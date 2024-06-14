@@ -105,7 +105,7 @@
                                             </div> --}}
                                             <p class="mb-4 text-2lx">{{ $row->name }}</p>
                                             <a href="https://api.whatsapp.com/send?phone=5568096555&text=Hola%20me%20gustaría%20solicitar%20una%20cotización%20para%20el%20producto%20{{ $row->name }}%20con%20SKU%20:%20({{ $row->internal_sku }})"
-                                                class="block w-full bg-green-500 hover:bg-green-600 text-white text-center rounded-sm font-semibold py-2 rounded-xl">
+                                                class="block w-full bg-primary text-black hover:bg-black hover:text-white text-center rounded-sm font-semibold py-2 rounded-xl">
                                                 Solicitar cotización
                                             </a>
                                         </div>
