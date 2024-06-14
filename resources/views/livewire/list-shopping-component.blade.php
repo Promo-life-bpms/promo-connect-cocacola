@@ -7,7 +7,39 @@
             <a class="text-secondary" href="#">Mis compras</a>
         </div>
       </div>
+      @php
+        $total_compra = 0;
+      @endphp
+      @foreach ($shoppings  as $shopping)
+        @php
+          $total_compra = $total_compra + $shopping->products[0]->precio_total;
+        @endphp
+      @endforeach
+      <div class="flex">
+        <div class="w-1/2 mr-8">
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-bold mb-2">N° de compras:</h2>
+                <p class="text-bold text-4xl">{{count($shoppings) }}</p>
+            </div>
+        </div>
+    
+        <div class="w-1/2">
+            <div class="bg-white p-4 rounded shadow">
+                <h2 class="text-xl font-bold mb-2">Total: </h2>
+                <p class="text-bold text-4xl">$ {{ number_format($total_compra, 2, '.', ',') }}</p>
+            </div>
+        </div>
+    
+        <div class="w-1/2">
+            
+        </div>
+    
+        <div class="w-1/2">
+            
+        </div>
+    </div>
 
+    <br>
       @if(session('message'))
         <div class="bg-green-500 text-white px-4 py-2 rounded-md my-4">
             {{ session('message') }}
