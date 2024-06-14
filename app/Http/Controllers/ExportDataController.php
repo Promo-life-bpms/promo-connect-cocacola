@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Catalogo\Product;
 use App\Models\RoleUser;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -49,6 +50,22 @@ class ExportDataController extends Controller
     public function presentation()  {
         
         return view('presentation');
+    }
+
+
+    public function importation() {
+        $only_products =[
+            3174,389293,389309,389311,389312,389313,389644,458583,456208,456467,456470,456476,
+            456480,456482,456232,456493,456494,456750,456751,456752,456245,456508,456509,456767,456522,456545,
+            456547,456548,456293,456549,456558,456304,456568,456575,456577,456329,456330,456344,456345,456346,
+            456602,456347,456348,456349,456369,456642,456643,456644,456645,456646,456647,456648,456649,456398,
+            456399,456410,456678,456679,456680,456681,456426,456683,456428,456684,456429,456685,456430,456686
+        ];
+
+        $products = Product::whereIn('id',$only_products)->get();
+        
+        return view('importation', compact('products'));
+
     }
 }
 

@@ -39,6 +39,7 @@ Route::get('/load-external-image', [ImageProxyController::class, 'loadExternalIm
 Route::post('/temporal-image', [TemporalImageUrlController::class, 'saveImage']);
 Route::get('/example-pdf', [CotizacionController::class, 'examplePDF']);
 Route::get('/presentation', [ExportDataController::class, 'presentation'])->name('presentation');
+Route::get('/importation', [ExportDataController::class, 'importation'])->name('importation');
 
 
 Route::middleware(['auth'])->group(function () {

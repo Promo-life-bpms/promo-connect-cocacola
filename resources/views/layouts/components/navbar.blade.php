@@ -56,19 +56,22 @@
                 @role(['buyers-manager', 'buyer'])
 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
-                        <p class="text-white hover:text-hh-green text-sm mx-4"><a href="{{ route('catalogo') }}">Catálogo</a></p>
+                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('catalogo') }}">Catálogo</a></p>
                     </div>
-                
+
+                    <div class="mb-7 md:mt-7 md:mb-0 mx-2">
+                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('importation') }}">Importación</a></p>
+                    </div>
 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
-                        <p class="text-white hover:text-hh-green text-sm mx-4"><a href="{{ route('compras') }}">Mis compras</a></p>
+                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('compras') }}">Mis compras</a></p>
                     </div>
                 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-white hover:text-hh-green text-sm mx-4"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
+                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
                     </div>
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-white hover:text-hh-green text-sm mx-4"><a href="{{ route('special') }}">Especiales</a></p>
+                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('special') }}">Especiales</a></p>
                     </div>
                 @endrole
             </div>
