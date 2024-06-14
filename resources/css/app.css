@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'sharpslab-bold';
+    src: url('/fonts/SharpSlab-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'zillaslap-bold';
+    src: url('/fonts/ZillaSlab-Bold.ttf') format('truetype');
+}
+
+*{
+    font-family: 'Open Sans',sans-serif;
+}
+
+.hh-text-shadow{
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
