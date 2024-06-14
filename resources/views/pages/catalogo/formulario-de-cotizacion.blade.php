@@ -205,8 +205,10 @@
 
                                     <div class="grid grid-cols-3 gap-4">
                                         <select id="logos" name="logos" class=" mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style="width: 210px;">
-                                            <option value="hhglobal_negro.png">HH Global negro</option>
-                                            <option value="hh-logo.png">HH Global blanco</option>
+                                            <option value="HHGLOBALNEGRO.png">HH Global negro</option>
+                                            <option value="HHGLOBALBLANCO.png">HH Global blanco</option>
+                                            <option value="LOGOADARENEGRO.png">Adare negro</option>
+                                            <option value="LOGOADAREBLANCO.png">Adare blanco</option>
                                         </select>
                                     </div>
                                     
@@ -409,9 +411,11 @@
         var productID = "{{ $product->id }}";
 
         /* Logos */
-        var logo1 = "{{asset('img/hhglobal_negro.png')}}";
-        var logo2 = "{{asset('img/hh-logo.png')}}";
-        
+                                            
+        var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
+        var logo2 = "{{asset('img/HHGLOBALBLANCO.png')}}";
+        var logo3 = "{{asset('img/LOGOADARENEGRO.png')}}";
+        var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}";
 
         if(imageURL.startsWith("https://catalogodeproductos.promolife.lat/")){
             imageURL = imageURL.slice(41);
