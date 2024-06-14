@@ -139,7 +139,7 @@
     </section>
 
     <!-- Categorias -->
-    <section class=" mx-auto flex flex-col items-center justify-center w-full px-2"> 
+    <section class=" mx-auto flex flex-col items-center justify-center w-full px-2 px-20"> 
         <div class="grid grid-cols-5 sm:grid-cols-2 md:grid-cols-5 gap-4 ">
             <style>
                 .hover-grow {
