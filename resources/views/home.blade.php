@@ -65,6 +65,13 @@
                 </a>
                 
             </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <a href="{{route('presentation')}}">
+                    <img src="{{ asset('img/BANNER3.jpg') }}"
+                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." style="z-index:1; object-fit: contain; !important">
+                </a>
+                
+            </div>
             @foreach ($banners as $item)
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <a href="{{route('presentation')}}">
