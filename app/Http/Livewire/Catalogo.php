@@ -162,6 +162,9 @@ class Catalogo extends Component
         $this->proveedor = null;
         $this->orderPrice = '';
         $this->orderStock = '';
+        $this->precioMin = 0;
+        $this->stockMin = 0;
+        
     }
 
     public function changeCategory($category_id)
@@ -169,4 +172,5 @@ class Catalogo extends Component
         $this->category = $this->category == $category_id ? null : $category_id;
         Session::put('category', $this->category);
     }
+    
 }
