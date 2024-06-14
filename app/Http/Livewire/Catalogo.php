@@ -77,11 +77,11 @@ class Catalogo extends Component
         $category = $this->category;
         $precioMax = $price;
         if ($this->precioMax != null) {
-            $precioMax =  round($this->precioMax / (($utilidad / 100) + 1), 2);
+            $precioMax = $this->precioMax;
         }
         $precioMin = 0;
         if ($this->precioMin != null) {
-            $precioMin =  round($this->precioMin / (($utilidad / 100) + 1), 2);
+            $precioMin = $this->precioMin;
         }
         $stockMax =  $this->stockMax;
         $stockMin =  $this->stockMin;

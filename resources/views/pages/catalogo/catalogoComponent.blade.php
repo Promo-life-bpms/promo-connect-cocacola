@@ -164,18 +164,10 @@
                     @endif
                     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-8 pb-8 -mt-8">
                         @foreach ($products as $row)
-
+                            
                             @if(isset($row->firstImage) && $row->firstImage->image_url != null)
-                                @php
-                                    $haspvc = false;
-                                    foreach ($row->productAttributes as $attribute) {
-                                        if ($attribute->value === 'pvc') {
-                                            $haspvc = true;
-                                        }
-                                    }
-                                @endphp
-
-                                @if($haspvc == false)
+                                
+                            
                                     <div class="w-full h-auto bg-white rounded-xl shadow-lg overflow-hidden p-4" style="border: 1px solid #d1d1d1;">
                                         <div
                                             class="flex sm:block gap-2 sm:bg-transparent bg-white rounded-md sm:rounded-none p-2 sm:p-0">
@@ -227,7 +219,6 @@
                                         </div>
                                     </div>
                                 
-                                @endif
 
                             @endif
  
