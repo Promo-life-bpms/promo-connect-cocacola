@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Company;
+use App\Models\Role;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\User;
@@ -31,11 +32,10 @@ class Users extends Component
         //         ->orWhere('email', 'LIKE', $keyWord)
         //         ->paginate(50),
         // ]);
-
         $users = User::where("name", "LIKE", "%" . $this->search . "%")->get();
-        return view('livewire.users.view', ['users' => $users]);
+        $roles = Role::all();
+        return view('livewire.users.view', ['users' => $users, 'roles' => $roles]);
     }
-
 
     public function sendAccess($id)
     {

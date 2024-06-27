@@ -117,4 +117,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/export/user', [ExportDataController::class, 'exportUser'])->name('exportUser');
     Route::post('/shopping/rate', [ShoppingController::class, 'shoppingRate'])->name('shoppingRate');
 
+    ////CREAR USUARIO////
+    Route::post('create/user', [AdminController::class, 'newUser'])->name('create.user');
+    Route::post('update/user',[AdminController::class, 'updateUser'])->name('update.user');
 });

@@ -14,6 +14,7 @@ class RoleUser extends Model
     protected $fillable = [
         'role_id',
         'user_id',
+        'user_type'
     ];
 
     public $timestamps = false;
