@@ -64,7 +64,7 @@
         <div class="inner-container">
             <h1>¡Buen día, {{ $receptor }}!</h1>
             <p>
-                Bienvenido al sistema HH BLOBAL.
+                Bienvenido al sistema HH GLOBAL.
             </p>
             <p>
                 Tu información de inicio de sesión es:
