@@ -22,7 +22,7 @@ class FormularioDeCotizacion extends Component
     use WithFileUploads;
 
     public $product, $currentQuote, $productEdit, $currentQuote_id, $productNewAdd;
-
+    public $projecName;
     public $precio, $precioCalculado, $precioTotal = 0;
     public $costoTotal, $costoCalculado = 0;
 
@@ -228,11 +228,13 @@ class FormularioDeCotizacion extends Component
         $user = Auth::user();
 
         $this->validate([
+            'projecName' => 'required|string|max:255',
             'priceTechnique' => 'required',
             'cantidad' => 'required|numeric|min:1',
             'colores' => 'required|numeric|min:0',
+            
         ]);
-
+ 
         $material = Material::findOrFail($this->materialSeleccionado);
         $technique = Technique::findOrFail($this->tecnicaSeleccionada);
         $size = Size::find($this->sizeSeleccionado);       
@@ -248,6 +250,7 @@ class FormularioDeCotizacion extends Component
             'armado'  => isset($this->armado)? 1:0,
             'destino' => isset($this->destino)? 1:0,
             'detalles' => $this->detalles != ""? $this->detalles : "",
+            'proyecto'=> $this->projecName,
         ]);
 
         if ($currentQuote === null) {

@@ -19,8 +19,13 @@
             @if (count($cotizacionActual) > 0)
                 @php
                     $quoteByScales = false;
+                   
                 @endphp
                 @foreach ($cotizacionActual as $quote)
+
+                    @php
+                        $moreDetails = json_decode($quote->more_details,true);
+                    @endphp
                     <div
                         class="flex justify-between border-t last:border-b border-gray-800 py-3 px-5 gap-2 items-center">
                         <div class="flex items-center">
@@ -40,11 +45,11 @@
                             <p class="font-bold text-lg">{{ $quote->product->name }}</p>
                             <div class="flex items-center space-x-3">
                                 <p>Cantidad: <strong>{{ $quote->cantidad }}</strong> <span>PZ</span></p>
-                                {{--        <input type="number" class="rounded-md border-gray-700 border text-center p-1 w-20"
-                                    min="1" value="{{ $quote->cantidad }}"> --}}
                             </div>
-                            {{-- <p>Costo de Personalizacion: <span class="font-bold"> $ {{ $quote->price_technique }}
-                                    c/u</span> </p> --}}
+                            <div class="flex items-center space-x-3">
+                                <p>Proyecto N°: <strong>{{ $moreDetails[0]['proyecto']  }}</strong></p>
+                            </div>
+                            
                         </div>
                         <div class="h-full text-center pr-20">
                             @if ($quote->logo)
@@ -70,15 +75,6 @@
                             @endif
                         </div>
                         <div class="flex flex-col items-end space-y-2">
-
-                           {{--  <!-- @php
-                                $precioTotal = round(($quote->precio_total / ((100 - config('settings.utility_aditional')) / 100)) * 1.16, 2);
-                            @endphp -->
-
-                            @php
-                                $precioTotal = ($quote->precio_total);
-                            @endphp --}}
-
                             @php
                                 $precioTotal = $quote->precio_total;
                             @endphp

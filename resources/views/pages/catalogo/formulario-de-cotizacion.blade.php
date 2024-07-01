@@ -270,7 +270,7 @@
         </div>
     </div>
 
-    <div class=" rounded">
+    <div class="rounded">
         <div class="form-group m-0 mb-1 ">
             <label for="newTechnique" class="text-dark m-0">
                 <strong>Dias de entrega:</strong>
@@ -286,21 +286,7 @@
             </label>
         </div>
     </div>
-    @if ($errors)
-        <div wire:poll.12s>
-            @if ($errors->has('cantidad'))
-                <div class="text-center text-red-500 font-bold p-3" style="margin-top:0px; margin-bottom:0px;">
-                    No se ha colocado la cantidad de productos</div>
-            @endif
-            @if ($errors->has('colores'))
-                <div class="text-center text-red-500 font-bold p-3" style="margin-top:0px; margin-bottom:0px;">
-                    No se ha colocado la cantidad de colores</div>
-            @endif
-        </div>
-        @php
-            $errors = null;
-        @endphp
-    @endif
+  
     <div class="justify-content-between  grid grid-cols-1">
         {{--  @if (!$priceScales) --}}
         <div>
@@ -348,10 +334,66 @@
             @else
             @endif
         </div>
-
-        <button class="bg-primary hover:bg-black  hover:text-white text-black py-3 col-span-4" wire:click="agregarCarrito()"> 
+        
+        <button data-modal-target="add-to-car" data-modal-toggle="add-to-car"  class="bg-primary hover:bg-black  hover:text-white text-black py-3 col-span-4 mb-3"  type="button">
             Agregar al carrito
         </button>
+        @if ($errors)
+            <div wire:poll.12s>
+                @if ($errors->has('cantidad'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">No se ha colocado la cantidad de productos</span>
+                    </div>
+                @endif
+                @if ($errors->has('colores'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">No se ha colocado la cantidad de colores</span>
+                    </div>
+                @endif
+                @if ($errors->has('projecName'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <span class="block sm:inline">No se ha colocado el número de proyecto</span>
+                    </div>
+                @endif
+            </div>
+            @php
+                $errors = null;
+            @endphp
+        @endif
+        <div wire:ignore id="add-to-car" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                            Número de proyecto
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="add-to-car">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <p class="text-base leading-relaxed text-gray-500">
+                            Antes de añadir al carrito este producto, agrega el número del proyecto al que se encuentra ligado
+                        </p>
+                        <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required>
+                    </div>
+                
+                    <div class="w-full flex items-center p-4 md:p-5 rounded-b ">
+                        <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()"> 
+                            Confirmar
+                        </button>
+                        <button data-modal-hide="add-to-car" type="button" class="py-3 col-span-4 px-10 ml-4 text-sm font-medium text-gray-900 focus:outline-none bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
         @if (session()->has('message'))
             <div wire:poll.4s class="btn btn-sm btn-success w-100" style="margin-top:0px; margin-bottom:0px;">
                 {{ session('message') }} </div>
