@@ -381,7 +381,7 @@
                         <p class="text-base leading-relaxed text-gray-500">
                             Antes de añadir al carrito este producto, agrega el número del proyecto al que se encuentra ligado
                         </p>
-                        <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required>
+                        <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
                     </div>
                 
                     <div class="w-full flex items-center p-4 md:p-5 rounded-b ">

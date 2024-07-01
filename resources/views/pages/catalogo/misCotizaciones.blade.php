@@ -64,6 +64,7 @@
                 <thead>
                     <tr class="bg-black text-white text-sm ">
                         <th class="p-4" style="width:5%;">Cotizacion</th>
+                        <th style="width:5%;">Proyecto</th>
                         <th style="width:5%;">Logo</th>
                         <th style="width:10%;">Producto</th>
                         <th style="width:10%;">Usuario</th>
@@ -92,6 +93,8 @@
                             $productDB = \App\Models\Catalogo\Product::where('id',$productData->id)->get()->first();
                             $productImage = $productDB->firstImage;
 
+                            $proyecto = isset($productData->proyecto) ?$productData->proyecto : '';
+                            
                         @endphp
                         
                         <tr class="border text-sm">
@@ -105,6 +108,9 @@
                                     </button>
                                 </form>
                                 
+                            </td>
+                            <td>
+                                {{$proyecto}}
                             </td>
                             <td class="text-center">
                                 @if($quote->logo == null || $quote->logo == '')
@@ -186,6 +192,7 @@
                                 @endif
                              
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>
