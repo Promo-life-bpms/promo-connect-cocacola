@@ -511,6 +511,12 @@ class CotizadorController extends Controller
     }
 
     public function comprasRealizarCompra(Request $request) {
+
+        $request->validate([
+            'oc_number' => 'required',
+            'art_file' => 'required',
+        ]);
+
      
         $quote = Quote::where('id', $request->id )->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
@@ -582,9 +588,26 @@ class CotizadorController extends Controller
             $createQuoteTechniques->size = $quote_techniques->size;
             $createQuoteTechniques->save();
         }
+        if ($request->hasFile('art_file')) {
+            $file = $request->file('art_file');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension(); 
+            $fileNameToStore = time() . '_' . $filename . '.' . $extension;
+        
+            $pathFile = $file->storeAs('public/art/files', $fileNameToStore);
+        
+            $data = [
+                'oc_number' => 'OC12903',
+                'art_file' => $pathFile,
+            ];
+    
+        } else {
+            return back()->with('error', 'No se encontró el archivo');
+        }
 
         DB::table('quote_information')->where('id',$request->id)->update([
-            'information' => strtoupper($request->type_order == ''? 'OC':$request->type_order. '-'.$request->oc),
+            'information' => $data
         ]);
         $date = Carbon::now()->format("d/m/Y");
 

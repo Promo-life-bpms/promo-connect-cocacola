@@ -151,7 +151,7 @@
                                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                                 <!-- Modal content -->
                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                    <form method="POST" action="{{ route('compras.realizarcompra') }}">
+                                                    <form method="POST" action="{{ route('compras.realizarcompra') }}" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $quote->id }}">
                                                         <!-- Modal header -->
@@ -168,13 +168,22 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 md:p-5 space-y-4 text-left">
-                                                            Para poder continuar con el proceso de compra, seleccione el tipo y número de orden.
+                                                            Para poder continuar con el proceso de compra, ingresa el número de orden y artes.
                                                             <br>
                                                             <div class="flex items-center space-x-4">
-                                                                <select id="type_order" name="type_order" class="form-select">
-                                                                    <option value="OC" selected>OC</option>
-                                                                </select>
-                                                                <input type="text" name="oc" id="oc" class="w-full form-input" required>
+                                                                
+                                                                <div class="w-1/2">
+                                                                    <label for="">Número de orden</label>
+                                                                    <br>
+                                                                    <input class="w-full" type="text" name="oc_number" id="oc_number" required>
+                                                                </div>
+                                                               
+                                                                <div class="w-1/2">
+                                                                    <label for="">Artes</label>
+                                                                    <br>
+                                                                    <input type="file" name="art_file" id="art_file" class="w-full form-input" required>
+                                                                </div>
+                
                                                             </div>
                                                         </div>
                                                         <!-- Modal footer -->
