@@ -174,8 +174,6 @@
                         <div class="w-full bg-stone-400" style="height: 1px;"></div>
                         <br>
                       
-                            <p class="flex flex-grow text-lg grid-cols-1"><strong>Informacion de la cotizacion</strong></p>
-
                             @livewire('formulario-de-cotizacion', ['product' => $product])
                            
                     </div>

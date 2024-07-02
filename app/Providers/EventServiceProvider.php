@@ -26,6 +26,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\ChatEvent' => [
             'App\Listeners\EventListener',
         ],
+        'Illuminate\Auth\Events\Login' => [
+            'App\Listeners\UserLogListener@handleLogin',
+        ],
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Listeners\UserLogListener@handleLogout',
+        ],
     ];
 
     /**
