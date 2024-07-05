@@ -1,20 +1,31 @@
 <div>
-   <p class="text-lg font-bold mb-2">Número de proyecto</p>
-    <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
-    <div class="w-full bg-stone-400 mt-10 mb-5" style="height: 1px;"></div>
+  
 
-    @if (!empty($projecName))
-
-
+    <ol class="relative text-gray-500 border-s border-stone-50 ">                  
+        <li class="mb-10 ms-6">            
+            <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white">
+                1
+            </span>
+           <div>
+                <p class="text-lg font-bold mb-2">Número de proyecto</p>
+                <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
+           </div>
+        </li>
+     
+        @if (!empty($projecName))
+        <li class="mb-10 ms-6">
+            <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                2
+            </span>
     
-        <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Informacion de la cotizacion</strong></p>
+            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Personalizacion de la tecnica</strong></p>
 
-    <p class="w-100 py-2"><strong>Personalizacion de la tecnica</strong></p>
+               
     <div class="">
         <div class="rounded">
             <div class="grid grid-cols-2">
                 <div class="m-0 mb-1 col-span-1">
-                    <label for="tecnica" class="text-dark m-0"><strong>Material</strong> </label>
+                    <label for="tecnica" class="m-0"><strong>Material</strong> </label>
                     <select name="" id=""
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                         wire:model="materialSeleccionado" wire:change="resetTecnique">
@@ -26,7 +37,7 @@
                 </div>
                 @if ($techniquesAvailables)
                     <div class="form-group m-0 mb-1 col-md-6">
-                        <label for="tecnica" class="text-dark m-0"><strong>Tecnica</strong> </label>
+                        <label for="tecnica" class="m-0"><strong>Tecnica</strong> </label>
                         <select name="" id=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                             wire:model="tecnicaSeleccionada" wire:change="resetSizes">
@@ -40,7 +51,7 @@
                 @endif
                 @if ($sizesAvailables)
                     <div class="form-group m-0 mb-1 col-md-6">
-                        <label for="tecnica" class="text-dark m-0"><strong>Tamaño</strong> </label>
+                        <label for="tecnica" class="m-0"><strong>Tamaño</strong> </label>
                         <select name="" id=""
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                             wire:model="sizeSeleccionado">
@@ -82,7 +93,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="grid grid-cols-1 md:grid-cols-3 mt-2">
+            <div class="grid grid-cols-1 md:grid-cols-3 mt-5">
                 <label><strong>Piezas</strong> </label>
                 <br>
                 <input
@@ -98,84 +109,6 @@
                     name="colores" wire:model="colores" placeholder="Colores" min="0">
             </div>
             <br>
-            <!-- <button class="w-full col-span-5 px-10 py-3 bg-gray-900 hover:bg-gray-900 text-stone-50"
-                data-modal-target="modalLogos" data-modal-toggle="modalLogos" type="button">
-                {{ $photo ? 'Ver o cambiar logo/producto personalizado' : 'Subir logo' }}
-            </button> 
-
-            <p  class="text-center m-2 font-bold text-xl">ó</p> -->
-         
-            <button class="w-full col-span-5 px-10 py-3 bg-gray-900 hover:bg-primary hover:text-black text-stone-50"
-                data-modal-target="modalPersonalize" data-modal-toggle="modalPersonalize" type="button">
-                Personaliza tu producto
-            </button>
-            <br>
-            <img  wire:ignore.self id="previewImage" src="#" alt="Vista previa de la imagen generada" style="display: none; width:140px; height:140px;">
-            <br>
-
-            <!-- Main modal -->
-            <!-- <div wire:ignore.self id="modalLogos" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
-                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative w-full max-w-2xl max-h-full">
-                    
-                    <div class="relative  bg-slate-800 rounded-lg shadow dark:bg-gray-700">
-                        
-                        <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold   text-white">
-                                Agrega tus logos
-                            </h3>
-                            <button type="button"
-                                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                data-modal-hide="modalLogos">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </button>
-                        </div>
-                       
-                        <div class="p-6 space-y-6">
-
-                            <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
-                                x-on:livewire-upload-finish="isUploading = false"
-                                x-on:livewire-upload-error="isUploading = false"
-                                x-on:livewire-upload-progress="progress = $event.detail.progress">
-                                <input type="file"
-                                    class="block w-full text-sm text-slate-500
-                                    file:mr-4 file:py-2 file:px-6
-                                    file:rounded-md
-                                    file:bg-slate-800
-                                    file:text-yellow-500 text-md font-semibold
-                                    file:border-amber-400"
-                                    wire:model="photo" accept="image/*" >
-                                <div x-show="isUploading" class="progress">
-                                    <div class="flex justify-between mb-1">
-                                        <span
-                                            class="text-base font-medium text-slate-700 dark:text-white">Progreso</span>
-                                    </div>
-                                    <div class="w-full bg-white rounded-full h-2.5 dark:bg-gray-700">
-                                        <div class="bg-slate-600 h-2.5 rounded-full"
-                                            x-bind:style="`width: ${progress}%`">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @if ($photo)
-                                <div class="text-center">
-                                    <div class="max-h-32 h-32 w-auto flex justify-center">
-                                        <img src="{{ $photo->temporaryUrl() }}" class="max-h-32 h-32 w-auto">
-                                    </div>
-                                    <p class="text-white mt-3">Ya puedes cerrar esta ventana</p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
 
             <div wire:ignore id="modalPersonalize" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
                 class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -278,110 +211,99 @@
         </div>
     </div>
 
-    <div class="rounded">
-        <div class="form-group m-0 mb-1 ">
-            <label for="newTechnique" class="text-dark m-0">
-                <strong>Dias de entrega:</strong>
-                10
-            </label>
-        </div>
-        <div class="form-group m-0 mb-1 ">
-            <label for="newTechnique" class="text-dark m-0">
-                <strong>
-                    Precio actual de la tecnica por articulo:
-                </strong>
-                $ {{ $precioDeTecnica * $colores }}
-            </label>
-        </div>
-    </div>
-  
-    <div class="justify-content-between  grid grid-cols-1">
-        {{--  @if (!$priceScales) --}}
-        <div>
-            <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ {{ number_format($costoCalculado,2)}}</h6>
-            <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
 
-            {{-- <div class="form-group mt-5 mb-1">
-                <h5 class="font-bold">Detalles adicionales</h5>
-              
-                <div class="flex items-center">
-                  <input type="checkbox" name="embalaje" id="embalaje" class="mr-2" wire:model="embalaje">
-                  <label for="embalaje" class="text-sm">Con embalaje</label>
-                </div>
-              
-                <div class="flex items-center mt-2">
-                  <input type="checkbox" name="armado" id="armado" class="mr-2" wire:model="armado">
-                  <label for="armado" class="text-sm">Con armado</label>
-                </div>
-              
-                <div class="flex items-center mt-2">
-                  <input type="checkbox" name="destino" id="destino" class="mr-2" wire:model="destino">
-                  <label for="destino" class="text-sm">Con destino de envío</label>
-                </div>
-              
-                <div class="mt-4"> 
-                  <textarea type="textarea" rows="4" name="detalles" id="detalles" placeholder="Información adicional" class="w-full border border-gray-300 rounded-md p-2" wire:model="detalles"></textarea>
-                </div>
-            </div> --}}
-        </div>
+        </li>
+        <li class="ms-6">
+            <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
+                3
+            </span>
 
+            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Total</strong></p>
 
-       
-        {{--  @endif --}}
-        <div class="form-group m-0 mb-1 text-center">
-            @if ($currentQuote)
-                <button type="button" class="btn btn-warning py-2 px-4" wire:click='editarCurrentCotizacion'>Editar
-                    cotizacion</button>
-            @elseif ($productEdit)
-                <button type="button" class="btn btn-info py-2 px-4" wire:click='editarCotizacion'>Actualizar
-                    cotizacion</button>
-            @elseif ($productNewAdd)
-                <button type="button" class="btn btn-secondary py-2 px-4" wire:click='addNewProductToQuote'>Agregar
-                    a
-                    la cotizacion</button>
-            @else
-            @endif
-        </div>
-        
-        <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()"> 
-            Agregar al carrito
-        </button>
-        @if ($errors)
-            <div wire:poll.12s>
-                @if ($errors->has('cantidad'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">No se ha colocado la cantidad de productos</span>
-                    </div>
-                @endif
-                @if ($errors->has('colores'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">No se ha colocado la cantidad de colores</span>
-                    </div>
-                @endif
-                @if ($errors->has('projecName'))
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                        <span class="block sm:inline">No se ha colocado el número de proyecto</span>
-                    </div>
-                @endif
+            <div class="rounded">
+                <div class="form-group m-0 mb-1 ">
+                    <label for="newTechnique" class=" m-0">
+                        <strong>Dias de entrega:</strong>
+                        10
+                    </label>
+                </div>
+                <div class="form-group m-0 mb-1 ">
+                    <label for="newTechnique" class=" m-0">
+                        <strong>
+                            Precio actual de la tecnica por articulo:
+                        </strong>
+                        $ {{ $precioDeTecnica * $colores }}
+                    </label>
+                </div>
             </div>
-            @php
-                $errors = null;
-            @endphp
+          
+            <div class="justify-content-between  grid grid-cols-1">
+                {{--  @if (!$priceScales) --}}
+                <div>
+                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ {{ number_format($costoCalculado,2)}}</h6>
+                    <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
+                </div>
+        
+                {{--  @endif --}}
+                <div class="form-group m-0 mb-1 text-center">
+                    @if ($currentQuote)
+                        <button type="button" class="btn btn-warning py-2 px-4" wire:click='editarCurrentCotizacion'>Editar
+                            cotizacion</button>
+                    @elseif ($productEdit)
+                        <button type="button" class="btn btn-info py-2 px-4" wire:click='editarCotizacion'>Actualizar
+                            cotizacion</button>
+                    @elseif ($productNewAdd)
+                        <button type="button" class="btn btn-secondary py-2 px-4" wire:click='addNewProductToQuote'>Agregar
+                            a
+                            la cotizacion</button>
+                    @else
+                    @endif
+                </div>
+                
+                <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()"> 
+                    Agregar al carrito
+                </button>
+                @if ($errors)
+                    <div wire:poll.12s>
+                        @if ($errors->has('cantidad'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <span class="block sm:inline">No se ha colocado la cantidad de productos</span>
+                            </div>
+                        @endif
+                        @if ($errors->has('colores'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <span class="block sm:inline">No se ha colocado la cantidad de colores</span>
+                            </div>
+                        @endif
+                        @if ($errors->has('projecName'))
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                <span class="block sm:inline">No se ha colocado el número de proyecto</span>
+                            </div>
+                        @endif
+                    </div>
+                    @php
+                        $errors = null;
+                    @endphp
+                @endif
+             
+              
+                @if (session()->has('message'))
+                    <div wire:poll.4s class="btn btn-sm btn-success w-100" style="margin-top:0px; margin-bottom:0px;">
+                        {{ session('message') }} </div>
+                @endif
+
+        </li>
         @endif
-     
-      
-        @if (session()->has('message'))
-            <div wire:poll.4s class="btn btn-sm btn-success w-100" style="margin-top:0px; margin-bottom:0px;">
-                {{ session('message') }} </div>
-            {{-- <div class="d-flex">
-                <a href="{{ url('/') }}" class="btn btn-sm btn-info w-50 px-1"
-                    style="margin-top:0px; margin-bottom:0px;">
-                    Ir al cotizador </a>
-                <a href="{{ url('/cotizacion-actual') }}" class="btn btn-sm btn-secondary w-50 px-1"
-                    style="margin-top:0px; margin-bottom:0px;">
-                    Ver mi cotizacion </a>
-            </div> --}}
-        @endif
+    </ol>
+
+
+    @if (!empty($projecName))
+
+
+    
+
+
+ 
     </div>
 
     <style>
