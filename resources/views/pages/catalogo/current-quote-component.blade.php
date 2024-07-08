@@ -5,7 +5,12 @@
             <p class="text-lg">¡Éxito! Se ha realizado la cotización de tu producto correctamente, ingresa a la sección <b>MIS COTIZACIONES</b> .</p>
         </div>
     @endif
-   
+
+    @if(session('arte'))
+        <div class="bg-green-500 text-white p-4 mb-4">
+            <p class="text-lg">¡Arte agregado satisfactoriamente!</p>
+        </div>
+    @endif
 
     <div class="grid sm:grid-cols-7 grid-cols-1">
         <div class="sm:col-span-5 col-span-1 px-6">
@@ -29,13 +34,6 @@
                     <div
                         class="flex justify-between border-t last:border-b border-gray-800 py-3 px-5 gap-2 items-center">
                         <div class="flex items-center">
-                            <div style="width: 2rem">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                            </div>
                             <div>
                                 <img src="{{ $quote->images_selected ?: ($quote->product->firstImage ? $quote->product->firstImage->image_url : asset('img/default.jpg')) }}"
                                     alt="" width="100">
@@ -109,7 +107,7 @@
                                                 </div>
                                                 <!-- Modal footer -->
                                                 <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                    <button data-modal-hide="default-modal" type="submit" class="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"  wire:click="updateQuote({{ $quote->id }})">Actualizar</button>
+                                                    <button data-modal-hide="default-modal" type="submit" class="text-black hover:text-white bg-primary hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"  wire:click="updateQuote({{ $quote->id }})">Actualizar</button>
                                                     <button data-modal-hide="default-modal" type="button" class="ms-3 text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
                                                 </div>
                                          
@@ -133,11 +131,50 @@
                                     Solicitar Muestra
                                 </button>
                             @else
-                                <button
-                                    class="block w-full border-2 border-primary hover:border-primary-dark text-center rounded-sm font-semibold py-1 px-4"
-                                    onclick="solicitarMuestra({{ $quote->id }})">
-                                    Solicitar Muestra
-                                </button>
+                                @if(isset( $moreDetails[0]['art']))
+                                    <a class="mx-12 text-center block underline" href="{{ str_replace('public', 'storage', $moreDetails[0]['art']) }}" target="__blank">Ver arte</a>
+                                @else
+                                    <button data-modal-target="art-modal-{{$quote->id}}" data-modal-toggle="art-modal-{{$quote->id}}" class="block w-full border-2 border-primary hover:border-primary-dark text-center rounded-sm font-semibold py-1 px-4" type="button">
+                                        Agregar arte
+                                    </button>
+                                @endif
+  
+                                <div id="art-modal-{{$quote->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                    <div class="relative p-4 w-full max-w-2xl max-h-full">
+                                        
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <form method="POST" action="{{ route('compras.solicitararte') }}" enctype="multipart/form-data">
+                                                @csrf 
+                                                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                                                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                                        Agregar arte
+                                                    </h3>
+                                                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="art-modal-{{$quote->id}}">
+                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                        </svg>
+                                                        <span class="sr-only">Close modal</span>
+                                                    </button>
+                                                </div>
+                                                
+                                                <div class="p-4 md:p-5 space-y-4">
+                                                    <input type="text" name="id" id="id" value="{{$quote->id}}" hidden>
+                                                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+                                                        Por favor, sube tus artes, en caso de que sea mas de un archivo, comprimelo y no exceda los 10 MB. 
+                                                    </p>
+                                                    <br>
+                                                    <input type="file" name="file" id="file" class="w-full" required>
+                                                </div>
+                                                
+                                                <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+                                                    <button type="submit" class="text-black hover:text-white bg-primary hover:bg-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Aceptar</button>
+                                                    <button data-modal-hide="art-modal-{{$quote->id}}" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Cancelar</button>
+                                                </div>
+                                            </form>    
+                                        </div>
+                                    </div>
+                                </div>
+  
                             @endif
                                 <button type="button" onclick='eliminar({{ $quote->id }})'
                                     class="block w-full text-center text-sm underline rounded-sm font-semibold py-1 px-4">
@@ -212,7 +249,7 @@
         </div>
     </div>
 
-    <div wire:ignore.self class="hidden bg-slate-800 bg-opacity-50 justify-center items-center absolute top-0 right-0 bottom-0 left-0" id="modalSolicitarMuestra">
+    <div wire:ignore.self class="hidden bg-slate-800 bg-opacity-50 justify-center items-center absolute top-0 right-0 bottom-0 left-0" id="modalSolicitarMuestra" style="z-index: 40;">
         <div class="bg-white px-16 py-6 rounded-sm text-center" style="width: 600px">
             <p class="text-xl mb-4 font-bold">Ingresa los datos para hacerte llegar la muestra</p>
             <div class="grid grid-cols-3 px-4">

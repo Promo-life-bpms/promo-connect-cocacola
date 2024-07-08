@@ -9,6 +9,7 @@ use App\Models\Catalogo\GlobalAttribute;
 use App\Models\Catalogo\Product;
 use App\Models\Client;
 use App\Models\CommentsSupport;
+use App\Models\CurrentQuoteDetails;
 use App\Models\Muestra;
 use App\Models\Quote;
 use App\Models\QuoteDiscount;
@@ -634,5 +635,37 @@ class CotizadorController extends Controller
 
         return redirect()->back()->with('message', 'Este es tu mensaje de sesión.');
 
+    }
+
+    public function comprasSolicitarArte(Request $request) {
+        $request->validate([
+            'file' => 'required|file|max:10240',
+        ]);
+      
+        if ($request->hasFile('file')) {
+
+            $currentQuoteDetails = CurrentQuoteDetails::where('id', $request->id)->get()->first();
+          
+            $currentQuoteMoreDetails = json_decode($currentQuoteDetails->more_details);
+
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);    
+            $extension = $request->file('file')->getClientOriginalExtension();
+            $fileNameToStore = time() . '_' . $filename . '.' . $extension;    
+            $pathFile = $request->file('file')->storeAs('public/art/files', $fileNameToStore);
+            $currentQuoteMoreDetails[0]->art = $pathFile;
+
+            DB::table('current_quotes_details')->where('id',$request->id)->update([
+                'more_details' =>  json_encode($currentQuoteMoreDetails)
+            ]);
+
+            return redirect()->back()->with('arte', 'Arte agregado satisfactoriamente.');
+
+        } else {
+            $pathFile = '';
+
+            return redirect()->back()->with('mal-arte', 'Error al subir el arte, intenta nuevamente.');
+
+        }
     }
 }
