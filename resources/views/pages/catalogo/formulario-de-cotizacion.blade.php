@@ -8,6 +8,7 @@
             </span>
            <div>
                 <p class="text-lg font-bold mb-2">Número de proyecto</p>
+                <p class="text-sm text-red-500 font-semibold my-2"> HH Global (CE Team) deberá de crear el proyecto en los sistemas de HH Global y compartir el número a BH Trade, para que BH Trade suba el costo final a nuestro sistema. Posteriormente BH Trade colocará el # de proyecto en su sistema, para tener un match.</p>
                 <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
            </div>
         </li>
