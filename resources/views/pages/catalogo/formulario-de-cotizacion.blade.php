@@ -164,15 +164,15 @@
                                             
                                             <br>
                                             
-                                        {{--  <input type="file"
-                                                class="block w-full text-sm text-slate-500 bg-violet-50
+                                          <input type="file"
+                                                class="block w-full text-sm text-slate-500
                                                     file:rounded-full
                                                     file:mr-4 file:py-2 file:px-4
                                                     file:text-sm file:font-semibold mt-2"
-                                                wire:model="photo" accept="image/*" id="imageInput" > --}}
+                                                wire:model="photo" accept="image/*" id="imageInput" > 
                                                 
                                                 <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-stone-700 " id="clearImage" style="display:none;">Limpiar imagen</p>
-                                                
+                                                <br>
                                             
                                                 <p class="text-base font-bold">Texto  (opcional) </p>
                                                 <!-- <p class="text-sm mb-2">Coloca tu logo en la posicion deseada y descarga el producto personalizado</p>
@@ -321,218 +321,239 @@
             background-color: rgb(251, 251, 254);
         }
     </style>
-    <script src="{{ asset('js/fabric.js') }}"></script>
-    <script src="{{ asset('js/html2canvas.js') }}"></script>
-    <script>
-        function modalLogo() {
-            let modal = document.querySelector('#modalOpenLogo')
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        }
-        function closeModalLogo() {
-            let modal = document.querySelector('#modalOpenLogo')
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-        }
-        window.addEventListener('addProducto', event => {
-            Swal.fire({
-                icon: "success",
-                title: "Se ha guardado la cotizacion",
-                showConfirmButton: false,
-                timer: 3000
-            })
-        })
-
-        /* Generador de logos  */
-
-       /*  Obtener de path de imagenes */
-        var imageURL = "{{ $product->images != '[]'?  $product->images[0]->image_url : '' }}";
-        var productID = "{{ $product->id }}";
-
-        /* Logos */
-                                            
-        var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
-        var logo2 = "{{asset('img/HHGLOBALBLANCO.png')}}";
-        var logo3 = "{{asset('img/LOGOADARENEGRO.png')}}";
-        var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}";
-
-        if(imageURL.startsWith("https://catalogodeproductos.promolife.lat/")){
-            imageURL = imageURL.slice(41);
-        }
-        /* Identificadores */
-        var selectedLogo1 = document.getElementById("logo1");
-        var selectedLogo2 = document.getElementById("logo2");
-
-        var logoSelect = document.getElementById("logos");
-        
-        var logoURL = document.getElementById("imageInput");
-
-        var selectedImageLogo = null;
-
-        /* Canvas en DOOM*/
-        document.addEventListener("DOMContentLoaded", function () {
-
-            logoSelect.addEventListener("change", function () {
-                var selectedLogo = logoSelect.value;
-              
-                canvas.remove(selectedImageLogo);
-
-                // Construir la URL de la imagen dinámicamente
-                var logo = `{{asset('img/${selectedLogo}')}}`;
-                if (selectedImageLogo) {
-                    canvas.remove(selectedImageLogo);
-                }
+   <script src="{{ asset('js/fabric.js') }}"></script>
+   <script src="{{ asset('js/html2canvas.js') }}"></script>
+   <script>
+       function modalLogo() {
+           let modal = document.querySelector('#modalOpenLogo')
+           modal.classList.remove('hidden');
+           modal.classList.add('flex');
+       }
+       function closeModalLogo() {
+           let modal = document.querySelector('#modalOpenLogo')
+           modal.classList.remove('flex');
+           modal.classList.add('hidden');
+       }
+       window.addEventListener('addProducto', event => {
+           Swal.fire({
+               icon: "success",
+               title: "Se ha guardado la cotizacion",
+               showConfirmButton: false,
+               timer: 3000
+           })
+       })
+   
+       /* Generador de logos  */
+   
+      /*  Obtener de path de imagenes */
+       var imageURL = "{{ $product->images != '[]'?  $product->images[0]->image_url : '' }}";
+       var productID = "{{ $product->id }}";
+   
+       /* Logos */
+                                           
+       var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
+       var logo2 = "{{asset('img/HHGLOBALBLANCO.png')}}";
+       var logo3 = "{{asset('img/LOGOADARENEGRO.png')}}";
+       var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}";
+   
+       if(imageURL.startsWith("https://catalogodeproductos.promolife.lat/")){
+           imageURL = imageURL.slice(41);
+       }
+       /* Identificadores */
+       var selectedLogo1 = document.getElementById("logo1");
+       var selectedLogo2 = document.getElementById("logo2");
+   
+       var logoSelect = document.getElementById("logos");
+       
+       var logoURL = document.getElementById("imageInput");
+   
+       var selectedImageLogo = null;
+   
+       /* Canvas en DOOM*/
+       document.addEventListener("DOMContentLoaded", function () {
+           var canvas = new fabric.Canvas('canvas', {
+               backgroundColor: 'white'
+           });
+   
+           var selectedImage = null; // Definir selectedImage aquí
+   
+           logoSelect.addEventListener("change", function () {
+               var selectedLogo = logoSelect.value;
+             
+               canvas.remove(selectedImageLogo);
+   
+               // Construir la URL de la imagen dinámicamente
+               var logo = `{{asset('img/${selectedLogo}')}}`;
+               if (selectedImageLogo) {
+                   canvas.remove(selectedImageLogo);
+               }
+                  
+               fabric.Image.fromURL(logo, function (image) {
+                   image.scaleToWidth(50);
+                   image.scaleToHeight(50);
+                   image.set({ left: 100, top: 100, selectable: true, crossOrigin: 'anonymous' });
+                   canvas.add(image);
+                   selectedImageLogo = image;
                    
-                fabric.Image.fromURL(logo, function (image) {
-                    image.scaleToWidth(50);
-                    image.scaleToHeight(50);
-                    image.set({ left: 100, top: 100, selectable: true, crossOrigin: 'anonymous' });
-                    canvas.add(image);
-                    selectedImageLogo = image;
-                    
-                    canvas.renderAll();
-                });
-
-                canvas.remove(image);
-        
-                console.log("Logo seleccionado: " + selectedImage);
-            });
-
-
-            /* Se inicializa */
-            var canvas = new fabric.Canvas('canvas', {
-                backgroundColor: 'white'
-            });
-
-            /* Verifica la url de la imagen de proveedores de APIS */
-            if (imageURL.startsWith('/storage/')) {
-                /* Imagenes con CORS y locales */
-                console.log('comienza con storage');
-                fabric.Image.fromURL(imageURL, function (img) {
-                    img.set({ crossOrigin: 'anonymous' });
-                        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-                        scaleX: canvas.width / img.width,
-                        scaleY: canvas.height / img.height
-                    });
-                });
-            } else {
-                var proxyUrl = "/load-external-image?url=" + encodeURIComponent(imageURL);
-                fabric.Image.fromURL(proxyUrl, function (img) {
-                    img.set({ crossOrigin: 'anonymous' });
-                    canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-                        scaleX: canvas.width / img.width,
-                        scaleY: canvas.height / img.height
-                    });
-                });
-            }
-  
-
-            /* Evento para agregar texto */
-            var textObject = null;
-            document.getElementById('addTextButton').addEventListener('click', function() {
-                var textInput = document.getElementById('textInput').value;
-                const addTextButton = document.getElementById('addTextButton');
-                addTextButton.textContent = 'Actualizar';
-                document.getElementById('clearText').style.display = 'block';
-                if (textInput.trim() !== '') {
-                    // Eliminar el objeto de texto anterior si existe
-                    if (textObject !== null) {
-                        canvas.remove(textObject);
-                    }
-                    // Crear un objeto de texto
-                    textObject = new fabric.Text(textInput, {
-                        left: 50,
-                        top: 50,
-                        fontFamily: 'Sans-  ',
-                        fontSize: 20,
-                        fill: 'black'
-                    });
-                    // Agregar el objeto de texto al lienzo
-                    canvas.add(textObject);
-                    // Renderizar el lienzo
-                    canvas.renderAll();
-                }
-            });
-
-
-            /* Borrado manual de imagenes y texto */
-            var resultImage = document.getElementById("resultImage");
-            var showGeneratedImage = document.getElementById("showGeneratedImage");
-            document.getElementById('clearImage').addEventListener('click', function() {
-                canvas.remove(selectedImage);
-            });
-            document.getElementById('clearText').addEventListener('click', function() {
-                canvas.remove(textObject);
-            })
-
-            /* Envio de image generada a backend */
-            var sendImageToBackend = document.getElementById("sendImageToBackend");
-            sendImageToBackend.addEventListener('click', saveImage, false);
-            function saveImage() {
-                var generatedDataURL = canvas.toDataURL({
-                    format: 'png',
-                    quality: 0.8
-                });
-                // Crear una instancia de FormData para enviar la imagen como archivo
-                var formData = new FormData();
-                var blob = dataURLToBlob(generatedDataURL);
-                formData.append('image', blob, 'producto-personalizado.png');
-                formData.append('product_id', productID);
-                // Agregar el token CSRF al FormData
-                var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-                formData.append('_token', csrfToken);
-                // Realizar la solicitud AJAX
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/temporal-image', true);
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            document.getElementById('savedText').style.display = 'block';
-                            document.getElementById('errorText').style.display = 'none';
-                        } else {
-                            document.getElementById('errorText').style.display = 'block';
-                            document.getElementById('savedText').style.display = 'none';
-                        }
-                    }
-                };
-                xhr.send(formData);
-                previewImage();
-            }
-
-            /* Evento para cambiar el color del texto */
-            const colorPicker = document.getElementById('colorPicker');
-            colorPicker.addEventListener('input', function() {
-                if (textObject !== null) {
-                    textObject.set('fill', colorPicker.value);
-                    canvas.renderAll();
-                }
-            });
-
-            // Función para convertir Data URL a Blob
-            function dataURLToBlob(dataURL) {
-                var arr = dataURL.split(',');
-                var mime = arr[0].match(/:(.*?);/)[1];
-                var byteString = atob(arr[1]);
-                var arrayBuffer = new ArrayBuffer(byteString.length);
-                var uint8Array = new Uint8Array(arrayBuffer);
-                for (var i = 0; i < byteString.length; i++) {
-                    uint8Array[i] = byteString.charCodeAt(i);
-                }
-                return new Blob([arrayBuffer], { type: mime });
-            }
-        });
-
-        /* Envia imagen generada a componente principal para preview */
-        function previewImage() {
-            var generatedDataURL = canvas.toDataURL({
-                format: 'png',
-                quality: 1.0
-            });
-            var previewImage = document.getElementById('previewImage');
-            previewImage.src = generatedDataURL;
-            previewImage.style.display = 'block';
-        }
-    </script>
+                   canvas.renderAll();
+               });
+   
+               canvas.remove(image);
+       
+               console.log("Logo seleccionado: " + selectedImage);
+           });
+   
+           /* Verifica la url de la imagen de proveedores de APIS */
+           if (imageURL.startsWith('/storage/')) {
+               /* Imagenes con CORS y locales */
+               console.log('comienza con storage');
+               fabric.Image.fromURL(imageURL, function (img) {
+                   img.set({ crossOrigin: 'anonymous' });
+                       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                       scaleX: canvas.width / img.width,
+                       scaleY: canvas.height / img.height
+                   });
+               });
+           } else {
+               var proxyUrl = "/load-external-image?url=" + encodeURIComponent(imageURL);
+               fabric.Image.fromURL(proxyUrl, function (img) {
+                   img.set({ crossOrigin: 'anonymous' });
+                   canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                       scaleX: canvas.width / img.width,
+                       scaleY: canvas.height / img.height
+                   });
+               });
+           }
+   
+           /* Evento para agregar imagenes desde input */
+           imageInput.addEventListener("change", function (event) {
+               var file = event.target.files[0];
+               document.getElementById('clearImage').style.display = 'block';
+               if (file) {
+                   var reader = new FileReader();
+                   reader.onload = function (loadEvent) {
+                       var imageUrl = loadEvent.target.result;
+                       if (selectedImage) {
+                           canvas.remove(selectedImage);
+                       }
+                       fabric.Image.fromURL(imageUrl, function (image) {
+                           image.scaleToWidth(100);
+                           image.scaleToHeight(100);
+                           image.set({ left: 100, top: 100, selectable: true, crossOrigin: 'anonymous' });
+                           canvas.add(image);
+                           selectedImage = image;
+                           canvas.renderAll();
+                       });
+                   };
+                   reader.readAsDataURL(file);
+               }
+           });
+   
+           /* Evento para agregar texto */
+           var textObject = null;
+           document.getElementById('addTextButton').addEventListener('click', function() {
+               var textInput = document.getElementById('textInput').value;
+               const addTextButton = document.getElementById('addTextButton');
+               addTextButton.textContent = 'Actualizar';
+               document.getElementById('clearText').style.display = 'block';
+               if (textInput.trim() !== '') {
+                   // Eliminar el objeto de texto anterior si existe
+                   if (textObject !== null) {
+                       canvas.remove(textObject);
+                   }
+                   // Crear un objeto de texto
+                   textObject = new fabric.Text(textInput, {
+                       left: 50,
+                       top: 50,
+                       fontFamily: 'Sans-  ',
+                       fontSize: 20,
+                       fill: 'black'
+                   });
+                   // Agregar el objeto de texto al lienzo
+                   canvas.add(textObject);
+                   // Renderizar el lienzo
+                   canvas.renderAll();
+               }
+           });
+   
+           /* Borrado manual de imagenes y texto */
+           var resultImage = document.getElementById("resultImage");
+           var showGeneratedImage = document.getElementById("showGeneratedImage");
+           document.getElementById('clearImage').addEventListener('click', function() {
+               canvas.remove(selectedImage);
+           });
+           document.getElementById('clearText').addEventListener('click', function() {
+               canvas.remove(textObject);
+           });
+   
+           /* Envio de image generada a backend */
+           var sendImageToBackend = document.getElementById("sendImageToBackend");
+           sendImageToBackend.addEventListener('click', saveImage, false);
+           function saveImage() {
+               var generatedDataURL = canvas.toDataURL({
+                   format: 'png',
+                   quality: 0.8
+               });
+               // Crear una instancia de FormData para enviar la imagen como archivo
+               var formData = new FormData();
+               var blob = dataURLToBlob(generatedDataURL);
+               formData.append('image', blob, 'producto-personalizado.png');
+               formData.append('product_id', productID);
+               // Agregar el token CSRF al FormData
+               var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+               formData.append('_token', csrfToken);
+               // Realizar la solicitud AJAX
+               var xhr = new XMLHttpRequest();
+               xhr.open('POST', '/temporal-image', true);
+               xhr.onreadystatechange = function () {
+                   if (xhr.readyState === 4) {
+                       if (xhr.status === 200) {
+                           document.getElementById('savedText').style.display = 'block';
+                           document.getElementById('errorText').style.display = 'none';
+                       } else {
+                           document.getElementById('errorText').style.display = 'block';
+                           document.getElementById('savedText').style.display = 'none';
+                       }
+                   }
+               };
+               xhr.send(formData);
+               previewImage();
+           }
+   
+           /* Evento para cambiar el color del texto */
+           const colorPicker = document.getElementById('colorPicker');
+           colorPicker.addEventListener('input', function() {
+               if (textObject !== null) {
+                   textObject.set('fill', colorPicker.value);
+                   canvas.renderAll();
+               }
+           });
+   
+           // Función para convertir Data URL a Blob
+           function dataURLToBlob(dataURL) {
+               var arr = dataURL.split(',');
+               var mime = arr[0].match(/:(.*?);/)[1];
+               var byteString = atob(arr[1]);
+               var arrayBuffer = new ArrayBuffer(byteString.length);
+               var uint8Array = new Uint8Array(arrayBuffer);
+               for (var i = 0; i < byteString.length; i++) {
+                   uint8Array[i] = byteString.charCodeAt(i);
+               }
+               return new Blob([arrayBuffer], { type: mime });
+           }
+       });
+   
+       /* Envia imagen generada a componente principal para preview */
+       function previewImage() {
+           var generatedDataURL = canvas.toDataURL({
+               format: 'png',
+               quality: 1.0
+           });
+           var previewImage = document.getElementById('previewImage');
+           previewImage.src = generatedDataURL;
+           previewImage.style.display = 'block';
+       }
+   </script>
 
   
 </div>
