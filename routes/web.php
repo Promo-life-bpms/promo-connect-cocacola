@@ -12,6 +12,7 @@ use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\ShoppingController;
+use App\Http\Controllers\SpecialController;
 use App\Http\Controllers\TemporalImageUrlController;
 use Illuminate\Support\Facades\Route;
 
@@ -85,6 +86,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pedidos', [SellerController::class, 'pedidos'])->name('seller.pedidos');
         Route::get('/compradores', [SellerController::class, 'compradores'])->name('seller.compradores');
         Route::get('/compradores/{id}', [CotizadorController::class, 'infoperfil'])->name('perfil');
+        Route::post('/especial/cambiar-status', [SpecialController::class, 'especialCambiarStatus'])->name('seller.especialCambiarStatus');
+        Route::post('/especial/alta-producto', [SpecialController::class, 'especialAltaProducto'])->name('seller.especialAltaProducto');
+
     });
     Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::get('/sa', [CotizadorController::class, 'dashboard'])->name('dashboard');
