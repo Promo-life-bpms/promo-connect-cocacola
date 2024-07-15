@@ -642,6 +642,13 @@ class CotizadorController extends Controller
             DB::table('current_quotes_details')->where('id',$request->id)->update([
                 'more_details' =>  json_encode($currentQuoteMoreDetails)
             ]);
+            
+            $creteUserlog = new UserLogs();
+            $creteUserlog->user_id = auth()->user()->id;
+            $creteUserlog->type = 'producto';
+            $creteUserlog->value = 'solicitar arte';
+            $creteUserlog->save();
+
 
             return redirect()->back()->with('arte', 'Arte agregado satisfactoriamente.');
 
