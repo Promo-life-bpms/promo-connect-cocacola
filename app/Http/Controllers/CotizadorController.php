@@ -513,12 +513,6 @@ class CotizadorController extends Controller
 
     public function comprasRealizarCompra(Request $request) {
 
-        $request->validate([
-            'oc_number' => 'required',
-            'art_file' => 'required',
-        ]);
-
-     
         $quote = Quote::where('id', $request->id )->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
         $quote_techniques = QuoteTechniques::where('id', $request->id )->get()->first();
@@ -551,7 +545,7 @@ class CotizadorController extends Controller
         $createQuoteInformation->oportunity = 'Oportunidad';
         $createQuoteInformation->rank = '1';
         $createQuoteInformation->department = 'Departamento';
-        $createQuoteInformation->information = strtoupper($request->oc);
+        $createQuoteInformation->information = '';
         $createQuoteInformation->tax_fee = 0;
         $createQuoteInformation->shelf_life = 10;
         $createQuoteInformation->save();
@@ -589,26 +583,9 @@ class CotizadorController extends Controller
             $createQuoteTechniques->size = $quote_techniques->size;
             $createQuoteTechniques->save();
         }
-        if ($request->hasFile('art_file')) {
-            $file = $request->file('art_file');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            $extension = $file->getClientOriginalExtension(); 
-            $fileNameToStore = time() . '_' . $filename . '.' . $extension;
-        
-            $pathFile = $file->storeAs('public/art/files', $fileNameToStore);
-        
-            $data = [
-                'oc_number' => 'OC12903',
-                'art_file' => $pathFile,
-            ];
-    
-        } else {
-            return back()->with('error', 'No se encontró el archivo');
-        }
 
         DB::table('quote_information')->where('id',$request->id)->update([
-            'information' => $data
+            'information' => 'compra'
         ]);
         $date = Carbon::now()->format("d/m/Y");
 
@@ -633,7 +610,7 @@ class CotizadorController extends Controller
             }
         } */
 
-        return redirect()->back()->with('message', 'Este es tu mensaje de sesión.');
+        return redirect()->back()->with('message', 'El producto ha cambiado a status de compra, puedes revisarlo en la pantalla de MIS COMPRAS');
 
     }
 

@@ -157,7 +157,7 @@
                                                         <!-- Modal header -->
                                                         <div class="flex justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                                                Orden de compra
+                                                                Confirmar compra
                                                             </h3>
                                                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="oc-modal-{{ $quote->id }}">
                                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -168,22 +168,17 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 md:p-5 space-y-4 text-left">
-                                                            Para poder continuar con el proceso de compra, ingresa el número de orden y artes.
-                                                            <br>
+                                                            Tu cotización pasará a un estatus de compra. Tu pedido será validado por el vendedor y se iniciará el proceso de entrega.                                                            <br>
                                                             <div class="flex items-center space-x-4">
                                                                 
-                                                                <div class="w-1/2">
-                                                                    <label for="">Número de orden</label>
+                                                                {{--                                                                 
+                                                                    <div class="w-full">
+                                                                    <label for="">Comentarios adicionales</label>
                                                                     <br>
-                                                                    <input class="w-full" type="text" name="oc_number" id="oc_number" required>
-                                                                </div>
+
+                                                                    <textarea name="more_information" id="more_information" cols="30" rows="3" class="w-full"></textarea>
+                                                                </div> --}}
                                                                
-                                                                <div class="w-1/2">
-                                                                    <label for="">Artes</label>
-                                                                    <br>
-                                                                    <input type="file" name="art_file" id="art_file" class="w-full form-input" required>
-                                                                </div>
-                
                                                             </div>
                                                         </div>
                                                         <!-- Modal footer -->
