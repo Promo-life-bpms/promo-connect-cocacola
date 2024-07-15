@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\SpecialController;
+use App\Http\Controllers\StadisticController;
 use App\Http\Controllers\TemporalImageUrlController;
 use Illuminate\Support\Facades\Route;
 
@@ -121,5 +122,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/export/user', [ExportDataController::class, 'exportUser'])->name('exportUser');
     Route::post('/shopping/rate', [ShoppingController::class, 'shoppingRate'])->name('shoppingRate');
+
+    Route::post('/statistics', [StadisticController::class, 'stadistics'])->name('download.stadistics');
+
 
 });

@@ -24,6 +24,7 @@ use App\Models\ShoppingProduct;
 use App\Models\ShoppingTechnique;
 use App\Models\ShoppingUpdate;
 use App\Models\User;
+use App\Models\UserLogs;
 use App\Notifications\PurchaseMadeNotification;
 use App\Notifications\SendEmailCotizationNotification;
 use Illuminate\Support\Facades\Storage;
@@ -609,6 +610,12 @@ class CotizadorController extends Controller
                 Log::error('Error enviando correo a ' . $email . ': ' . $e->getMessage());
             }
         } */
+
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'confirmar compra';
+        $creteUserlog->save();
 
         return redirect()->back()->with('message', 'El producto ha cambiado a status de compra, puedes revisarlo en la pantalla de MIS COMPRAS');
 

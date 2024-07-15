@@ -13,6 +13,7 @@ use App\Models\Size;
 use App\Models\SizeMaterialTechnique;
 use App\Models\Technique;
 use App\Models\TemporalImageUrl;
+use App\Models\UserLogs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -274,6 +275,12 @@ class FormularioDeCotizacion extends Component
         // Renombrar la imagen
         // Subir la imagen
         /* $this->photo->storeAs('public/logos', $imageName); */
+
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = $user->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'agregar al carrito';
+        $creteUserlog->save();
 
         $dataQuote = [
             'product_id' => $this->product->id,
