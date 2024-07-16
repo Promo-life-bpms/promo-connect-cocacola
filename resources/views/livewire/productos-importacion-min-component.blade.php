@@ -5,11 +5,11 @@
         <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
             <a class="text-secondary" href="/">Inicio</a>
             <p class="text-secondary"> / </p>
-            <a class="text-secondary" href="#">Catálogo de productos</a>
+            <a class="text-secondary" href="#">Importación</a>
         </div>
 
         
-        <div class="flex w-full flex-col md:flex-row ">
+        <div class="flex w-full flex-col md:flex-row">
             <style>
                 .container1 {
                     width:400px;
@@ -22,21 +22,6 @@
                         margin: 0; 
                         padding: 0 0 10% 5%;
                     }
-                }
-            </style>
-
-            <style>
-                .pagination{
-
-                    width: 300px;
-                    display: flex;
-                    justify-content: space-between;
-
-                }
-                .pagination .page-item.active {
-                    background-color:#B1FE2E;
-                    padding: 2px;
-                    color: black; 
                 }
             </style>
             <div class="container1" >
@@ -69,86 +54,7 @@
                                     placeholder="Nombre">
                             </div>
                             <br>
-                            <div>
-                                <label  class="mb-6" style="font-size: 20px;">Categoría:</label>
-                        
-                                <div class="flex flex-col space-y-4 mt-4">
-                                    <a href="#" wire:click="changeCategory({{ 9 }})">
-                                        <span class="inline-block {{ $category == 9 ? 'text-black font-semibold  underline' : 'text-stone-600'}} px-1 rounded-sm mr-2" style="font-size: 16px;">
-                                            Accesorios
-                                        </span>
-                                    </a>
-                                    
-                                    <a href="#" wire:click="changeCategory({{ 5 }})">
-                                        <span class="inline-block {{ $category == 5 ? 'text-black font-semibold  underline' : 'text-stone-600'}} px-1 rounded-sm mr-2" style="font-size: 16px;">
-                                            Textil
-                                        </span>
-                                    </a>
-                        
-                                    <a href="#" wire:click="changeCategory({{ 7 }})">
-                                        <span class="inline-block {{ $category == 7 ? 'text-black font-semibold  underline' : 'text-stone-600'}} px-1 rounded-sm mr-2"  style="font-size: 16px;">
-                                            Ecología
-                                        </span>
-                                    </a>
-                        
-                                    <a href="#" wire:click="changeCategory({{ 14 }})">
-                                        <span class="inline-block {{ $category == 14 ? 'text-black font-semibold  underline' : 'text-stone-600'}} px-1 rounded-sm mr-2"  style="font-size: 16px;">
-                                            Tecnología
-                                        </span>
-                                    </a>
-                        
-                                    <a href="#" wire:click="changeCategory({{ 8 }})">
-                                        <span class="inline-block {{ $category == 8 ? 'text-black font-semibold  underline' : 'text-stone-600'}} px-1 rounded-sm mr-2" style="font-size: 16px;">
-                                            Hogar
-                                        </span>
-                                    </a>
-
-
-                                </div>
-      
-                            </div>
-
-                            <br>
-                            <div>
-                                <label class="text-sm" for="color">Color:</label>
-                                <input wire:model='color' type="text"
-                                    class="py-1 px-2 border border-slate-700 rounded w-full" name="color" id="color"
-                                    placeholder="Color">
-                            </div>
-                            <br>
-                            <div>
-                                <label  class="text-sm" for="piezas">Piezas:</label>
-                                <div class="flex gap-1">
-                                    <input wire:model='stockMin' type="number"
-                                        class="py-1 px-2 border border-slate-700 rounded w-2/5" name="piezas"
-                                        id="piezas" placeholder="Max">
-                                    <p class="w-1/5 text-center text-sm">  - a - </p>
-                                    <input wire:model='stockMax' type="number"
-                                        class="py-1 px-2 border border-slate-700 rounded w-1/3" name="piezas1"
-                                        id="piezas1" placeholder="Min">
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-                                <label  class="text-sm" for="precio">Precio:</label>
-                                <div class="flex gap-1">
-                                    <input wire:model='precioMin' type="number"
-                                        class="py-1 px-2 border border-slate-700 rounded w-2/5" name="precio1"
-                                        id="precio1" placeholder="Max">
-                                    <p class="w-1/5 text-center text-sm">  - a - </p>
-                                    <input wire:model='precioMax' type="number"
-                                        class="py-1 px-2 border border-slate-700 rounded w-1/3" name="precio"
-                                        id="precio" placeholder="Min">
-                                </div>
-                            </div>
-                            <br>
-                            <div>
-
-                                <a  wire:click.prevent="limpiar" 
-                                    class="block w-full bg-primary text-black hover:bg-black  text-black  hover:text-white  text-center  font-semibold py-2">
-                                    Limpiar filtro
-                                </a>
-                            </div>
+                            <p class="text-sm">Stock no disponible para productos de importación.</p>
                         </div> 
                     </div>
                     
@@ -226,9 +132,24 @@
                                                     <p class="m-0">$
                                                         {{number_format($priceProduct,2)}}</p>
                                                 </div>
-                                                <a href="{{ route('show.product', ['product' => $row->id]) }}"
-                                                    class="block w-full bg-black hover:bg-primary  text-white  hover:text-black  text-center rounded-sm font-semibold py-2 rounded-xl">
-                                                    Cotizar
+
+                                                <style>
+                                                    .pagination{
+
+                                                        width: 300px;
+                                                        display: flex;
+                                                        justify-content: space-between;
+
+                                                    }
+                                                    .pagination .page-item.active {
+                                                        background-color:#B1FE2E;
+                                                        padding: 2px;
+                                                        color: black; 
+                                                    }
+                                                </style>
+                                                <a href="https://api.whatsapp.com/send?phone=5568096555&text=Hola%20me%20gustaría%20solicitar%20una%20cotización%20para%20el%20producto%20{{ $row->name }}%20con%20SKU%20:%20({{ $row->internal_sku }})"
+                                                    class="block w-full bg-primary text-black hover:bg-black hover:text-white text-center rounded-sm font-semibold py-2 rounded-xl" target="__blank">
+                                                    Solicitar cotización
                                                 </a>
                                             </div>
                                         </div>
@@ -249,8 +170,6 @@
             </div>
         </div>
 
-        
-        
         <br>
     </div>
     <style>
