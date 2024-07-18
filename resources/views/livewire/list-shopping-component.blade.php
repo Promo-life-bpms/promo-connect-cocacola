@@ -72,7 +72,7 @@
                   $productImage = $productDB->firstImage;
                   $shoppingInformation = \App\Models\ShoppingInformation::where('id',$shopping->id)->get()->first();
                 @endphp
-                <tr class="border border-gray-300">
+                 <tr class="border border-gray-300">
                     <td class="text-center py-5 px-6">OC-{{  $shoppingInformation->id }}</td>
                     <td class="text-center">
                       @if($product['logo'] != '')

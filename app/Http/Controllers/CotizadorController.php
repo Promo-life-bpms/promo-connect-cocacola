@@ -27,6 +27,7 @@ use App\Models\User;
 use App\Models\UserLogs;
 use App\Notifications\PurchaseMadeNotification;
 use App\Notifications\SendEmailCotizationNotification;
+use App\Notifications\ShoppingsStatus;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -509,6 +510,32 @@ class CotizadorController extends Controller
             'status' => $request->status,
         ]);
 
+        $info = DB::table('shopping_products')->where('shopping_id', $request->shopping_id)->first();
+        $products = json_decode($info->product, true);
+        $description = $products['description'];
+        $id = $products['id'];
+        
+        $nameStatus = '';
+        if($request->status == 0){
+            $nameStatus = 'Pendiente';
+        }elseif($request->status == 1){
+            $nameStatus = 'En proceso';
+        }elseif($request->status == 2){
+            $nameStatus = 'Enviado';
+        }elseif($request->status == 3){
+            $nameStatus = 'Entregado';
+        }
+
+        $buyer = DB::table('shoppings')->where('id', $info->shopping_id)->value('user_id');
+        $receptor = User::where('id', $buyer)->first();
+        $namereceptor = $receptor->name;
+
+        try {
+            $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
+        } catch (\Exception $e) {
+            return 0;
+        } 
+  
         return redirect()->action([CotizadorController::class, 'compras']);
     }
 

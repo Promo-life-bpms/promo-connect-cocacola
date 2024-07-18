@@ -123,6 +123,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/export/user', [ExportDataController::class, 'exportUser'])->name('exportUser');
     Route::post('/shopping/rate', [ShoppingController::class, 'shoppingRate'])->name('shoppingRate');
 
+    ////CREAR USUARIO////
+    Route::post('create/user', [AdminController::class, 'newUser'])->name('create.user');
+    Route::post('update/user',[AdminController::class, 'updateUser'])->name('update.user');
+
+    ///////////////PRUEBA PARA UNA NUEVA VISTA DE USUARIOS
+    Route::get('admin/users', [AdminController::class, 'users'])->name('allusers');
+
+    //////////ESTADISTICAS////////////
     Route::post('/statistics', [StadisticController::class, 'stadistics'])->name('download.stadistics');
 
 

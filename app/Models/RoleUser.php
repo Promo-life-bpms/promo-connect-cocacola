@@ -14,7 +14,13 @@ class RoleUser extends Model
     protected $fillable = [
         'role_id',
         'user_id',
+        'user_type'
     ];
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 
     public $timestamps = false;
 
