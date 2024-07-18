@@ -1,7 +1,7 @@
 @extends('layouts.cotizador')
 
 @section('content')
-<div class="bg-white">
+<div class="bg-white mx-10">
     <div class="container mx-auto w-full px-2 mt-6">
         <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
             <a class="text-secondary" href="/">Inicio</a>

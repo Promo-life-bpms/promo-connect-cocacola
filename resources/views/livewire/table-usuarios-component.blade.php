@@ -1,24 +1,31 @@
 <div>
-    <div class="bg-white mx-auto h-auto w-full grid md:grid-cols-2 p-3 gap-y-1 px-20">
+    <div class="bg-white mx-auto h-auto w-full grid md:grid-cols-2 p-3 gap-y-1 px-20">     
 
-         <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
+        <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
             <a class="text-secondary" href="/">Inicio</a>
             <p class="text-secondary"> / </p>
-            <a class="text-secondary" href="#">Compradores</a>
+            <a class="text-secondary" href="#">Administrador</a>
         </div>
 
-        <div class="relative col-span-1">
-           <!--  <input type="search"
-                class="border-2 lg:block border-gray-400 py-2 text-sm bg-white rounded-md pr-10 pl-2 focus:outline-none focus:bg-white focus:text-gray-900 w-full"
-                placeholder="Buscar..." autocomplete="off" name="busqueda" wire:model="search">
-            <span class="absolute inset-y-0 right-0 flex items-center pr-2">
-                <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
-                    <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </button>
-            </span> -->
+        <div class="flex mt-6">
+
+            <div class="w-1/2">
+
+            </div>
+            <div class="flex">
+                <form action="{{ route('download.stadistics')}}" method="POST">
+                    @csrf 
+                    <button type="submit" class="text-black bg-primary text-black hover:bg-black hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none flex">
+                        <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
+                            <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#a8a8a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#a8a8a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Registros de usuarios
+                    </button>
+                </form>
+            </div>
+
+            
         </div>
         <br>
 

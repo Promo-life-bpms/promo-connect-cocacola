@@ -20,6 +20,7 @@ use App\Models\ShoppingProduct;
 use App\Models\ShoppingTechnique;
 use App\Models\ShoppingUpdate;
 use App\Models\User;
+use App\Models\UserLogs;
 use App\Notifications\RequestedSampleNotification;
 use App\Notifications\SendEmailCotizationNotification;
 use Exception;
@@ -112,6 +113,12 @@ class CurrentQuoteComponent extends Component
                 'precio_total' => $precio_total
             ]);
         }
+
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'editar producto';
+        $creteUserlog->save();
        
         return redirect()->to('/carrito');
 
@@ -129,6 +136,13 @@ class CurrentQuoteComponent extends Component
         if (count(auth()->user()->currentQuote->currentQuoteDetails) < 1) {
             auth()->user()->currentQuote->delete();
         }
+
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'eliminar del carrito';
+        $creteUserlog->save();
+
         $this->resetData();
         $this->emit('currentQuoteAdded');
     }
@@ -251,7 +265,8 @@ class CurrentQuoteComponent extends Component
                 $product->embalaje = $current_quote_more_details[0]->embalaje;  
                 $product->armado = $current_quote_more_details[0]->armado;    
                 $product->destino = $current_quote_more_details[0]->destino;    
-                $product->detalles = $current_quote_more_details[0]->detalles;    
+                $product->detalles = $current_quote_more_details[0]->detalles;   
+                $product->proyecto = $current_quote_more_details[0]->proyecto;
             }
 
             if($product){
@@ -353,6 +368,11 @@ class CurrentQuoteComponent extends Component
             return $response;
         });
         
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id =auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'crear cotización';
+        $creteUserlog->save();
         // Luego puedes usarlo así:
         return response()->downloadWithFlash(public_path($filename));
        

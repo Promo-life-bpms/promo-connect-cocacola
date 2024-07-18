@@ -166,7 +166,7 @@
                                  </svg> My Profile</a>
                          </div> --}}
                          <div class="dropdown-item">
-                             <a class="" href="{{ config("settings.url_home_g500") }}">Ir a G500</a>
+                             <a class="" href="{{ url("/") }}">Ir a Home</a>
                          </div>
                      </div>
                  </div>

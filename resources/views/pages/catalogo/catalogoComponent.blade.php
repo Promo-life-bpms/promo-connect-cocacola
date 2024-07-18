@@ -1,6 +1,6 @@
 <div class="bg-white">
     <img src="{{asset('img/banner_productos.png')}}" alt="" class="w-full" style="margin-top: -12px;">
-    <div class="container mx-auto w-full px-2">
+    <div class="container mx-auto w-full px-10">
 
         <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
             <a class="text-secondary" href="/">Inicio</a>
@@ -9,7 +9,7 @@
         </div>
 
         
-        <div class="flex w-full flex-col md:flex-row">
+        <div class="flex w-full flex-col md:flex-row ">
             <style>
                 .container1 {
                     width:400px;
@@ -22,6 +22,21 @@
                         margin: 0; 
                         padding: 0 0 10% 5%;
                     }
+                }
+            </style>
+
+            <style>
+                .pagination{
+
+                    width: 300px;
+                    display: flex;
+                    justify-content: space-between;
+
+                }
+                .pagination .page-item.active {
+                    background-color:#B1FE2E;
+                    padding: 2px;
+                    color: black; 
                 }
             </style>
             <div class="container1" >

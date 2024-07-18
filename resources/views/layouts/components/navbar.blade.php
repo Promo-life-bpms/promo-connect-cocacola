@@ -3,11 +3,13 @@
 
     
         <div class="w-full md:w-3/12 mb-2 md:mb-0">
-            <a href="{{ route('index') }}">
+            <a href="{{ route('index') }}" class="flex">
                 <img src="{{asset('img/hh-logo.png')}}"
                     style="object-fit: cover; width:100px;"
                     alt="logo" class="p-2 ">
+                    <div class="text-black text-sm bg-stone-200 " style="margin: 0 0 0 4px; padding:0 4px 0 4px; height:20px; margin-top:8px;">México</div>
             </a>
+          
         </div>
        
         <div id="popup-modal" tabindex="-1"

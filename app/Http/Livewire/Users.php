@@ -32,9 +32,9 @@ class Users extends Component
         //         ->orWhere('email', 'LIKE', $keyWord)
         //         ->paginate(50),
         // ]);
-        $users = User::where("name", "LIKE", "%" . $this->search . "%")->get();
+        /* $users = User::where("name", "LIKE", "%" . $this->search . "%")->get();
         $roles = Role::all();
-        return view('livewire.users.view', ['users' => $users, 'roles' => $roles]);
+        return view('livewire.users.view', ['users' => $users, 'roles' => $roles]); */
     }
 
     public function sendAccess($id)

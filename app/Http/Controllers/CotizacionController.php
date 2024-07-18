@@ -7,6 +7,7 @@ use App\Models\Quote;
 use App\Models\QuoteTechniques;
 use App\Models\SpecialRequest;
 use App\Models\User;
+use App\Models\UserLogs;
 use App\Notifications\SendEmailCotizationNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -57,6 +58,14 @@ class CotizacionController extends Controller
         $pdf->setPaper('Letter', 'portrait');
         $filename = "QS-1.pdf";
         $pdf->save(public_path($filename));
+
+
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id =auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'crear cotización';
+        $creteUserlog->save();
+
 
         return response()->download(public_path($filename))->deleteFileAfterSend(true);
         

@@ -17,6 +17,11 @@ class RoleUser extends Model
         'user_type'
     ];
 
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
     public $timestamps = false;
 
 }

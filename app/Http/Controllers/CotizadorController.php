@@ -9,6 +9,7 @@ use App\Models\Catalogo\GlobalAttribute;
 use App\Models\Catalogo\Product;
 use App\Models\Client;
 use App\Models\CommentsSupport;
+use App\Models\CurrentQuoteDetails;
 use App\Models\Muestra;
 use App\Models\Quote;
 use App\Models\QuoteDiscount;
@@ -23,8 +24,10 @@ use App\Models\ShoppingProduct;
 use App\Models\ShoppingTechnique;
 use App\Models\ShoppingUpdate;
 use App\Models\User;
+use App\Models\UserLogs;
 use App\Notifications\PurchaseMadeNotification;
 use App\Notifications\SendEmailCotizationNotification;
+use App\Notifications\ShoppingsStatus;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
@@ -507,11 +510,37 @@ class CotizadorController extends Controller
             'status' => $request->status,
         ]);
 
+        $info = DB::table('shopping_products')->where('shopping_id', $request->shopping_id)->first();
+        $products = json_decode($info->product, true);
+        $description = $products['description'];
+        $id = $products['id'];
+        
+        $nameStatus = '';
+        if($request->status == 0){
+            $nameStatus = 'Pendiente';
+        }elseif($request->status == 1){
+            $nameStatus = 'En proceso';
+        }elseif($request->status == 2){
+            $nameStatus = 'Enviado';
+        }elseif($request->status == 3){
+            $nameStatus = 'Entregado';
+        }
+
+        $buyer = DB::table('shoppings')->where('id', $info->shopping_id)->value('user_id');
+        $receptor = User::where('id', $buyer)->first();
+        $namereceptor = $receptor->name;
+
+        try {
+            $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
+        } catch (\Exception $e) {
+            return 0;
+        } 
+  
         return redirect()->action([CotizadorController::class, 'compras']);
     }
 
     public function comprasRealizarCompra(Request $request) {
-     
+
         $quote = Quote::where('id', $request->id )->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
         $quote_techniques = QuoteTechniques::where('id', $request->id )->get()->first();
@@ -544,7 +573,7 @@ class CotizadorController extends Controller
         $createQuoteInformation->oportunity = 'Oportunidad';
         $createQuoteInformation->rank = '1';
         $createQuoteInformation->department = 'Departamento';
-        $createQuoteInformation->information = strtoupper($request->oc);
+        $createQuoteInformation->information = '';
         $createQuoteInformation->tax_fee = 0;
         $createQuoteInformation->shelf_life = 10;
         $createQuoteInformation->save();
@@ -584,7 +613,7 @@ class CotizadorController extends Controller
         }
 
         DB::table('quote_information')->where('id',$request->id)->update([
-            'information' => strtoupper($request->type_order == ''? 'OC':$request->type_order. '-'.$request->oc),
+            'information' => 'compra'
         ]);
         $date = Carbon::now()->format("d/m/Y");
 
@@ -609,7 +638,52 @@ class CotizadorController extends Controller
             }
         } */
 
-        return redirect()->back()->with('message', 'Este es tu mensaje de sesión.');
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = auth()->user()->id;
+        $creteUserlog->type = 'producto';
+        $creteUserlog->value = 'confirmar compra';
+        $creteUserlog->save();
 
+        return redirect()->back()->with('message', 'El producto ha cambiado a status de compra, puedes revisarlo en la pantalla de MIS COMPRAS');
+
+    }
+
+    public function comprasSolicitarArte(Request $request) {
+        $request->validate([
+            'file' => 'required|file|max:10240',
+        ]);
+      
+        if ($request->hasFile('file')) {
+
+            $currentQuoteDetails = CurrentQuoteDetails::where('id', $request->id)->get()->first();
+          
+            $currentQuoteMoreDetails = json_decode($currentQuoteDetails->more_details);
+
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);    
+            $extension = $request->file('file')->getClientOriginalExtension();
+            $fileNameToStore = time() . '_' . $filename . '.' . $extension;    
+            $pathFile = $request->file('file')->storeAs('public/art/files', $fileNameToStore);
+            $currentQuoteMoreDetails[0]->art = $pathFile;
+
+            DB::table('current_quotes_details')->where('id',$request->id)->update([
+                'more_details' =>  json_encode($currentQuoteMoreDetails)
+            ]);
+            
+            $creteUserlog = new UserLogs();
+            $creteUserlog->user_id = auth()->user()->id;
+            $creteUserlog->type = 'producto';
+            $creteUserlog->value = 'solicitar arte';
+            $creteUserlog->save();
+
+
+            return redirect()->back()->with('arte', 'Arte agregado satisfactoriamente.');
+
+        } else {
+            $pathFile = '';
+
+            return redirect()->back()->with('mal-arte', 'Error al subir el arte, intenta nuevamente.');
+
+        }
     }
 }

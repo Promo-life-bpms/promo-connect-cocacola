@@ -49,7 +49,7 @@ class changePassword extends Notification
 
         ])
         ->subject('Información de usuario')
-        ->from('adminportales@bh.com.mx', 'HHGLOBAL');
+        ->from('adminportales@trademarket.com.mx', 'HHGLOBAL');
     }
 
 

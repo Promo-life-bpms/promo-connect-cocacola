@@ -54,7 +54,7 @@ class ExportDataController extends Controller
 
 
     public function importation() {
-        $only_products =[
+        /* $only_products =[
             3174,389293,389309,389311,389312,389313,389644,458583,456208,456467,456470,456476,
             456480,456482,456232,456493,456494,456750,456751,456752,456245,456508,456509,456767,456522,456545,
             456547,456548,456293,456549,456558,456304,456568,456575,456577,456329,456330,456344,456345,456346,
@@ -64,7 +64,9 @@ class ExportDataController extends Controller
 
         $products = Product::whereIn('id',$only_products)->get();
         
-        return view('importation', compact('products'));
+        return view('importation', compact('products')); */
+
+        return view('livewire.productos-importacion');
 
     }
 }

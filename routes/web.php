@@ -12,6 +12,8 @@ use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificacionesController;
 use App\Http\Controllers\ShoppingController;
+use App\Http\Controllers\SpecialController;
+use App\Http\Controllers\StadisticController;
 use App\Http\Controllers\TemporalImageUrlController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/mis-compras', [CotizadorController::class, 'compras'])->name('compras');
     Route::post('/mis-compras/actualizar', [CotizadorController::class, 'comprasStatus'])->name('compras.status');
     Route::post('/mis-compras/realizar-compra', [CotizadorController::class, 'comprasRealizarCompra'])->name('compras.realizarcompra');
+    Route::post('/mis-compras/solicitar-arte', [CotizadorController::class, 'comprasSolicitarArte'])->name('compras.solicitararte');
 
     Route::get('/mis-muestras', [CotizadorController::class, 'muestras'])->name('muestras');
     Route::get('/carrito', [CotizadorController::class, 'cotizacion'])->name('cotizacion');
@@ -84,6 +87,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/pedidos', [SellerController::class, 'pedidos'])->name('seller.pedidos');
         Route::get('/compradores', [SellerController::class, 'compradores'])->name('seller.compradores');
         Route::get('/compradores/{id}', [CotizadorController::class, 'infoperfil'])->name('perfil');
+        Route::post('/especial/cambiar-status', [SpecialController::class, 'especialCambiarStatus'])->name('seller.especialCambiarStatus');
+        Route::post('/especial/alta-producto', [SpecialController::class, 'especialAltaProducto'])->name('seller.especialAltaProducto');
+
     });
     Route::prefix('admin')->middleware(['role:admin'])->group(function () {
         Route::get('/sa', [CotizadorController::class, 'dashboard'])->name('dashboard');
@@ -120,4 +126,12 @@ Route::middleware(['auth'])->group(function () {
     ////CREAR USUARIO////
     Route::post('create/user', [AdminController::class, 'newUser'])->name('create.user');
     Route::post('update/user',[AdminController::class, 'updateUser'])->name('update.user');
+
+    ///////////////PRUEBA PARA UNA NUEVA VISTA DE USUARIOS
+    Route::get('admin/users', [AdminController::class, 'users'])->name('allusers');
+
+    //////////ESTADISTICAS////////////
+    Route::post('/statistics', [StadisticController::class, 'stadistics'])->name('download.stadistics');
+
+
 });

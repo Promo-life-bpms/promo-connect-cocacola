@@ -64,6 +64,7 @@
                 <thead>
                     <tr class="bg-black text-white text-sm ">
                         <th class="p-4" style="width:5%;">Cotizacion</th>
+                        <th style="width:5%;">Proyecto</th>
                         <th style="width:5%;">Logo</th>
                         <th style="width:10%;">Producto</th>
                         <th style="width:10%;">Usuario</th>
@@ -92,6 +93,8 @@
                             $productDB = \App\Models\Catalogo\Product::where('id',$productData->id)->get()->first();
                             $productImage = $productDB->firstImage;
 
+                            $proyecto = isset($productData->proyecto) ?$productData->proyecto : '';
+                            
                         @endphp
                         
                         <tr class="border text-sm">
@@ -105,6 +108,9 @@
                                     </button>
                                 </form>
                                 
+                            </td>
+                            <td>
+                                {{$proyecto}}
                             </td>
                             <td class="text-center">
                                 @if($quote->logo == null || $quote->logo == '')
@@ -145,13 +151,13 @@
                                             <div class="relative p-4 w-full max-w-2xl max-h-full">
                                                 <!-- Modal content -->
                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                    <form method="POST" action="{{ route('compras.realizarcompra') }}">
+                                                    <form method="POST" action="{{ route('compras.realizarcompra') }}" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="hidden" name="id" value="{{ $quote->id }}">
                                                         <!-- Modal header -->
                                                         <div class="flex justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                                                Orden de compra
+                                                                Confirmar compra
                                                             </h3>
                                                             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="oc-modal-{{ $quote->id }}">
                                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -162,13 +168,17 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 md:p-5 space-y-4 text-left">
-                                                            Para poder continuar con el proceso de compra, seleccione el tipo y número de orden.
-                                                            <br>
+                                                            Tu cotización pasará a un estatus de compra. Tu pedido será validado por el vendedor y se iniciará el proceso de entrega.                                                            <br>
                                                             <div class="flex items-center space-x-4">
-                                                                <select id="type_order" name="type_order" class="form-select">
-                                                                    <option value="OC" selected>OC</option>
-                                                                </select>
-                                                                <input type="text" name="oc" id="oc" class="w-full form-input" required>
+                                                                
+                                                                {{--                                                                 
+                                                                    <div class="w-full">
+                                                                    <label for="">Comentarios adicionales</label>
+                                                                    <br>
+
+                                                                    <textarea name="more_information" id="more_information" cols="30" rows="3" class="w-full"></textarea>
+                                                                </div> --}}
+                                                               
                                                             </div>
                                                         </div>
                                                         <!-- Modal footer -->
@@ -186,6 +196,7 @@
                                 @endif
                              
                             </td>
+
                         </tr>
                     @endforeach
                 </tbody>

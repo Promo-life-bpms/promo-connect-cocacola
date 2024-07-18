@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\RoleUser;
 use App\Models\User;
 use App\Notifications\changePassword;
@@ -12,6 +13,22 @@ use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    public function users(Request $request)
+    {
+        $search = $request->input('search');
+        $usersQuery = User::query();
+        // Aplicar filtro de búsqueda si hay término de búsqueda
+        if ($search) {
+            $usersQuery->where('name', 'like', '%' . $search . '%')
+                       ->orWhere('email', 'like', '%' . $search . '%');
+        }
+        $users = $usersQuery->paginate(10);
+        $roles = Role::all();
+        $rolesusers = RoleUser::all();
+
+        return view('users.usersview', compact('users', 'roles', 'rolesusers'));
+    }
+    
     public function changeManualPassword(Request $request) {
 
         $request->validate([
