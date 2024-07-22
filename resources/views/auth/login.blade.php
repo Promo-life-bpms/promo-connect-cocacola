@@ -5,6 +5,10 @@
 <div class="flex md:flex-row xs:flex-col-reverse justify-center items-center w-full h-screen">
     <div class="md:w-1/2 xs:w-full h-screen flex flex-col items-center justify-center">
         <div class="md:w-[435px] xs:w-[300px]">
+
+            <div class="w-full block md:hidden mb-10">
+                <img src="{{ asset('img/banner1.png') }}" alt="logo hhglobal" class="object-cover" style="height: 120px;" >
+            </div>
             <h1 class="text-2xl font-bold text-black text-center">
                 Bienvenido
             </h1>
@@ -45,10 +49,8 @@
             </form>
         </div>
     </div>
-    <div class="md:w-1/2 xs:w-full bg-bglogin h-screen " >
-           
-            
-        </div>
+    <div class="md:w-1/2 xs:w-full bg-bglogin h-screen md:block xs:hidden">
+    </div>
 
 </div>
    
