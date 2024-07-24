@@ -43,7 +43,7 @@ class ShoppingsStatus extends Notification
                         'nameProduct'=>$this->nameProduct,
                     ])
                     ->subject('Status de la orden')
-                    ->from('admin.portales@trademarket.com.mx ', 'HHGLOBAL');
+                    ->from('admin.portales@trademarket.com.mx', 'HHGLOBAL');
     }
 
     /**

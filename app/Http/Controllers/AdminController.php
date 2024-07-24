@@ -46,6 +46,7 @@ class AdminController extends Controller
             $Usuario->notify(new changePassword($username, $request->password, $email));
                 
         } catch (\Exception $e) {
+          
             return back()->with('msg', 'Contraseña actualizada correctamente; sin embargo, no se pudo enviar el correo');
         } 
        
