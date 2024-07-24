@@ -49,7 +49,7 @@ class changePassword extends Notification
 
         ])
         ->subject('Información de usuario')
-        ->from('admin.cotizador@trademarket.com.mx', 'HHGLOBAL');
+        ->from('cotizador@trademarket.com.mx', 'HHGLOBAL');
     }
 
 
