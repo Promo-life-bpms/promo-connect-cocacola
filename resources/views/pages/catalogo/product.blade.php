@@ -63,7 +63,7 @@
                     <p class="text-4xl font-semibold mb-4 w-full" style="margin-left: 24px;">{{ $product->name }}</p>
                     
                     <div class="col-start-1 col-span-5 px-6">
-                        <p class="text-lg"> Precio Unitario: $
+                       {{--  <p class="text-lg"> Precio Unitario: $
 
                             @php
                               if($product->provider_id == 1){
@@ -83,7 +83,7 @@
     
                             {{ 
                                 number_format($priceProduct,2);  
-                            }}</p>
+                            }}</p> --}}
 
                             <p class="font-normal">Stock: <b>{{ $product->stock }}</b> </p>
 
