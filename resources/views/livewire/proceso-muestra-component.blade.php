@@ -153,7 +153,7 @@
 
                         <div class="flex items-center space-x-3 mt-2">
                             <button
-                                class="block w-full bg-red-700 text-white text-center rounded-sm font-semibold py-1 px-4"
+                                class="block w-full bg-primary text-black hover:bg-black hover:text-white text-center rounded-sm font-semibold py-1 px-4"
                                 wire:click='updateMuestraStatus'>
                                 Confirmar Cambio De Estado
                             </button>
