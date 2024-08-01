@@ -248,7 +248,7 @@
             <div class="justify-content-between  grid grid-cols-1">
                 {{--  @if (!$priceScales) --}}
                 <div>
-                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ {{ number_format($costoCalculado,2)}}</h6>
+                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ {{ number_format($costoCalculado,2)}} <b class="text-xs text-red-500 font-bold">Incluye TF</b></h6>
                     <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
                 </div>
         
