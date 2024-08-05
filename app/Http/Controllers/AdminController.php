@@ -16,11 +16,12 @@ class AdminController extends Controller
     public function users(Request $request)
     {
         $search = $request->input('search');
-        $usersQuery = User::query();
-        // Aplicar filtro de búsqueda si hay término de búsqueda
+        $usersQuery = User::query()->where('status', 1);
         if ($search) {
-            $usersQuery->where('name', 'like', '%' . $search . '%')
-                       ->orWhere('email', 'like', '%' . $search . '%');
+            $usersQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('email', 'like', '%' . $search . '%');
+            });
         }
         $users = $usersQuery->paginate(10);
         $roles = Role::all();
@@ -28,15 +29,16 @@ class AdminController extends Controller
 
         return view('users.usersview', compact('users', 'roles', 'rolesusers'));
     }
-    
-    public function changeManualPassword(Request $request) {
+
+    public function changeManualPassword(Request $request)
+    {
 
         $request->validate([
             'password' => 'required|string',
         ]);
-    
+
         User::where('id', $request->user_id)->update([
-            'password'=>Hash::make($request->password)
+            'password' => Hash::make($request->password)
         ]);
 
         $Usuario = User::where('id', $request->user_id)->first();
@@ -44,20 +46,20 @@ class AdminController extends Controller
         $username = $Usuario->name;
         try {
             $Usuario->notify(new changePassword($username, $request->password, $email));
-                
         } catch (\Exception $e) {
             return back()->with('msg', 'Contraseña actualizada correctamente; sin embargo, no se pudo enviar el correo');
-        } 
-       
+        }
+
         return back()->with('msg', 'Contraseña actualizada correctamente');
     }
 
-    public function changeAutomaticPassword(Request $request) {
+    public function changeAutomaticPassword(Request $request)
+    {
 
-        $randomPassword = Str::random(12); 
+        $randomPassword = Str::random(12);
 
         User::where('id', $request->user_id)->update([
-            'password'=>Hash::make($randomPassword)
+            'password' => Hash::make($randomPassword)
         ]);
 
         $Usuario = User::where('id', $request->user_id)->first();
@@ -65,26 +67,25 @@ class AdminController extends Controller
         $username = $Usuario->name;
         try {
             $Usuario->notify(new changePassword($username, $randomPassword, $email));
-                
         } catch (\Exception $e) {
             return back()->with('msg', 'Contraseña actualizada correctamente; sin embargo, no se pudo enviar el correo');
-        } 
+        }
         return back()->with('msg', 'Contraseña actualizada correctamente');
     }
 
     public function newUser(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
         ]);
 
-        $randomPassword = Str::random(12); 
+        $randomPassword = Str::random(12);
         $newUser = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password'=>Hash::make($randomPassword)
+            'password' => Hash::make($randomPassword)
 
         ]);
 
@@ -95,11 +96,11 @@ class AdminController extends Controller
         ]);
 
         try {
-            $newUser->notify(new changePassword($request->name, $randomPassword, $request->email));   
+            $newUser->notify(new changePassword($request->name, $randomPassword, $request->email));
         } catch (\Exception $e) {
             return back()->with('msg', 'Usuario creado correctamente; sin embargo, no se pudo enviar el correo');
-        } 
-        
+        }
+
         return back()->with('msg', 'Usuario creado correctamente.');
     }
 
@@ -118,16 +119,35 @@ class AdminController extends Controller
         ]);
 
         $roles = DB::table('role_user')->where('user_id', $request->id)->get();
-        if($roles){
+        if ($roles) {
             DB::table('role_user')->where('user_id', $request->id)->delete();
         }
-        
+
         RoleUser::create([
             'user_id' => $request->id,
             'role_id' => $request->role,
             'user_type' => 'App\Models\User',
         ]);
-        
+
         return back()->with('msg', 'Usuario editado correctamente.');
+    }
+
+    public function deactivateUser(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+        ]);
+
+        $UserInfo = User::where('id', $request->user_id)->value('email');
+
+        $randomLetters = uniqid();
+        $modifiedEmail = $randomLetters . '_' . $UserInfo;
+
+        DB::table('users')->where('id', $request->user_id)->update([
+            'status' => 0,
+            'email' => $modifiedEmail,
+        ]);
+
+        return back()->with('msg', 'Usuario eliminado correctamente.');
     }
 }
