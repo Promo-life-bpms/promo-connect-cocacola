@@ -8,34 +8,6 @@
             <a class="text-secondary" href="#">Catálogo de productos</a>
         </div>
 
-        @if ($product->precio_unico)
-            @php
-
-                if($product->provider_id == 1){
-                    /* FOR PROMOTIONAL */
-                    $priceProduct = ($product->price) * 0.93751;
-                }else if($product->provider_id == 2){
-                    /* PROMO OPCION */
-                    $priceProduct = ($product->price) * 0.87502;
-                }else if($product->provider_id == 3){
-                    /* INNOVATION */
-                    $priceProduct = ($product->price) * 1.2332;
-                }else{
-                    /* OTRO */
-                    $priceProduct = ($product->price);
-                }
-                /* $priceProduct = $product->price; */
-            
-            /*  if ($product->producto_promocion) {
-                    $priceProduct = round($priceProduct - $priceProduct * ($product->descuento / 100), 2);
-                } else {
-                    $priceProduct = round($priceProduct - $priceProduct * ($product->provider->discount / 100), 2);
-                }
-                $priceProduct = round($priceProduct / ((100 - $utilidad) / 100), 2); */
-            
-            @endphp
-        @endif
-
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="p-4 rounded-lg">
                 <div class="grid grid-cols-10 gap-4">
@@ -63,27 +35,59 @@
                     <p class="text-4xl font-semibold mb-4 w-full" style="margin-left: 24px;">{{ $product->name }}</p>
                     
                     <div class="col-start-1 col-span-5 px-6">
-                        <p class="text-lg"> Precio Unitario: $
+                        {{-- <p class="font-normal"> <strong>Precio Unitario: </strong>$
 
                             @php
-                              if($product->provider_id == 1){
-                                /* FOR PROMOTIONAL */
-                                $priceProduct = ($product->price) * 0.93751;
-                            }else if($product->provider_id == 2){
-                                /* PROMO OPCION */
-                                $priceProduct = ($product->price) * 0.87502;
-                            }else if($product->provider_id == 3){
-                                /* INNOVATION */
-                                $priceProduct = ($product->price) * 1.2332;
-                            }else{
-                                /* OTRO */
-                                $priceProduct = ($product->price);
-                            }
+                                $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
+    
+                              
+                                $priceProduct = $product->price;
+    
+                                if ($product_type && $product_type->value == 'Normal') {
+                                    $precioTotal = round($priceProduct - $priceProduct * (30 / 100), 2);
+                                    $priceProduct = $precioTotal / config('settings.utility');
+                                    
+                                } elseif (
+                                    $product_type &&
+                                    ($product_type->value == 'Outlet' || $product_type->value == 'Unico')
+                                ) {
+                                    $precioTotal = round($priceProduct - $priceProduct * (0 / 100), 2);
+                                    $priceProduct = $precioTotal / config('settings.utility');
+                                } else {
+                                    if ($product->producto_promocion) {
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->descuento / 100),2,);
+                                        $priceProduct = $precioTotal / config('settings.utility');
+                                    } else {
+                                        $priceProduct = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+    
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                        $priceProduct = $precioTotal / config('settings.utility');
+                                    }
+                                    if ($product->provider->company == 'EuroCotton') {
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                        $iva = $precioTotal * 0.16;
+                                        $precioTotal = round($priceProduct - $iva, 2);
+    
+                                        $priceProduct = $precioTotal / config('settings.utility');
+                                    }
+    
+                                    if ($product->provider->company == 'For Promotional') {
+                                        if ($product->descuento >= $product->provider->discount) {
+                                            $precioTotal = round($product->price - $product->price * ($product->descuento / 100),2,);
+                                            $priceProduct = $precioTotal / config('settings.utility');
+                                        } else {
+                                            $precioTotal = round($product->price - $product->price * (25 / 100), 2);
+                                            $priceProduct = $precioTotal / config('settings.utility');
+                                        }
+                                    }
+                                }
+    
+                                $initialPrice =$precioTotal;
                             @endphp
     
                             {{ 
-                                number_format($priceProduct,2);  
-                            }}</p>
+                                number_format($initialPrice,2);  
+                            }}</p> --}}
 
                             <p class="font-normal">Stock: <b>{{ $product->stock }}</b> </p>
 

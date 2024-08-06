@@ -62,7 +62,7 @@
                                 </select>
                             </div>
                         @endif
-                        @if ($preciosDisponibles)
+                        {{-- @if ($preciosDisponibles)
                             <div class="col-span-2">
                                 <p class="m-1"><strong> Precios Por Cantidad de Articulos, de acuerdo al material,
                                         tecnica y tamaño seleccionados</strong></p>
@@ -89,7 +89,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
                 <div class="row">
@@ -236,19 +236,27 @@
                     </label>
                 </div>
                 <div class="form-group m-0 mb-1 ">
-                    <label for="newTechnique" class=" m-0">
+                   {{--  <label for="newTechnique" class=" m-0">
                         <strong>
                             Precio actual de la tecnica por articulo:
                         </strong>
                         $ {{ $precioDeTecnica * $colores }}
-                    </label>
+                    </label> --}}
                 </div>
             </div>
           
             <div class="justify-content-between  grid grid-cols-1">
                 {{--  @if (!$priceScales) --}}
                 <div>
-                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ {{ number_format($costoCalculado,2)}}</h6>
+                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
+                        @if($this->cantidad == null || $this->cantidad == 0)
+                            0.00
+                        @else
+                            {{ number_format($costoCalculado,2)}}
+                        @endif
+                        <b class="text-xs text-red-500 font-bold">Incluye TF</b>
+                    </h6>
+
                     <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
                 </div>
         
