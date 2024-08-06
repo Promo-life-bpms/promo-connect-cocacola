@@ -534,7 +534,7 @@ class CotizadorController extends Controller
         try {
             $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
         } catch (\Exception $e) {
-            return 0;
+         
         } 
   
         return redirect()->action([CotizadorController::class, 'compras']);

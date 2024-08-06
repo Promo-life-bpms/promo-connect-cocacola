@@ -121,7 +121,7 @@
                           <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">En proceso de compra</span>
                             @break
                         @case(2)
-                          <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-red-700/10">Error en número de compra</span>
+                          <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-700/10">Error en número de compra</span>
                             @break
                         @case(3)
                           <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Entregado</span>
@@ -257,9 +257,9 @@
                                           <input type="text" value="{{$shopping->id}}" name="shopping_id" hidden>
                                           <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                           <select id="status" name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                            <option value="0" {{ $shopping->status == 0 ? 'selected' : '' }}>Pendiente</option>
-                                            <option value="1" {{ $shopping->status == 1 ? 'selected' : '' }}>En proceso</option>
-                                            <option value="2" {{ $shopping->status == 2 ? 'selected' : '' }}>Enviado</option>
+                                            <option value="0" {{ $shopping->status == 0 ? 'selected' : '' }}>En validación OC</option>
+                                            <option value="1" {{ $shopping->status == 1 ? 'selected' : '' }}>En proceso de compra</option>
+                                            <option value="2" {{ $shopping->status == 2 ? 'selected' : '' }}>Error en número de compra</option>
                                             <option value="3" {{ $shopping->status == 3 ? 'selected' : '' }}>Entregado</option>
                                           </select>
                                           

@@ -1,21 +1,10 @@
-<div class="bg-white mx-auto h-auto w-full grid md:grid-cols-2 p-3 gap-y-2">
-    <h1 class="text-2xl lg:text-4xl col-span-1 font-[600] md:font-[700]">Pedidos Realizados</h1>
-    <div class="relative col-span-1 ">
-        <input type="search"
-            class="border-2 lg:block border-gray-400 py-2 text-sm bg-white rounded-md pr-10 pl-2 focus:outline-none focus:bg-white focus:text-gray-900 w-full"
-            placeholder="Buscar..." autocomplete="off" name="busqueda" wire:model="search">
-        <span class="absolute inset-y-0 right-0 flex items-center pr-2">
-            <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="2" viewBox="0 0 24 24" class="w-6 h-6">
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-            </button>
-        </span>
+<div class="bg-white mx-auto h-auto w-full grid md:grid-cols-2 p-3 gap-y-2 px-20">
+    <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
+        <a class="text-secondary" href="/">Inicio</a>
+        <p class="text-secondary"> / </p>
+        <a class="text-secondary" href="#">Muestras</a>
     </div>
     <br>
-
-
 
     <div class="relative overflow-x-auto md:col-span-2">
         <div class="relative" wire:loading.class="opacity-70">
@@ -34,8 +23,14 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-white  bg-black">
                     <tr>
+                        <th scope="col" style="width:10px;" class="px-3 py-2 md:px-6 md:py-3">
+                            #
+                        </th>
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
-                            NOMBRE
+                            PRODUCTO
+                        </th>
+                        <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
+                            SOLICITANTE
                         </th>
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
                             FECHA
@@ -43,9 +38,7 @@
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
                             DIRECCIÓN
                         </th>
-                        <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
-                            PRODUCTO
-                        </th>
+                        
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
                             TIPO
                         </th>
@@ -62,6 +55,10 @@
 
                     @foreach ($muestras as $muestra)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="px-6 py-4  hidden md:table-cell">
+                                {{ $muestra->product_name }}
+                            </td>
                             <th scope="row"
                                 class="px-6 py-4  hidden md:table-cell font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $muestra->user_name }}
@@ -72,9 +69,7 @@
                             <td class="px-6 py-4  hidden md:table-cell">
                                 {{ $muestra->address }}
                             </td>
-                            <td class="px-6 py-4  hidden md:table-cell">
-                                {{ $muestra->product_name }}
-                            </td>
+                            
                             <td class="px-6 py-4  hidden md:table-cell">
                                 {{ $muestra->product_type }}
                             </td>
@@ -85,7 +80,7 @@
                             </td> --}}
                             <td class="px-6 py-4  hidden md:table-cell">
                                 <a href="/carrito/muestra/{{ $muestra->id_muestra }}">
-                                    <button class="bg-[#2B2D2F] text-white h-[50px] w-full px-2 ">VER MUESTRA </button>
+                                    <button class="bg-[#2B2D2F] text-white h-[50px] w-full px-2 ">VER DETALLES </button>
                                 </a>
                             </td>
 

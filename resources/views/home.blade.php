@@ -228,8 +228,8 @@
                                     </div>
                                 @endif
                                     <div class="p-5">
-                                        <p class="mb-2 text-lg font-bold" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $product->name}}</p>
-                                        <p class="text-base text-stone-600 mb-2"> ${{ $product->price}}</p>
+                                        <p class="mb-6 text-lg font-bold" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $product->name}}</p>
+                                        {{-- <p class="text-base text-stone-600 mb-2"> ${{ $product->price}}</p> --}}
                                         
                                         <a href="{{ route('show.product', ['product' => $product->id]) }}" class="bg-black text-white font-semibold py-2 px-10 rounded mt-5">
                                             Ver más

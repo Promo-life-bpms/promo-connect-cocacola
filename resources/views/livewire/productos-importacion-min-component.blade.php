@@ -129,8 +129,8 @@
                                                 <div class="py-2 text-lg text-slate-700">
                                                     <h5 class="capitalize m-0">
                                                         {{ Str::limit($row->name, 22, '...') }}</h5>
-                                                    <p class="m-0">$
-                                                        {{number_format($priceProduct,2)}}</p>
+                                                   {{--  <p class="m-0">$
+                                                        {{number_format($priceProduct,2)}}</p> --}}
                                                 </div>
 
                                                 <style>

@@ -8,6 +8,7 @@ use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\CotizadorController;
 use App\Http\Controllers\ExportDataController;
 use App\Http\Controllers\ImageProxyController;
+use App\Http\Controllers\MuestraController;
 use App\Http\Controllers\SellerController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\NotificacionesController;
@@ -122,6 +123,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/export/user', [ExportDataController::class, 'exportUser'])->name('exportUser');
     Route::post('/shopping/rate', [ShoppingController::class, 'shoppingRate'])->name('shoppingRate');
+
+    Route::post('/muestras/edit-date', [MuestraController::class, 'editDate'])->name('editDate');
+
 
     ////CREAR USUARIO////
     Route::post('create/user', [AdminController::class, 'newUser'])->name('create.user');
