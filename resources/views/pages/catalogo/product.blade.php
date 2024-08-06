@@ -35,7 +35,7 @@
                     <p class="text-4xl font-semibold mb-4 w-full" style="margin-left: 24px;">{{ $product->name }}</p>
                     
                     <div class="col-start-1 col-span-5 px-6">
-                        <p class="font-normal"> <strong>Precio Unitario: </strong>$
+                        {{-- <p class="font-normal"> <strong>Precio Unitario: </strong>$
 
                             @php
                                 $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
@@ -87,7 +87,7 @@
     
                             {{ 
                                 number_format($initialPrice,2);  
-                            }}</p>
+                            }}</p> --}}
 
                             <p class="font-normal">Stock: <b>{{ $product->stock }}</b> </p>
 

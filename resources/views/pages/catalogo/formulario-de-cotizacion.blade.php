@@ -62,7 +62,7 @@
                                 </select>
                             </div>
                         @endif
-                        @if ($preciosDisponibles)
+                        {{-- @if ($preciosDisponibles)
                             <div class="col-span-2">
                                 <p class="m-1"><strong> Precios Por Cantidad de Articulos, de acuerdo al material,
                                         tecnica y tamaño seleccionados</strong></p>
@@ -89,7 +89,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        @endif
+                        @endif --}}
                     </div>
                 </div>
                 <div class="row">
