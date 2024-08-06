@@ -178,55 +178,73 @@
                         </div>
                     @endif
                     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-8 pb-8 -mt-8">
-                        @foreach ($products as $row)
+                        @foreach ($products as $product)
                             
-                            @if(isset($row->firstImage) && $row->firstImage->image_url != null)
+                            @if(isset($product->firstImage) && $product->firstImage->image_url != null)
                                 
                             
                                     <div class="w-full h-auto bg-white rounded-xl shadow-lg overflow-hidden p-4" style="border: 1px solid #d1d1d1;">
                                         <div
                                             class="flex sm:block gap-2 sm:bg-transparent bg-white rounded-md sm:rounded-none p-2 sm:p-0">
                                             @php
-                                                /* $priceProduct = $row->price;
-                                                if ($row->producto_promocion) {
-                                                    $priceProduct = round($priceProduct - $priceProduct * ($row->descuento / 100), 2);
+                                               $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
+                                                
+                                                $priceProduct = $product->price;
+
+                                                if ($product_type && $product_type->value == 'Normal') {
+                                                    $precioTotal = round($priceProduct - $priceProduct * (30 / 100), 2);
+                                                    $priceProduct = $precioTotal;
+                                                    
+                                                } elseif (
+                                                    $product_type &&
+                                                    ($product_type->value == 'Outlet' || $product_type->value == 'Unico')
+                                                ) {
+                                                    $precioTotal = round($priceProduct - $priceProduct * (0 / 100), 2);
+                                                    $priceProduct = $precioTotal;
                                                 } else {
-                                                    $priceProduct = round($priceProduct - $priceProduct * ($row->provider->discount / 100), 2);
+                                                    if ($product->producto_promocion) {
+                                                        $precioTotal = round($priceProduct - $priceProduct * ($product->descuento / 100),2,);
+                                                        $priceProduct = $precioTotal;
+                                                    } else {
+                                                        $priceProduct = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+
+                                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                                        $priceProduct = $precioTotal;
+                                                    }
+                                                    if ($product->provider->company == 'EuroCotton') {
+                                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                                        $iva = $precioTotal * 0.16;
+                                                        $precioTotal = round($priceProduct - $iva, 2);
+
+                                                        $priceProduct = $precioTotal;
+                                                    }
+
+                                                    if ($product->provider->company == 'For Promotional') {
+                                                        if ($product->descuento >= $product->provider->discount) {
+                                                            $precioTotal = round($product->price - $product->price * ($product->descuento / 100),2,);
+                                                            $priceProduct = $precioTotal;
+                                                        } else {
+                                                            $precioTotal = round($product->price - $product->price * (25 / 100), 2);
+                                                            $priceProduct = $precioTotal;
+                                                        }
+                                                    }
+
                                                 }
-                                                $priceProduct = round($priceProduct / ((100 - $utilidad) / 100), 2); */
-                
-                                                if($row->provider_id == 1){
-                                                    /* FOR PROMOTIONAL */
-                                                    $priceProduct = ($row->price) * 0.93751;
-                                                }else if($row->provider_id == 2){
-                                                    /* PROMO OPCION */
-                
-                                                    $priceProduct = ($row->price) * 0.87502;
-                                                }else if($row->provider_id == 3){
-                                                    /* INNOVATION */
-                                                    $priceProduct = ($row->price) * 1.2329;
-                                                }else{
-                                                    /* OTRO */
-                                                    $priceProduct = ($row->price);
-                                                }
-                                                /* $priceProduct = round($row->price * 0.9375, 2); */
-                                    
-                                            
                                             @endphp
                                             <div class="w-full flex justify-center  sm:p-5 sm:bg-white  text-center">
                                                 <div class="">
-                                                    <img src="{{ $row->firstImage ? $row->firstImage->image_url : '' }}"
-                                                        class="w-auto h-52" alt="{{ $row->name }}">
+                                                    <img src="{{ $product->firstImage ? $product->firstImage->image_url : '' }}"
+                                                        class="w-auto h-52" alt="{{ $product->name }}">
                                                 </div>
                                             </div>
                                             <div class="text-center flex-grow gap-2 flex flex-col justify-between sm:block">
                                                 <div class="py-2 text-lg text-slate-700">
                                                     <h5 class="capitalize m-0">
-                                                        {{ Str::limit($row->name, 22, '...') }}</h5>
-                                                   {{--  <p class="m-0">$
-                                                        {{number_format($priceProduct,2)}}</p> --}}
+                                                        {{ Str::limit($product->name, 22, '...') }}</h5>
+                                                    <p class="m-0">$
+                                                        {{number_format($priceProduct,2)}}</p> 
                                                 </div>
-                                                <a href="{{ route('show.product', ['product' => $row->id]) }}"
+                                                <a href="{{ route('show.product', ['product' => $product->id]) }}"
                                                     class="block w-full bg-black hover:bg-primary  text-white  hover:text-black  text-center rounded-sm font-semibold py-2 rounded-xl">
                                                     Cotizar
                                                 </a>

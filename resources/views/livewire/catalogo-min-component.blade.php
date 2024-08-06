@@ -19,38 +19,74 @@
                     @endif
                 </div>
             @endif
-            @foreach ($products as $row)
+            @foreach ($products as $product)
                 <div class="col-md-4 col-lg-3 col-sm-6  d-flex justify-content-center">
                     <div class="card product-info">
                         <div class="card-body text-center shadow-sm p-2">
                             @php
-                                $priceProduct = $row->price;
-                                if ($row->producto_promocion) {
-                                    $priceProduct = round($priceProduct - $priceProduct * ($row->descuento / 100), 2);
+                                $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
+
+                                $priceProduct = $product->price;
+
+                                if ($product_type && $product_type->value == 'Normal') {
+                                    $precioTotal = round($priceProduct - $priceProduct * (30 / 100), 2);
+                                    $priceProduct = $precioTotal / config('settings.utility');
+                                    
+                                } elseif (
+                                    $product_type &&
+                                    ($product_type->value == 'Outlet' || $product_type->value == 'Unico')
+                                ) {
+                                    $precioTotal = round($priceProduct - $priceProduct * (0 / 100), 2);
+                                    $priceProduct = $precioTotal /config('settings.utility')/100);
                                 } else {
-                                    $priceProduct = round($priceProduct - $priceProduct * ($row->provider->discount / 100), 2);
+                                    if ($product->producto_promocion) {
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->descuento / 100),2,);
+                                        $priceProduct = $precioTotal / config('settings.utility')/100);
+                                    } else {
+                                        $priceProduct = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                        $priceProduct = $precioTotal + ($precioTotal *(config('settings.utility')/100));
+                                    }
+                                    if ($product->provider->company == 'EuroCotton') {
+                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
+                                        $iva = $precioTotal * 0.16;
+                                        $precioTotal = round($priceProduct - $iva, 2);
+
+                                        $priceProduct = $precioTotal /(config('settings.utility'));
+                                    }
+
+                                    if ($product->provider->company == 'For Promotional') {
+                                        if ($product->descuento >= $product->provider->discount) {
+                                            $precioTotal = round($product->price - $product->price * ($product->descuento / 100),2,);
+                                            $priceProduct = $precioTotal + ($precioTotal *(config('settings.utility')/100));
+                                        } else {
+                                            $precioTotal = round($product->price - $product->price * (25 / 100), 2);
+                                            $priceProduct = $precioTotal / (config('settings.utility'));
+                                        }
+                                    }
                                 }
                             @endphp
                             <p class="stock-relative m-0 mb-1 pt-1" style="font-size: 16px">Stock: <span
-                                    style="font-weight: bold">{{ $row->stock }}</span></p>
+                                    style="font-weight: bold">{{ $product->stock }}</span></p>
                             <div class="d-flex flex-row flex-sm-column">
                                 <div class="text-center" style="height: 110px">
-                                    <img src="{{ $row->firstImage ? $row->firstImage->image_url : '' }}"
-                                        class="card-img-top " alt="{{ $row->name }}"
+                                    <img src="{{ $product->firstImage ? $product->firstImage->image_url : '' }}"
+                                        class="card-img-top " alt="{{ $product->name }}"
                                         style="width: auto; max-width: 100px; max-height: 110px; height: auto">
                                 </div>
                                 <div class="info-products">
                                     <h5 class="card-title m-0" style="text-transform: capitalize">
-                                        {{ Str::limit($row->name, 22, '...') }}</h5>
+                                        {{ Str::limit($product->name, 22, '...') }}</h5>
                                     <p class=" m-0 pt-1" style="font-size: 16px"><strong>SKU:</strong>
-                                        {{ $row->sku }}</p>
+                                        {{ $product->sku }}</p>
                                     <p class="m-0 mb-1 pt-1 d-sm-none" style="font-size: 16px">Stock: <span
-                                            style="font-weight: bold">{{ $row->stock }}</span></p>
+                                            style="font-weight: bold">{{ $product->stock }}</span></p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <p class=" m-0 pt-1" style="font-weight: bold">$
                                             {{ round($priceProduct / ((100 - $utilidad) / 100), 2) }}</p>
                                         <button class="btn btn-primary btn-sm"
-                                            wire:click="seleccionarProducto({{ $row }})"> Seleccionar </button>
+                                            wire:click="seleccionarProducto({{ $product }})"> Seleccionar </button>
                                     </div>
                                 </div>
                             </div>
