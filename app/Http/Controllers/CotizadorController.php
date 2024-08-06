@@ -25,6 +25,7 @@ use App\Models\ShoppingTechnique;
 use App\Models\ShoppingUpdate;
 use App\Models\User;
 use App\Models\UserLogs;
+use App\Notifications\CompraStatus;
 use App\Notifications\PurchaseMadeNotification;
 use App\Notifications\SendEmailCotizationNotification;
 use App\Notifications\ShoppingsStatus;
@@ -540,6 +541,7 @@ class CotizadorController extends Controller
     }
 
     public function comprasRealizarCompra(Request $request) {
+        //dd($request);
 
         $quote = Quote::where('id', $request->id )->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
@@ -615,6 +617,23 @@ class CotizadorController extends Controller
         DB::table('quote_information')->where('id',$request->id)->update([
             'information' => 'compra'
         ]);
+
+        ///ENVIAMOS NOTIFICACIÓ DE QUE SE CONFIRMO EL PEDIDO///
+        $user = $quote->user_id;
+        $InfoUser = User::where('id', $user)->first();
+        $name =  $InfoUser->name;
+        $producto = json_decode($quote_products->product); 
+        $nameProduct = $producto->name;
+        $descriptionProduct = $producto->description;
+        $status = 'Compra';
+        //$description = $product['description'];
+        try {
+            $InfoUser->notify(new CompraStatus($name, $status, $nameProduct, $descriptionProduct,$request->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'No se pudo enviar el correo');
+        }
+
+
         $date = Carbon::now()->format("d/m/Y");
 
         /* $emails = [

@@ -40,7 +40,7 @@
                             href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                            Si, estoy seguro</a>
+                            Sí, estoy seguro</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             @csrf
                         </form>
