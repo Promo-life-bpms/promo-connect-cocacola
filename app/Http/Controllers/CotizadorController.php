@@ -189,7 +189,7 @@ class CotizadorController extends Controller
         $db = config('database.connections.mysql_catalogo.database');
         $userproducts = Muestra::join('users', 'users.id', 'muestras.user_id')
             ->join($db . ".products",  'muestras.product_id', $db . ".products.id")
-            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra', 'status as status')
+            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra', 'muestras.status as status')
             ->where('users.id', $id)
             ->get();
             
