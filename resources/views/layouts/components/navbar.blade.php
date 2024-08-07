@@ -40,7 +40,7 @@
                             href="{{ route('logout') }}"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
-                            Si, estoy seguro</a>
+                            Sí, estoy seguro</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
                             @csrf
                         </form>
@@ -369,7 +369,7 @@
                             <li>
                                 <button data-modal-target="popup-modal" data-modal-toggle="popup-modal"
                                     class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Cerrar
-                                    Sesion</button>
+                                    Sesión</button>
                             </li>
                         </ul>
                     </div>

@@ -130,7 +130,7 @@ Route::middleware(['auth'])->group(function () {
     ////CREAR USUARIO////
     Route::post('create/user', [AdminController::class, 'newUser'])->name('create.user');
     Route::post('update/user',[AdminController::class, 'updateUser'])->name('update.user');
-
+    Route::post('delete/user',[AdminController::class, 'deactivateUser'])->name('delete.user');
     ///////////////PRUEBA PARA UNA NUEVA VISTA DE USUARIOS
     Route::get('admin/users', [AdminController::class, 'users'])->name('allusers');
 

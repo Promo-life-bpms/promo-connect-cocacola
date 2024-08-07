@@ -46,8 +46,8 @@
                             <li class="mr-2">
                                 <a href="#"
                                     class="inline-flex p-1 px-2 border-b-2  rounded-t-lg
-                                {{ $quote->status >= 3 ? 'text-black' : 'text-[#B3B2B2]' }}
-                                {{ $quote->status === 3 ? 'border-black' : 'border-transparent' }}">
+                                {{ $quote->status >= 4 ? 'text-black' : 'text-[#B3B2B2]' }}
+                                {{ $quote->status === 4 ? 'border-black' : 'border-transparent' }}">
                                     <div
                                         class="rounded-full  text-[#F2F2F2] h-6 w-6 mr-2 flex justify-center pt-[0.5px]
                                     {{ $quote->status >= 3 ? 'bg-black' : 'bg-[#B3B2B2] ' }}">
@@ -167,9 +167,10 @@
                         <strong>Estado de la Compra:</strong>
                         <select wire:model="quoteStatus"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[45%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="1" {{ $quote->status == 1 ? 'disabled' : '' }}>Se esta preparando</option>
-                            <option value="2" {{ $quote->status == 2 ? 'disabled' : '' }}>Va en camino</option>
-                            <option value="3" {{ $quote->status == 3 ? 'disabled' : '' }}>Ya se entrego</option>
+                            <option value="1">En validación OC</option>
+                            <option value="2">En proceso de compra</option>
+                            <option value="3">Error en número de compra</option>
+                            <option value="4">Entregado</option>
                         </select>
                     </div>
 

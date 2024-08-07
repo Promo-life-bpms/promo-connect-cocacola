@@ -146,17 +146,56 @@
                         @endforeach
                     </td>
                     <td>
-                        <div class="flex flex-col space-y-3">
-                            <button data-modal-target="password-modal-{{$user->id}}" data-modal-toggle="password-modal-{{$user->id}}" class="btn btn-outline-success" type="button">
-                                Cambiar contraseña
-                            </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <a>
+                                <button data-modal-target="password-modal-{{$user->id}}" data-modal-toggle="password-modal-{{$user->id}}" class="btn btn-outline-success" type="button" data-tooltip-target="tooltip-password" data-tooltip-placement="top">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width: 0.9rem; height: 0.9rem;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H3.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                                    </svg>
+                                </button>
+                                <div id="tooltip-password" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                                    Modificar Password
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
+                            </a>
                             <a href="/admin/users/{{ $user->id }}">
-                                <button class="btn btn-outline-info">Generar reporte</button>
+                                <button class="btn btn-outline-info" data-tooltip-target="tooltip-report" data-tooltip-placement="top">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width: 0.9rem; height: 0.9rem;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                    </svg>
+                                </button>
+                                <div id="tooltip-report" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                                    Generar Reporte
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
                             </a>
                             <a>
-                                <button data-modal-target="editarUsuario-{{$user->id}}" data-modal-toggle="editarUsuario-{{$user->id}}" class="btn btn-outline-warning" type="button">
-                                    Editar usuario
+                                <button data-modal-target="editarUsuario-{{$user->id}}" data-modal-toggle="editarUsuario-{{$user->id}}" class="btn btn-outline-warning" type="button" data-tooltip-target="tooltip-right" data-tooltip-placement="top">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width: 0.9rem; height: 0.9rem;">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                    </svg>
                                 </button>
+                                <div id="tooltip-right" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                                    Editar Usuario
+                                    <div class="tooltip-arrow" data-popper-arrow></div>
+                                </div>
+                            </a>
+                            <a>
+                                <form class="form-delete m-0" action="{{ route('delete.user') }}" method="post">
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline-danger" data-tooltip-target="tooltip-delete-user" data-tooltip-placement="top">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" style="width: 0.9rem; height: 0.9rem;">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+                                    </button>
+                                    <div id="tooltip-delete-user" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 tooltip">
+                                        Eliminar Usuario
+                                        <div class="tooltip-arrow" data-popper-arrow></div>
+                                    </div>
+
+                                </form>
                             </a>
                         </div>
 
@@ -266,4 +305,26 @@
     </div>
 </div>
 @endforeach
+@endsection
+
+@section('scripts')
+<script>
+    $('.form-delete').submit(function(e) {
+        e.preventDefault();
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "¡El usuario se eliminara permanentemente.!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '¡Sí, eliminar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        })
+    });
+</script>
 @endsection

@@ -4,7 +4,7 @@
         <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
             <a class="text-secondary" href="/">Inicio</a>
             <p class="text-secondary"> / </p>
-            <a class="text-secondary" href="#">Administrador</a>
+            <a class="text-secondary" href="#">Compradores</a>
         </div>
 
         <div class="flex mt-6">

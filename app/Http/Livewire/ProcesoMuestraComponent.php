@@ -13,6 +13,7 @@ use App\Notifications\MuestraStatusNotification;
 use App\Models\Quote;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\MuestraStatus;
 use DB;
 use Exception;
 use Illuminate\Support\Carbon;
@@ -79,10 +80,32 @@ class ProcesoMuestraComponent extends Component
     public function updateMuestraStatus()
     {
         $product = Muestra::find($this->idMuestra);
+        
         if ($product) {
             $product->status = $this->productStatus; // Modificar el valor del atributo
             $product->save(); // Guardar los cambios en la base de datos
         }
+
+        $status = " ";
+        if($product->status == 1){
+            $status = 'Se esta preparando';
+        }elseif($product->status == 2){
+            $status = 'Va en camino';
+        }elseif($product->status == 3){
+            $status = 'Cancelada';
+        }elseif($product->status == 4){
+            $status = 'Ya se entrego';
+        }
+        
+        $userId = $product->user_id;
+        $InfoUser = User::where('id', $userId)->first();
+        $name = $InfoUser->name;
+        try {
+            $InfoUser->notify(new MuestraStatus($name, $status, $product->name, $product->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'No se pudo enviar el correo');
+        }
+        
         self::muestra_notificacion($product);
         // Browser event
         $this->dispatchBrowserEvent('cambio-status', ['type' => 'success',  'message' => 'Estatus actualizado']);

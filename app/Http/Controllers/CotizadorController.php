@@ -25,6 +25,7 @@ use App\Models\ShoppingTechnique;
 use App\Models\ShoppingUpdate;
 use App\Models\User;
 use App\Models\UserLogs;
+use App\Notifications\CompraStatus;
 use App\Notifications\PurchaseMadeNotification;
 use App\Notifications\SendEmailCotizationNotification;
 use App\Notifications\ShoppingsStatus;
@@ -188,16 +189,16 @@ class CotizadorController extends Controller
         $db = config('database.connections.mysql_catalogo.database');
         $userproducts = Muestra::join('users', 'users.id', 'muestras.user_id')
             ->join($db . ".products",  'muestras.product_id', $db . ".products.id")
-            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra')
+            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra', 'status as status')
             ->where('users.id', $id)
             ->get();
-
+            
         $usercompras = Quote::join('users', 'users.id', 'quotes.user_id')
             ->join('quote_updates', 'quote_updates.quote_id', 'quotes.id')
             ->join('quote_products', 'quote_products.id', 'quote_updates.id')
             ->where('users.id', $id)
             ->get();
-
+                        
         $longitudcompras = count($usercompras);
         $longitudmuestras = count($userproducts);
         return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras]);
@@ -533,13 +534,14 @@ class CotizadorController extends Controller
         try {
             $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
         } catch (\Exception $e) {
-         
+            return 0;
         } 
   
         return redirect()->action([CotizadorController::class, 'compras']);
     }
 
     public function comprasRealizarCompra(Request $request) {
+        //dd($request);
 
         $quote = Quote::where('id', $request->id )->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
@@ -615,6 +617,23 @@ class CotizadorController extends Controller
         DB::table('quote_information')->where('id',$request->id)->update([
             'information' => 'compra'
         ]);
+
+        ///ENVIAMOS NOTIFICACIÓ DE QUE SE CONFIRMO EL PEDIDO///
+        $user = $quote->user_id;
+        $InfoUser = User::where('id', $user)->first();
+        $name =  $InfoUser->name;
+        $producto = json_decode($quote_products->product); 
+        $nameProduct = $producto->name;
+        $descriptionProduct = $producto->description;
+        $status = 'Compra';
+        //$description = $product['description'];
+        try {
+            $InfoUser->notify(new CompraStatus($name, $status, $nameProduct, $descriptionProduct,$request->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'No se pudo enviar el correo');
+        }
+
+
         $date = Carbon::now()->format("d/m/Y");
 
         /* $emails = [
