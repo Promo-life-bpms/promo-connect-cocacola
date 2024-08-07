@@ -44,7 +44,7 @@ class CompraStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->markdown('mail.confirmacionstatus.ConfirmacionCompraStatus',[
+                    ->markdown('mail.status.ConfirmacionCompraStatus',[
                         'url' => url('/mis-compras'),
                         'receptor'=>$this->receptor,
                         'status'=>$this->status,

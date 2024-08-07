@@ -7,11 +7,13 @@ use App\Models\Muestra;
 use App\Models\Quote;
 use App\Models\Role;
 use App\Models\User;
+use App\Notifications\PedidosStatus;
 use App\Notifications\StatusPedidoNotification;
 use Livewire\Component;
 use Exception;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class VerCotizacionComponent extends Component
 {
@@ -169,15 +171,32 @@ class VerCotizacionComponent extends Component
             $quote->save(); // Guardar los cambios en la base de datos
             $user = $this->quote->user;
 
-            $dataNotification = [
-                'user' => auth()->user()->name,
-                'pedido' => 'ODC-' . $quote->id,
-                'status' => $this->quoteStatus,
-                'pedido_id' => $quote->id,
-            ];
-            // Enviar notificacion a los usuarios con el rol de vendedor y gerente de compras
-            $user->notify(new StatusPedidoNotification($dataNotification));
+            $status = " ";
+            if ($this->quoteStatus == 1) {
+                $status = 'En validación OC';
+            } elseif ($this->quoteStatus == 2) {
+                $status = 'En proceso de compra';
+            } elseif ($this->quoteStatus == 3) {
+                $status = 'Error en número de compra';
+            } elseif ($this->quoteStatus == 4) {
+                $status = 'Entregado';
+            } else {
+                $status = 'No se tiene información sobre el status, acercate con el administrador para una aclaración.';
+            }
+
+            $info = DB::table('quote_products')->where('id', $this->quote->id)->first();
+            $Product = $info->product;
+            $infoProduct = json_decode($Product);
+            $name = $user->name;
+            $idUser = $user->id;
+
+            try {
+                $user->notify(new PedidosStatus($name, $status,$infoProduct->description, $idUser));
+            } catch (\Exception $e) {
+                return 0;
+            }
             $this->dispatchBrowserEvent('cambio-status', ['type' => 'success',  'message' => 'Estatus actualizado']);
         }
+
     }
 }

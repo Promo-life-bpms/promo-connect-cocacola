@@ -62,11 +62,11 @@
                                 <li class="mr-2">
                                     <a href="#"
                                         class="inline-flex p-1 px-2 border-b-2  rounded-t-lg
-                                    {{ $muestra->status >= 3 ? 'text-black' : 'text-[#B3B2B2]' }}
-                                    {{ $muestra->status === 3 ? 'border-black' : 'border-transparent' }}">
+                                    {{ $muestra->status >= 4 ? 'text-black' : 'text-[#B3B2B2]' }}
+                                    {{ $muestra->status === 4 ? 'border-black' : 'border-transparent' }}">
                                         <div
                                             class="rounded-full  text-[#F2F2F2] h-6 w-6 mr-2 flex justify-center pt-[0.5px]
-                                        {{ $muestra->status >= 3 ? 'bg-black' : 'bg-[#B3B2B2] ' }}">
+                                        {{ $muestra->status >= 4 ? 'bg-black' : 'bg-[#B3B2B2] ' }}">
                                             3
                                         </div>
                                         ENTREGADO
@@ -85,10 +85,7 @@
                                     <path d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </button>
-                            <form action="{{ route('')}}">
-
-                                
-                            </form>
+    
                             <div id="edit-date-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                 <div class="relative p-4 w-full max-w-2xl max-h-full">
                                     <!-- Modal content -->
@@ -138,7 +135,7 @@
                             @if ($muestra->status === 2)
                                 <strong class="">TU PEDIDO YA ESTA LISTO Y VA EN CAMINO</strong>
                             @endif
-                            @if ($muestra->status === 3)
+                            @if ($muestra->status === 4)
                                 <strong class="">TU PEDIDO SE TE HA ENTREGADO CORRECTAMENTE</strong>
                             @endif
                         </div>
@@ -190,7 +187,9 @@
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-[45%] p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="1">Se esta preparando</option>
                                 <option value="2">Va en camino</option>
-                                <option value="3">Ya se entrego</option>
+                                <option value="3">Cancelada</option>
+                                <option value="4">Ya se entrego</option>
+                                
                             </select>
                         </div>
 

@@ -92,9 +92,11 @@ class ProcesoMuestraComponent extends Component
         }elseif($product->status == 2){
             $status = 'Va en camino';
         }elseif($product->status == 3){
+            $status = 'Cancelada';
+        }elseif($product->status == 4){
             $status = 'Ya se entrego';
         }
-
+        
         $userId = $product->user_id;
         $InfoUser = User::where('id', $userId)->first();
         $name = $InfoUser->name;

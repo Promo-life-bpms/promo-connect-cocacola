@@ -189,16 +189,16 @@ class CotizadorController extends Controller
         $db = config('database.connections.mysql_catalogo.database');
         $userproducts = Muestra::join('users', 'users.id', 'muestras.user_id')
             ->join($db . ".products",  'muestras.product_id', $db . ".products.id")
-            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra')
+            ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra', 'status as status')
             ->where('users.id', $id)
             ->get();
-
+            
         $usercompras = Quote::join('users', 'users.id', 'quotes.user_id')
             ->join('quote_updates', 'quote_updates.quote_id', 'quotes.id')
             ->join('quote_products', 'quote_products.id', 'quote_updates.id')
             ->where('users.id', $id)
             ->get();
-
+                        
         $longitudcompras = count($usercompras);
         $longitudmuestras = count($userproducts);
         return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras]);
@@ -534,7 +534,7 @@ class CotizadorController extends Controller
         try {
             $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
         } catch (\Exception $e) {
-         
+            return 0;
         } 
   
         return redirect()->action([CotizadorController::class, 'compras']);

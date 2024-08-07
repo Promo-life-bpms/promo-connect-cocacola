@@ -4,31 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cambio de estatus. HHGLOBAL</title>
+    <title>Cambio de status. HHGLOBAL</title>
     <style>
-        /*BOTON*/
-        .inner-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centra el contenido en el medio verticalmente */
-            align-items: center; /* Centra el contenido horizontalmente */
-            height: 250px; /* Ajusta la altura según tus necesidades */
-            border: 1px solid #ccc; /* Solo para visualización, puedes eliminarlo */
-            padding: 20px; /* Espaciado interno opcional */
-            position: relative;
-        }
-        .btn-container {
-            margin-top: auto; /* Empuja el botón hacia el fondo del contenedor */
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            color: white;
-            background-color: #007bff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
         /* Estilos generales */
         body {
             font-family: Arial, sans-serif;
@@ -51,31 +28,36 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             padding: 20px;
             position: relative;
-            /* Añadido para el posicionamiento del .logo */
+            text-align: justify; /* Justifica el texto en el contenedor */
+        }
+
+        .inner-container b {
+            display: block;
+            text-align: left; /* Alinea el texto en negrita a la izquierda */
+            margin: 10px 0; /* Agrega un margen vertical para separación */
+        }
+
+        .btn-container {
+            text-align: center; /* Centra el botón en el contenedor */
+            margin-top: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border-radius: 5px;
         }
 
         .bpms-legend {
-            position: absolute;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-sizing: border-box;
+            text-align: center; /* Centra el texto en el pie de página */
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
             line-height: 1.5em;
-            margin-top: 0;
+            margin-top: 20px;
             color: #b0adc5;
             font-size: 12px;
-            text-align: center;
-        }
-
-        h1,
-        h2,
-        h3 {
-            color: #333;
-        }
-
-        p {
-            margin-bottom: 20px;
         }
 
         /* Fondo azul detrás del contenedor */
@@ -109,5 +91,4 @@
         </div>
     </div>
 </body>
-
 </html>

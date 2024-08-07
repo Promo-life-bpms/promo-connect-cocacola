@@ -44,7 +44,7 @@ class MuestraStatus extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->markdown('mail.muestrastatus.MuestraStatus',[
+                    ->markdown('mail.status.MuestraStatus',[
                         'url' => url('/carrito/muestra' . '/' . $this->idMuestra),
                         'receptor'=>$this->receptor,
                         'status'=>$this->status,
