@@ -106,7 +106,7 @@
                         <label class="col-span-2"><strong>Cantidad de Colores y / o Logos</strong> </label>
                         <input
                             class="flex flex-wrap w-full py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"type="number"
-                            name="colores" wire:model="colores" placeholder="Colores" min="0">
+                            name="colores" wire:model="colores" placeholder="Colores" min="0" max="10">
                     </div>
                     <br>
 

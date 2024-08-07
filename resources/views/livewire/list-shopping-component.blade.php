@@ -130,9 +130,11 @@
                             <br>
                             <span class="bg-orange-100 text-orange-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded">Evaluado</span>
                           @else
-                            <button data-modal-target="rating-modal-{{$shopping->id}}" data-modal-toggle="rating-modal-{{$shopping->id}}"  class="block text-white bg-primary hover:bg-primary focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center ml-8 " type="button">
-                              Evaluar
-                            </button>
+                            @if( auth()->user()->hasRole(['buyer', "buyers-manager"]))
+                              <button data-modal-target="rating-modal-{{$shopping->id}}" data-modal-toggle="rating-modal-{{$shopping->id}}"  class="block text-white bg-primary hover:bg-primary focus:ring-2 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 text-center ml-8 " type="button">
+                                Evaluar
+                              </button>
+                            @endif    
 
                           @endif
                           <!-- Main modal -->
