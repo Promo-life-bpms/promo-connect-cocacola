@@ -311,11 +311,11 @@
                         class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44  hover:">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
                             @role('buyers-manager')
-                                <li>
+                                <!-- <li>
                                     <a href="{{ route('administrador') }}"
                                         class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Administrador</a>
-                                </li>
-                            @endrole
+                                </li> -->
+                            @endrole 
                             @role('seller')
                                 {{-- <li>
                                     <a href="{{ route('seller.content') }}"
