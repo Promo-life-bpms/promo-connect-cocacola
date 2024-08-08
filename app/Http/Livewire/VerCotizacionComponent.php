@@ -172,13 +172,13 @@ class VerCotizacionComponent extends Component
             $user = $this->quote->user;
 
             $status = " ";
-            if ($this->quoteStatus == 1) {
+            if ($this->quoteStatus == 0) {
                 $status = 'En validación OC';
-            } elseif ($this->quoteStatus == 2) {
+            } elseif ($this->quoteStatus == 1) {
                 $status = 'En proceso de compra';
-            } elseif ($this->quoteStatus == 3) {
+            } elseif ($this->quoteStatus == 2) {
                 $status = 'Error en número de compra';
-            } elseif ($this->quoteStatus == 4) {
+            } elseif ($this->quoteStatus == 3) {
                 $status = 'Entregado';
             } else {
                 $status = 'No se tiene información sobre el status, acercate con el administrador para una aclaración.';
@@ -193,9 +193,9 @@ class VerCotizacionComponent extends Component
             try {
                 $user->notify(new PedidosStatus($name, $status,$infoProduct->description, $idUser));
             } catch (\Exception $e) {
-                return 0;
+                $this->dispatchBrowserEvent('cambio-status', ['type' => 'success',  'message' => 'Estatus actualizado.']);
             }
-            $this->dispatchBrowserEvent('cambio-status', ['type' => 'success',  'message' => 'Estatus actualizado']);
+            $this->dispatchBrowserEvent('cambio-status', ['type' => 'success',  'message' => 'Estatus actualizado.']);
         }
 
     }

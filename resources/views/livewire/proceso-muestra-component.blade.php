@@ -67,7 +67,7 @@
                                         <div
                                             class="rounded-full  text-[#F2F2F2] h-6 w-6 mr-2 flex justify-center pt-[0.5px]
                                         {{ $muestra->status >= 4 ? 'bg-black' : 'bg-[#B3B2B2] ' }}">
-                                            3
+                                            4
                                         </div>
                                         ENTREGADO
                                     </a>
