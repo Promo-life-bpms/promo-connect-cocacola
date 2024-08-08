@@ -87,8 +87,9 @@ $layout = auth()
                                         $price = $compra->precio_unitario;
                                         ?>
                                         @php
-                                        // Decodificar el JSON del producto
                                         $infoProduc = json_decode($compra->product);
+                                        $productDB = \App\Models\Catalogo\Product::where('id',$infoProduc->id)->get()->first();
+                                        $productImage = $productDB->firstImage;
                                         @endphp
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="px-6 py-4">
