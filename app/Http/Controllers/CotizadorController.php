@@ -201,7 +201,21 @@ class CotizadorController extends Controller
                         
         $longitudcompras = count($usercompras);
         $longitudmuestras = count($userproducts);
-        return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras]);
+
+        $shoppings = [];
+
+        $total = 0;
+
+        $user = auth()->user();
+        if ($user->hasRole(['buyers-manager', 'seller' ])) {
+            $shoppings = Shopping::orderBy('created_at', 'desc')->paginate(8);
+            $total = $shoppings->sum('precio_total');
+        }else{
+            $shoppings = Shopping::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(8);
+            $total = $shoppings->sum('precio_total');
+        }
+
+        return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras, 'shoppings' => $shoppings, 'total' => $total]);
     }
 
     public function administrador()
@@ -518,11 +532,11 @@ class CotizadorController extends Controller
         
         $nameStatus = '';
         if($request->status == 0){
-            $nameStatus = 'Pendiente';
+            $nameStatus = 'En validación OC';
         }elseif($request->status == 1){
-            $nameStatus = 'En proceso';
+            $nameStatus = 'En proceso de compra';
         }elseif($request->status == 2){
-            $nameStatus = 'Enviado';
+            $nameStatus = 'Error en número de compra';
         }elseif($request->status == 3){
             $nameStatus = 'Entregado';
         }
