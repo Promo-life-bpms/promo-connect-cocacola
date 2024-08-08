@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function users(Request $request)
     {
         $search = $request->input('search');
-        $usersQuery = User::query()->where('status', 1);
+        $usersQuery = User::query()->where('active', 1);
         if ($search) {
             $usersQuery->where(function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
@@ -86,8 +86,8 @@ class AdminController extends Controller
         $newUser = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($randomPassword)
-
+            'password' => Hash::make($randomPassword),
+            'active' => 1
         ]);
 
         RoleUser::create([
@@ -145,7 +145,7 @@ class AdminController extends Controller
         $modifiedEmail = $randomLetters . '_' . $UserInfo;
 
         DB::table('users')->where('id', $request->user_id)->update([
-            'status' => 0,
+            'active' => 0,
             'email' => $modifiedEmail,
         ]);
 

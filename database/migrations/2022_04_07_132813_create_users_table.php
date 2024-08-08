@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('company_id')->nullable()->constrained();
             $table->dateTime('last_login')->nullable();
             $table->rememberToken();
-            $table->integer('status');
+            $table->integer('active');
             $table->timestamps();
         });
     }
