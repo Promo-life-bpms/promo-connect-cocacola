@@ -119,16 +119,16 @@ $layout = auth()
                                             </td>
                                             <td class="text-center">
                                                 @switch($compra->status)
-                                                @case(1)
+                                                @case(0)
                                                 <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">En validación OC</span>
                                                 @break
-                                                @case(2)
+                                                @case(1)
                                                 <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">En proceso de compra</span>
                                                 @break
-                                                @case(3)
+                                                @case(2)
                                                 <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-700/10">Error en número de compra</span>
                                                 @break
-                                                @case(4)
+                                                @case(3)
                                                 <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Entregado</span>
                                                 @break
                                                 @endswitch
@@ -209,10 +209,10 @@ $layout = auth()
                                                 @case(2)
                                                 <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">Va en camino</span>
                                                 @break
-                                                @case(3)
+                                                @case(4)
                                                 <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">Ya se entrego</span>
                                                 @break
-                                                @case(4)
+                                                @case(3)
                                                 <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-700/10">Cancelada</span>
                                                 @break
                                                 @endswitch
