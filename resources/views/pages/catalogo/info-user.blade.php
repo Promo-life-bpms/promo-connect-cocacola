@@ -238,7 +238,7 @@ $layout = auth()
                         </div>
 
                         <div class="relative overflow-y-auto md:col-span-2  lg:mx-32 lg:mt-2 ">
-                            <strong>MUESTRAS</strong>
+                            <strong>COMPRAS</strong>
                             <div class="relative" wire:loading.class="opacity-70">
                                 <div class="absolute top-5 w-full">
                                     <div wire:loading.flex class="justify-center">
@@ -253,8 +253,8 @@ $layout = auth()
                                     </div>
                                 </div>
 
-                                <table class="w-full table-auto">
-                                    <thead class="text-sm">
+                                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 col-span-2">
+                                    <thead class="text-xs text-white bg-black">
                                         <tr class="bg-black text-white">
                                             <th class="p-4" style="width: 10%;" class="p-2">#</th>
                                             <th style="width: 10%;">Imagen</th>
@@ -279,7 +279,7 @@ $layout = auth()
                                         $productImage = $productDB->firstImage;
                                         $shoppingInformation = \App\Models\ShoppingInformation::where('id',$shopping->id)->get()->first();
                                         @endphp
-                                        <tr class="border border-gray-300">
+                                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="text-center py-5 px-6">OC-{{ $shoppingInformation->id }}</td>
                                             <td class="text-center">
                                                 @if($product['logo'] != '')
@@ -425,9 +425,6 @@ $layout = auth()
 
                                                 @endswitch
                                                 <br>
-
-
-
                                             </td>
                                             @role('seller')
                                             <td>
@@ -454,13 +451,14 @@ $layout = auth()
                                                                 </button>
                                                             </div>
 
-                                                            <form action="{{ route('compras.status') }}" method="POST" enctype="multipart/form-data">
+                                                            <form action="{{ route('compras.status.of.buyers') }}" method="POST" enctype="multipart/form-data">
                                                                 @csrf
                                                                 @method('POST')
 
                                                                 <div class="p-4 md:p-5 space-y-4">
 
                                                                     <input type="text" value="{{$shopping->id}}" name="shopping_id" hidden>
+                                                                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
                                                                     <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                                                                     <select id="status" name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                                                         <option value="0" {{ $shopping->status == 0 ? 'selected' : '' }}>En validación OC</option>
@@ -489,15 +487,6 @@ $layout = auth()
                                 </table>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
 
                         <style>
                             .sk-chase {

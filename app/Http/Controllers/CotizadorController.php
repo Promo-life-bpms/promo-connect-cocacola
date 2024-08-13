@@ -42,6 +42,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\WithPagination;
 use SimpleXMLElement;
 
@@ -116,7 +117,7 @@ class CotizadorController extends Controller
     {
         $utilidad = (float) config('settings.utility');
 
-     
+
 
         $family = $product->categories[0]->family;
 
@@ -124,14 +125,14 @@ class CotizadorController extends Controller
         $recommendedProducts = Product::whereHas('categories', function ($query) use ($family) {
             $query->where('family', $family);
         })
-        ->whereDoesntHave('categories', function ($query) {
-            $query->where('family', 'like', '%textil%');
-        })
-        ->inRandomOrder()
-        ->limit(5)
-        ->get();
+            ->whereDoesntHave('categories', function ($query) {
+                $query->where('family', 'like', '%textil%');
+            })
+            ->inRandomOrder()
+            ->limit(5)
+            ->get();
 
-        
+
         $msg = '';
         // Consultar las existencias de los productos en caso de ser de Doble Vela.
         if ($product->provider_id == 5) {
@@ -192,28 +193,29 @@ class CotizadorController extends Controller
             ->select('users.name as user_name', 'products.name as product_name as product_name', 'muestras.updated_at', 'muestras.address',  'muestras.current_quote_id', 'muestras.id as id_muestra', 'muestras.status as status')
             ->where('users.id', $id)
             ->get();
-            
+
         $usercompras = Quote::join('users', 'users.id', 'quotes.user_id')
             ->join('quote_updates', 'quote_updates.quote_id', 'quotes.id')
             ->join('quote_products', 'quote_products.id', 'quote_updates.id')
             ->where('users.id', $id)
             ->get();
-                        
+
         $longitudcompras = count($usercompras);
         $longitudmuestras = count($userproducts);
 
         $shoppings = [];
-
         $total = 0;
-
         $user = auth()->user();
-        if ($user->hasRole(['buyers-manager', 'seller' ])) {
-            $shoppings = Shopping::orderBy('created_at', 'desc')->paginate(8);
-            $total = $shoppings->sum('precio_total');
-        }else{
-            $shoppings = Shopping::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(8);
-            $total = $shoppings->sum('precio_total');
+        if ($user->hasRole(['buyers-manager', 'seller'])) {
+            // Obtiene todos los resultados sin paginado
+            $shoppings = Shopping::orderBy('created_at', 'desc')->get();
+        } else {
+            // Obtiene todos los resultados sin paginado y filtra por user_id
+            $shoppings = Shopping::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         }
+
+        // Calcula el total sumando el campo 'precio_total'
+        $total = $shoppings->sum('precio_total');
 
         return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras, 'shoppings' => $shoppings, 'total' => $total]);
     }
@@ -509,17 +511,18 @@ class CotizadorController extends Controller
 
     public function misCotizaciones()
     {
-     
+
         if (auth()->user()->hasRole("buyers-manager")) {
             $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
         } else {
             $quotes = auth()->user()->quotes()->orderBy('created_at', 'desc')->simplePaginate(10);
         }
-    
+
         return view('pages.catalogo.misCotizaciones', compact('quotes'));
     }
 
-    public function comprasStatus(Request $request) {
+    public function comprasStatus(Request $request)
+    {
 
         DB::table('shoppings')->where('id', $request->shopping_id)->update([
             'status' => $request->status,
@@ -529,15 +532,15 @@ class CotizadorController extends Controller
         $products = json_decode($info->product, true);
         $description = $products['description'];
         $id = $products['id'];
-        
+
         $nameStatus = '';
-        if($request->status == 0){
+        if ($request->status == 0) {
             $nameStatus = 'En validación OC';
-        }elseif($request->status == 1){
+        } elseif ($request->status == 1) {
             $nameStatus = 'En proceso de compra';
-        }elseif($request->status == 2){
+        } elseif ($request->status == 2) {
             $nameStatus = 'Error en número de compra';
-        }elseif($request->status == 3){
+        } elseif ($request->status == 3) {
             $nameStatus = 'Entregado';
         }
 
@@ -549,23 +552,60 @@ class CotizadorController extends Controller
             $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
         } catch (\Exception $e) {
             return 0;
-        } 
-  
+        }
+
         return redirect()->action([CotizadorController::class, 'compras']);
     }
 
-    public function comprasRealizarCompra(Request $request) {
+    public function comprasStatusdeCompradores(Request $request)
+    {
+        //dd($request);
+        DB::table('shoppings')->where('id', $request->shopping_id)->update([
+            'status' => $request->status,
+        ]);
+ 
+        $info = DB::table('shopping_products')->where('shopping_id', $request->shopping_id)->first();
+        $products = json_decode($info->product, true);
+        $description = $products['description'];
+        $id = $products['id'];
+
+        $nameStatus = '';
+        if ($request->status == 0) {
+            $nameStatus = 'En validación OC';
+        } elseif ($request->status == 1) {
+            $nameStatus = 'En proceso de compra';
+        } elseif ($request->status == 2) {
+            $nameStatus = 'Error en número de compra';
+        } elseif ($request->status == 3) {
+            $nameStatus = 'Entregado';
+        }
+
+        $buyer = DB::table('shoppings')->where('id', $info->shopping_id)->value('user_id');
+        $receptor = User::where('id', $buyer)->first();
+        $namereceptor = $receptor->name;
+
+        try {
+            $receptor->notify(new ShoppingsStatus($namereceptor, $nameStatus, $description));
+        } catch (\Exception $e) {
+            return 0;
+        }
+        
+        return Redirect::route('perfil', ['id' => $request->user_id]);
+    }
+
+    public function comprasRealizarCompra(Request $request)
+    {
         //dd($request);
 
-        $quote = Quote::where('id', $request->id )->get()->first();
-        $quote_products = QuoteProducts::where('id', $request->id )->get()->first();
-        $quote_techniques = QuoteTechniques::where('id', $request->id )->get()->first();
-    
-        $quote_updates = QuoteUpdate::where('id', $request->id )->get()->first();
-/*         $quote_update_product = QuoteProducts::where('id', $request->id )->get()->first();
+        $quote = Quote::where('id', $request->id)->get()->first();
+        $quote_products = QuoteProducts::where('id', $request->id)->get()->first();
+        $quote_techniques = QuoteTechniques::where('id', $request->id)->get()->first();
+
+        $quote_updates = QuoteUpdate::where('id', $request->id)->get()->first();
+        /*         $quote_update_product = QuoteProducts::where('id', $request->id )->get()->first();
  */
-        if($quote){
-            $createQuote = new Shopping(); 
+        if ($quote) {
+            $createQuote = new Shopping();
             $createQuote->user_id = $quote->user_id;
             $createQuote->address_id = $quote->address_id;
             $createQuote->iva_by_item = $quote->iva_by_item;
@@ -573,7 +613,7 @@ class CotizadorController extends Controller
             $createQuote->logo = $quote->logo;
             $createQuote->status = 0;
             $createQuote->save();
-        } 
+        }
 
         $createQuoteDiscount = new ShoppingDiscount();
         $createQuoteDiscount->discount = 0;
@@ -619,7 +659,7 @@ class CotizadorController extends Controller
             $createQuoteUpdate->save();
         } */
 
-        if($quote_techniques){
+        if ($quote_techniques) {
             $createQuoteTechniques = new ShoppingTechnique();
             $createQuoteTechniques->shopping_id = $createQuote->id;
             $createQuoteTechniques->material =  $quote_techniques->material;
@@ -628,7 +668,7 @@ class CotizadorController extends Controller
             $createQuoteTechniques->save();
         }
 
-        DB::table('quote_information')->where('id',$request->id)->update([
+        DB::table('quote_information')->where('id', $request->id)->update([
             'information' => 'compra'
         ]);
 
@@ -636,13 +676,13 @@ class CotizadorController extends Controller
         $user = $quote->user_id;
         $InfoUser = User::where('id', $user)->first();
         $name =  $InfoUser->name;
-        $producto = json_decode($quote_products->product); 
+        $producto = json_decode($quote_products->product);
         $nameProduct = $producto->name;
         $descriptionProduct = $producto->description;
         $status = 'Compra';
         //$description = $product['description'];
         try {
-            $InfoUser->notify(new CompraStatus($name, $status, $nameProduct, $descriptionProduct,$request->id));
+            $InfoUser->notify(new CompraStatus($name, $status, $nameProduct, $descriptionProduct, $request->id));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'No se pudo enviar el correo');
         }
@@ -655,9 +695,9 @@ class CotizadorController extends Controller
             'maria.maldonado@gnp.com.mx',    
             'jaime.gonzalez@promolife.com.mx' 
         ]; */
-     
-        
-     /*    $emails = [
+
+
+        /*    $emails = [
             auth()->user()->email,
             'luz.enriquez@promolife.com.mx'
         ];
@@ -678,31 +718,31 @@ class CotizadorController extends Controller
         $creteUserlog->save();
 
         return redirect()->back()->with('message', 'El producto ha cambiado a status de compra, puedes revisarlo en la pantalla de MIS COMPRAS');
-
     }
 
-    public function comprasSolicitarArte(Request $request) {
+    public function comprasSolicitarArte(Request $request)
+    {
         $request->validate([
             'file' => 'required|file|max:10240',
         ]);
-      
+
         if ($request->hasFile('file')) {
 
             $currentQuoteDetails = CurrentQuoteDetails::where('id', $request->id)->get()->first();
-          
+
             $currentQuoteMoreDetails = json_decode($currentQuoteDetails->more_details);
 
             $filenameWithExt = $request->file('file')->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);    
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('file')->getClientOriginalExtension();
-            $fileNameToStore = time() . '_' . $filename . '.' . $extension;    
+            $fileNameToStore = time() . '_' . $filename . '.' . $extension;
             $pathFile = $request->file('file')->storeAs('public/art/files', $fileNameToStore);
             $currentQuoteMoreDetails[0]->art = $pathFile;
 
-            DB::table('current_quotes_details')->where('id',$request->id)->update([
+            DB::table('current_quotes_details')->where('id', $request->id)->update([
                 'more_details' =>  json_encode($currentQuoteMoreDetails)
             ]);
-            
+
             $creteUserlog = new UserLogs();
             $creteUserlog->user_id = auth()->user()->id;
             $creteUserlog->type = 'producto';
@@ -711,12 +751,10 @@ class CotizadorController extends Controller
 
 
             return redirect()->back()->with('arte', 'Arte agregado satisfactoriamente.');
-
         } else {
             $pathFile = '';
 
             return redirect()->back()->with('mal-arte', 'Error al subir el arte, intenta nuevamente.');
-
         }
     }
 }

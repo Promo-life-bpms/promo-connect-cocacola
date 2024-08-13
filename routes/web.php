@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
  */    
     Route::get('/mis-compras', [CotizadorController::class, 'compras'])->name('compras');
     Route::post('/mis-compras/actualizar', [CotizadorController::class, 'comprasStatus'])->name('compras.status');
+    Route::post('/mis-compras/actualizar/of/buyers', [CotizadorController::class, 'comprasStatusdeCompradores'])->name('compras.status.of.buyers');
     Route::post('/mis-compras/realizar-compra', [CotizadorController::class, 'comprasRealizarCompra'])->name('compras.realizarcompra');
     Route::post('/mis-compras/solicitar-arte', [CotizadorController::class, 'comprasSolicitarArte'])->name('compras.solicitararte');
 
