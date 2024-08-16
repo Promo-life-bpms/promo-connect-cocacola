@@ -212,8 +212,8 @@
                                 @endif
                                 <div class="p-5">
                                     <p class="mb-2 text-base font-bold truncate-text truncate-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $product->name}}</p>
-                                    <p class="text-base text-stone-600 mb-2"> ${{ $product->price}}</p>
-                                    
+                                   {{--  <p class="text-base text-stone-600 mb-2"> ${{ $product->price}}</p> --}}
+                                    <br>
                                     <a href="#" class="bg-black text-white font-semibold py-2 px-10 rounded mt-5">
                                         Ver más
                                     </a>

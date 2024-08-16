@@ -178,17 +178,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="width:10% ;"><center><b>Tiempo de Entrega: 10 días hábiles</b> </center>  </td>
+                        <td colspan="4" style="width:10% ;"><center><b>Tiempo de Entrega: 10 días hábiles</b> </center>  </td>
                     </tr>
                     <tr>
                         <th colspan="1">Cantidad</th>
                         <th colspan="1">Precio Unitario</th>
                         <th colspan="1">Precio total</th>
+                        <th colspan="1">Total con IVA </th>
                     </tr>
                     <tr>
+                        @php
+                            $totalIVA=$product->precio_total * 1.16;
+                        @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn </td>
                         <td colspan="1"> $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn </td>
+                        <td colspan="1"> $ {{ number_format($totalIVA , 2, '.', ',') }} mxn </td>
                     </tr>
                 </table>
             <br>

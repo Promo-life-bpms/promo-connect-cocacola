@@ -107,7 +107,7 @@
                 <table border="1" >
                     <tr>
                         <th style="width:30%" >Imagen de Referencia</th>
-                        <th style="width:70%" colspan="3">Descripción 
+                        <th style="width:70%" colspan="4">Descripción 
                     </th>
                     </tr>
                     <tr>
@@ -119,7 +119,7 @@
                             <center><img style="width:200px; height:240px; object-fit:contain;" src="data:image/png;base64,{{$image64}}" alt=""></center>
                         @endif
                         </td>
-                        <td colspan="3" style="width:70%; padding:2px;">
+                        <td colspan="4" style="width:70%; padding:2px;">
                             {{ $productName }}
 
                             @switch($category)
@@ -167,28 +167,33 @@
                         
                     </tr>
                     <tr>
-                        <th colspan="1" style="width:35%; padding:2px;">Tecnica de Personalizacion </th>
+                        <th colspan="2" style="width:35%; padding:2px;">Tecnica de Personalizacion </th>
                         <th colspan="2" style="width:35%; padding:2px;" >Detalle de la Personalizacion </th>
                     </tr>
                     <tr>
-                        <td colspan="1" style="width:35%">{{ isset($quoteTechnique->technique)? $quoteTechnique->technique :  '' }} </td>
+                        <td colspan="2" style="width:35%">{{ isset($quoteTechnique->technique)? $quoteTechnique->technique :  '' }} </td>
                         <td colspan="2" style="width:35%">
                             <p> <b>Material: </b>  {{ isset($quoteTechnique->material)? $quoteTechnique->material : ''  }} </p>
                             <p> <b>Tamaño: </b>  {{ isset($quoteTechnique->size)? $quoteTechnique->size : '' }} </p>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3" style="width:10% ;"><center><b>Tiempo de Entrega: 10 días hábiles</b> </center>  </td>
+                        <td colspan="4" style="width:10% ;"><center><b>Tiempo de Entrega: 10 días hábiles</b> </center>  </td>
                     </tr>
                     <tr>
                         <th colspan="1">Cantidad</th>
                         <th colspan="1">Precio Unitario</th>
                         <th colspan="1">Precio total</th>
+                        <th colspan="1">Total con IVA </th>
                     </tr>
                     <tr>
+                        @php
+                            $totalIVA=$product->precio_total * 1.16;
+                        @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn </td>
                         <td colspan="1"> $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn </td>
+                        <td colspan="1"> $ {{ number_format($totalIVA , 2, '.', ',') }} mxn </td>
                     </tr>
                 </table>
             <br>
