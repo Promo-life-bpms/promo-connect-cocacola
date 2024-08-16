@@ -33,7 +33,7 @@
                             SOLICITANTE
                         </th>
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
-                            FECHA
+                            FECHA DE CREACIÓN
                         </th>
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
                             DIRECCIÓN
@@ -43,9 +43,12 @@
                             TIPO
                         </th>
                       
-                        {{-- <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
+                        <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
+                            FECHA ESTIMADA DE ENTREGA
+                        </th>
+                        <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
                             ESTATUS
-                        </th> --}}
+                        </th> 
                         <th scope="col" class="px-3 py-2 md:px-6  md:py-3">
 
                         </th>
@@ -64,7 +67,9 @@
                                 {{ $muestra->user_name }}
                             </th>
                             <td class="px-6 py-4  hidden md:table-cell">
-                                {{ $muestra->updated_at }}
+                                {{
+                                    \Carbon\Carbon::parse($muestra->created_at)->format('d-m-y') 
+                                }}
                             </td>
                             <td class="px-6 py-4  hidden md:table-cell">
                                 {{ $muestra->address }}
@@ -73,11 +78,31 @@
                             <td class="px-6 py-4  hidden md:table-cell">
                                 {{ $muestra->product_type }}
                             </td>
-                            
-                            {{-- <td class="px-6 py-4  hidden md:table-cell">
-                                {{ $muestra->status }}
+                  
+                            <td class="px-6 py-4  hidden md:table-cell">
 
-                            </td> --}}
+                                {{ $muestra->estimated_delivery != null? $muestra->estimated_delivery: 'Sin fecha confirmada' }}
+                            </td>
+                         
+
+                            <td class="px-6 py-4  hidden md:table-cell">
+                                @switch($muestra->status)
+                                    @case(1)
+                                        <span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Se está preparando</span>
+                                        @break
+                                    @case(2)
+                                        <span class="bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">Va en camino</span>
+                                        @break
+                                    @case(3)
+                                        <span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Cancelada</span>
+                                        @break
+                                    @case(4)
+                                        <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Entregada</span>
+                                        @break
+                                    @default
+                                        
+                                @endswitch
+                            </td>
                             <td class="px-6 py-4  hidden md:table-cell">
                                 <a href="/carrito/muestra/{{ $muestra->id_muestra }}">
                                     <button class="bg-[#2B2D2F] text-white h-[50px] w-full px-2 ">VER DETALLES </button>

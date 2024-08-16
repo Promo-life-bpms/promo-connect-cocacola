@@ -91,6 +91,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/compradores/{id}', [CotizadorController::class, 'infoperfil'])->name('perfil');
         Route::post('/especial/cambiar-status', [SpecialController::class, 'especialCambiarStatus'])->name('seller.especialCambiarStatus');
         Route::post('/especial/alta-producto', [SpecialController::class, 'especialAltaProducto'])->name('seller.especialAltaProducto');
+        Route::post('/muestra/cambiar-fecha', [MuestraController::class, 'especialCambiarFecha'])->name('seller.especialCambiarFecha');
 
     });
     Route::prefix('admin')->middleware(['role:admin'])->group(function () {
@@ -124,8 +125,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/export/user', [ExportDataController::class, 'exportUser'])->name('exportUser');
     Route::post('/shopping/rate', [ShoppingController::class, 'shoppingRate'])->name('shoppingRate');
-
-    Route::post('/muestras/edit-date', [MuestraController::class, 'editDate'])->name('editDate');
 
 
     ////CREAR USUARIO////
