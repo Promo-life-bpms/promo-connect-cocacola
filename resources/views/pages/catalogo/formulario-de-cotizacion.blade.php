@@ -162,7 +162,8 @@
                                                     <option value="LOGOADAREBLANCO.png">Adare blanco</option>
                                                 </select>
                                             </div>
-                                            
+                                            <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-stone-700 " id="clearLogo" style="display:none;">Limpiar logo</p>
+
                                             <br>
                                             
                                           <input type="file"
@@ -387,6 +388,9 @@
            var selectedImage = null; // Definir selectedImage aquí
    
            logoSelect.addEventListener("change", function () {
+
+                document.getElementById('clearLogo').style.display = 'block';
+
                var selectedLogo = logoSelect.value;
              
                canvas.remove(selectedImageLogo);
@@ -396,6 +400,7 @@
                if (selectedImageLogo) {
                    canvas.remove(selectedImageLogo);
                }
+               
                   
                fabric.Image.fromURL(logo, function (image) {
                    image.scaleToWidth(50);
@@ -486,8 +491,12 @@
            });
    
            /* Borrado manual de imagenes y texto */
+           var resultLogo = document.getElementById("resultLogo");
            var resultImage = document.getElementById("resultImage");
            var showGeneratedImage = document.getElementById("showGeneratedImage");
+           document.getElementById('clearLogo').addEventListener('click', function() {
+               canvas.remove(selectedImageLogo);
+           });
            document.getElementById('clearImage').addEventListener('click', function() {
                canvas.remove(selectedImage);
            });
