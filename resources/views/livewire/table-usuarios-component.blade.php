@@ -62,6 +62,15 @@
                             <th scope="col" class="px-6 py-3 hidden md:table-cell ">
                                 Email
                             </th>
+                            <th scope="col" class="px-6 py-3 hidden md:table-cell ">
+                                No. de Cotizaciones
+                            </th>
+                            <th scope="col" class="px-6 py-3 hidden md:table-cell ">
+                                No. de Muestras
+                            </th>
+                            <th scope="col" class="px-6 py-3 hidden md:table-cell ">
+                                No. de compras
+                            </th>
                             <th scope="col" class="px-6 py-3">
 
                             </th>
@@ -77,6 +86,15 @@
                                 </th>
                                 <td class="px-6 py-4  hidden md:table-cell	">
                                     {{ $user->email }}
+                                </td>
+                                <td class="px-6 py-4  hidden md:table-cell	">
+                                    {{ $user->quotes->count() }}
+                                </td>
+                                <td class="px-6 py-4  hidden md:table-cell	">
+                                    {{ $user->muestras->count() }}
+                                </td>
+                                <td class="px-6 py-4  hidden md:table-cell	">
+                                    {{ $user->shopping->count() }}
                                 </td>
                                 <td class="">
                                     <a href="/seller/compradores/{{ $user->id }}">

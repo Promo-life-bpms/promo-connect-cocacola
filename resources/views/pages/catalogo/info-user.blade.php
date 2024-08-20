@@ -141,8 +141,8 @@ $layout = auth()
                                         </tr>
                                         @endforeach
                                         @else
-                                        <td colspan="6" class=" text-center">
-                                            No tiene compras por el momento
+                                        <td colspan="7" class=" text-center">
+                                            No tiene cotizaciones por el momento
                                         </td>
                                         @endif
 
@@ -272,6 +272,7 @@ $layout = auth()
                                         </tr>
                                     </thead>
                                     <tbody class="text-sm">
+                                        @if ($total > 0)
                                         @foreach ($shoppings as $shopping)
                                         @php
                                         $product = json_decode($shopping->products[0]->product, true);
@@ -483,6 +484,11 @@ $layout = auth()
                                             @endrole
                                         </tr>
                                         @endforeach
+                                        @else
+                                        <td colspan="10" class=" text-center">
+                                            No tiene compras por el momento
+                                        </td>
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>
