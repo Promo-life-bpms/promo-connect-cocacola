@@ -204,18 +204,8 @@ class CotizadorController extends Controller
         $longitudmuestras = count($userproducts);
 
         $shoppings = [];
-        $total = 0;
-        $user = auth()->user();
-        if ($user->hasRole(['buyers-manager', 'seller'])) {
-            // Obtiene todos los resultados sin paginado
-            $shoppings = Shopping::orderBy('created_at', 'desc')->get();
-        } else {
-            // Obtiene todos los resultados sin paginado y filtra por user_id
-            $shoppings = Shopping::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
-        }
-
-        // Calcula el total sumando el campo 'precio_total'
-        $total = $shoppings->sum('precio_total');
+        $shoppings = Shopping::where('user_id', $id)->orderBy('created_at', 'desc')->get();
+        $total = count($shoppings);
 
         return view('pages.catalogo.info-user', compact('id'), ['infouser' => $datainforusers, 'muestras' => $userproducts, 'longitudmuestras' => $longitudmuestras, 'compras' => $usercompras, 'longitudcompras' => $longitudcompras, 'shoppings' => $shoppings, 'total' => $total]);
     }
