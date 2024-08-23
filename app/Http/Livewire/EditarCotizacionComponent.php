@@ -6,6 +6,7 @@ use App\Models\Catalogo\Product;
 use App\Models\PricesTechnique;
 use App\Models\Quote;
 use App\Models\QuoteDiscount;
+use App\Models\QuoteInformation;
 use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
@@ -14,7 +15,7 @@ class EditarCotizacionComponent extends Component
     use AuthorizesRequests;
 
     // Informaicon de los descuentos
-    public $discount, $value, $type, $discountStatus;
+    public $discount, $value, $type, $discountStatus, $cotizacion_id;
     // Informaicon de los descuentos
 
     public $quote, $puedeEditar = false, $inputDiscount;
@@ -29,20 +30,26 @@ class EditarCotizacionComponent extends Component
     // Informacion a mostrar
     public $showProduct, $dataProduct;
 
-    public function mount()
+    public function mount($cotizacionId)
     {
-        $discount = $this->quote->latestQuotesUpdate->quoteDiscount;
-        $this->value = $discount->value;
-        $this->type = $discount->type;
-        $this->discountStatus = $discount->discount;
-
-        // dd($this->type, $this->value, $this->discountStatus);
+        $this->quote = Quote::find($cotizacionId);
+        dd($this->quote);
+        $this->cotizacion_id = $cotizacionId;
+        if ($this->quote) {
+            $discount = $this->quote->latestQuotesUpdate->quoteDiscount;
+            $this->value = $discount->value;
+            $this->type = $discount->type;
+            $this->discountStatus = $discount->discount;
+        }
+    
     }
 
     public function render()
     {
-        $quote = Quote::find($this->quote->id);
-        return view('livewire.editar-cotizacion-component', ['quote' => $quote]);
+        $quote = Quote::find($this->cotizacion_id);
+        $quoteInformation = QuoteInformation::find($this->cotizacion_id)->first();
+
+        return view('livewire.editar-cotizacion-component', ['quote' => $quote, 'quoteInformation' => $quoteInformation]);
     }
 
     public function verDetalles($product)

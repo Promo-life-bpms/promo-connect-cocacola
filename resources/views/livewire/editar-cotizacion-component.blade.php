@@ -34,12 +34,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($quote->latestQuotesUpdate->quoteProducts as $product)
+                      
+                            @foreach ($quote as $data)
                                 @php
-                                    $producto = (object) json_decode($product->product);
-                                    $tecnica = (object) json_decode($product->technique);
+                                    $producto = (object) json_decode($quoteInformation->product);
+                                    $tecnica = (object) json_decode($quoteInformation->technique);
                                     $visible = true;
-                                    $auxProduct = $product;
+                                    $auxProduct = $quoteInformation;
                                     
                                     foreach ($listUpdateCurrent as $productUpdate) {
                                         if ($product->id == $productUpdate['currentQuote_id']) {

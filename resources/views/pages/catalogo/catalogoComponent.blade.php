@@ -237,12 +237,20 @@
                                                         class="w-auto h-52" alt="{{ $product->name }}">
                                                 </div>
                                             </div>
+                                            @if($product->provider_id == 1987)
+                                                <div class="w-full flex justify-end items-end">
+                                                    <img src="{{ asset('./img/banderaGTM.png') }}" alt="" class="w-8 mb-4" style="margin-top: -20px;">
+                                                </div>
+                                            @else
+                                                <div class="w-full flex justify-end items-end">
+                                                    <img src="{{ asset('./img/banderaMX.png') }}" alt="" class="w-8 mb-4" style="margin-top: -20px;">
+                                                </div>
+                                            @endif
+                                           
                                             <div class="text-center flex-grow gap-2 flex flex-col justify-between sm:block">
                                                 <div class="py-2 text-lg text-slate-700">
                                                     <h5 class="capitalize m-0">
                                                         {{ Str::limit($product->name, 22, '...') }}</h5>
-                                                    {{-- <p class="m-0">$
-                                                        {{number_format($priceProduct,2)}}</p>  --}}
                                                 </div>
                                                 <a href="{{ route('show.product', ['product' => $product->id]) }}"
                                                     class="block w-full bg-black hover:bg-primary  text-white  hover:text-black  text-center rounded-sm font-semibold py-2 rounded-xl">

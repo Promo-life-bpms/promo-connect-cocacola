@@ -512,7 +512,7 @@ class CotizadorController extends Controller
     public function misCotizaciones()
     {
 
-        if (auth()->user()->hasRole("buyers-manager")) {
+        if (auth()->user()->hasRole(["buyers-manager", "seller"])) {
             $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
         } else {
             $quotes = auth()->user()->quotes()->orderBy('created_at', 'desc')->simplePaginate(10);
