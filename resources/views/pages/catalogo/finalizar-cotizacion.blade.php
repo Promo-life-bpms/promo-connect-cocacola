@@ -322,7 +322,11 @@
                         <hr class="border-black">
                         <div class="flex justify-between">
                             <p>Total:</p>
-                            <p class="font-bold">$ {{ number_format($totalQuote, 2, '.', ',') }}</p>
+
+                            @if(!Auth::user()->hasRole('invited'))
+                                <p class="font-bold">$ {{ number_format($totalQuote, 2, '.', ',') }}</p>
+                            @endif
+
                         </div>
                         <hr class="border-black">
                         <div>

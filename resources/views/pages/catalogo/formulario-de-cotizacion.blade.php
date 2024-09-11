@@ -248,18 +248,29 @@
           
             <div class="justify-content-between  grid grid-cols-1">
                 {{--  @if (!$priceScales) --}}
-                <div>
-                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
-                        @if($this->cantidad == null || $this->cantidad == 0)
-                            0.00
-                        @else
-                            {{ number_format($costoCalculado,2)}}
-                        @endif
-                        <b class="text-xs text-red-500 font-bold">Incluye TF</b>
-                    </h6>
 
-                    <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
-                </div>
+                @if(Auth::user()->hasRole('invited'))
+                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
+                            No disponible
+                            <b class="text-xs text-red-500 font-bold">Incluye TF</b>
+                        </h6>
+
+                    <h6 class="text-success"><strong>Precio Total:</strong>No disponible</h6>
+                @else
+                    <div>
+                        <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
+                            @if($this->cantidad == null || $this->cantidad == 0)
+                                0.00
+                            @else
+                                {{ number_format($costoCalculado,2)}}
+                            @endif
+                            <b class="text-xs text-red-500 font-bold">Incluye TF</b>
+                        </h6>
+
+                        <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
+                    </div>
+                @endif
+                
         
                 {{--  @endif --}}
                 <div class="form-group m-0 mb-1 text-center">

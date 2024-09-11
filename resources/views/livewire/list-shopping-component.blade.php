@@ -22,13 +22,18 @@
                 <p class="text-bold text-4xl">{{count($shoppings) }}</p>
             </div>
         </div>
-    
-        <div class="w-1/2">
+
+
+        @if(!Auth::user()->hasRole('invited'))
+          <div class="w-1/2">
             <div class="bg-white p-4 rounded shadow">
                 <h2 class="text-xl font-bold mb-2">Total: </h2>
                 <p class="text-bold text-4xl">$ {{ number_format($total_compra, 2, '.', ',') }}</p>
             </div>
-        </div>
+          </div>                
+        @endif
+        
+        
     
         <div class="w-1/2">
             
@@ -55,7 +60,11 @@
                 <th style="width: 10%;">Producto</th>
                 <th style="width: 20%;">Descripción</th>
                 <th style="width: 10%;">Cantidad</th>
-                <th style="width: 10%;">Total</th>
+
+                @if(!Auth::user()->hasRole('invited'))
+                  <th style="width: 10%;">Total</th>
+                @endif
+
                 <th style="width: 10%;">Fecha de pedido</th>
                 <th style="width: 10%;">Fecha de entrega</th>
                 <th style="width: 10%;">Status</th>
@@ -95,9 +104,13 @@
                     <td class="text-center"> 
                       {{ $shopping->products[0]->cantidad }}
                     </td>
-                    <td class="text-center">
-                      <b>$ {{ number_format($shopping->products[0]->precio_total, 2, '.', ',') }}</b> 
-                    </td>
+
+                    @if(!Auth::user()->hasRole('invited'))
+                      <td class="text-center">
+                        <b>$ {{ number_format($shopping->products[0]->precio_total, 2, '.', ',') }}</b> 
+                      </td>              
+                    @endif
+
                     <td class="text-center">
                       {{ $shopping->products[0]->created_at->format('d-m-Y') }}
                     </td>

@@ -51,12 +51,14 @@
             </div>
         </div>
 
-        <div class="w-1/2">
-            <div class="bg-white p-4 rounded shadow">
-                <h2 class="text-xl font-bold mb-2">Total: </h2>
-                <p class="text-bold text-4xl">$ {{ number_format($totalGeneral, 2, '.', ',') }}</p>
+        @if(!Auth::user()->hasRole('invited'))
+            <div class="w-1/2">
+                <div class="bg-white p-4 rounded shadow">
+                    <h2 class="text-xl font-bold mb-2">Total: </h2>
+                    <p class="text-bold text-4xl">$ {{ number_format($totalGeneral, 2, '.', ',') }}</p>
+                </div>
             </div>
-        </div>
+        @endif
 
         <div class="w-1/2">
 
@@ -81,8 +83,10 @@
                     <th style="width:20%;">Detalles</th>
                     <th style="width:10%;">Tiempo de entrega</th>
                     <th style="width:10%;">Cantidad</th>
-                    <th style="width:10%;">Precio unitario</th>
-                    <th style="width:10%;">Total</th>
+                    @if(!Auth::user()->hasRole('invited'))
+                        <th style="width:10%;">Precio unitario</th>
+                        <th style="width:10%;">Total</th>
+                    @endif
                     <th style="width:10%;"></th>
                 </tr>
             </thead>
@@ -141,10 +145,13 @@
                     </td>
                     <td class="text-center">{{ $product->dias_entrega}} dias</td>
                     <td class="text-center"> {{ $product->cantidad}} piezas</td>
-                    <td class="text-center"> <b>$ {{ $product->precio_unitario}} </b> </td>
-                    <td class="text-center"> <b>$ {{ number_format($product->precio_total, 2, '.', ',') }} </b> </td>
-                    <td class="text-center">
 
+                    @if(!Auth::user()->hasRole('invited'))
+                        <td class="text-center"> <b>$ {{ $product->precio_unitario}} </b> </td>
+                        <td class="text-center"> <b>$ {{ number_format($product->precio_total, 2, '.', ',') }} </b> </td>
+                    @endif
+                   
+                    <td class="text-center">
 
                         @if( intval($product->cantidad) > intval($productDB->stock) )
                         <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Producto sin stock</span>
