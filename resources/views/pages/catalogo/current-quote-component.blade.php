@@ -76,7 +76,10 @@
                             @php
                                 $precioTotal = $quote->precio_total;
                             @endphp
-                            <p class="font-bold text-lg">$ {{ number_format($precioTotal, 2, '.', ',') }} + IVA</p>
+                            @if(!Auth::user()->hasRole('invited'))
+                                <p class="font-bold text-lg">$ {{ number_format($precioTotal, 2, '.', ',') }} + IVA</p>
+                            @endif
+                            
                                 <!-- Modal toggle -->
                                 <button data-modal-target="edit-modal-{{$quote->id}}" data-modal-toggle="edit-modal-{{$quote->id}}" class=" bg-primary text-black block w-full text-center text-sm underline rounded-sm font-semibold py-2 px-4" type="button">
                                     Editar cotización
@@ -201,7 +204,11 @@
                     <hr class="border-black"> --}}
                     <div class="flex justify-between">
                         <p>Total:</p>
-                        <p class="font-bold">$ {{ number_format(round($totalQuote, 2), 2, '.', ',') }} </p>
+                        @if(!Auth::user()->hasRole('invited'))
+                            <p class="font-bold">$ {{ number_format(round($totalQuote, 2), 2, '.', ',') }} </p>
+                        @else
+                        No disponible
+                        @endif
                     </div>
                     <hr class="border-black">
                     <!-- <a href="{{ route('finalizar') }}" 

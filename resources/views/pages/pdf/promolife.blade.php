@@ -191,9 +191,28 @@
                             $totalIVA=$product->precio_total * 1.16;
                         @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
-                        <td colspan="1"> $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn </td>
-                        <td colspan="1"> $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn </td>
-                        <td colspan="1"> $ {{ number_format($totalIVA , 2, '.', ',') }} mxn </td>
+                        <td colspan="1"> 
+                            @if(!Auth::user()->hasRole('invited'))
+                                $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn  
+                            @else
+                                no disponible                    
+                            @endif
+                        </td>
+                        <td colspan="1"> 
+                            @if(!Auth::user()->hasRole('invited'))
+                                $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn
+                            @else
+                                no disponible                                                         
+                            @endif
+
+                        </td>
+                        <td colspan="1"> 
+                            @if(!Auth::user()->hasRole('invited'))
+                                $ {{ number_format($totalIVA , 2, '.', ',') }} mxn  
+                            @else
+                                no disponible        
+                            @endif                        
+                        </td>
                     </tr>
                 </table>
             <br>

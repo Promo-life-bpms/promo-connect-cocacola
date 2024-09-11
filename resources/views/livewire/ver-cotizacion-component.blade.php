@@ -156,9 +156,13 @@
                     <strong>RESUMEN DEL PEDIDO</strong>
                 </div>
                 <span class="">Total :</span>
-                <strong class="text-right">$
-                    {{ number_format($quote->latestQuotesUpdate->quoteProducts->sum('precio_total'), 2, '.', ',') }}
-                </strong>
+                
+                @if(!Auth::user()->hasRole('invited'))
+                    <strong class="text-right">$
+                        {{ number_format($quote->latestQuotesUpdate->quoteProducts->sum('precio_total'), 2, '.', ',') }}
+                    </strong>           
+                @endif
+
                 <hr class="col-span-2 h-[2.0px] bg-black">
             </div>
             @role('seller')
