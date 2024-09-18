@@ -475,7 +475,9 @@ class CotizadorController extends Controller
 
         if (auth()->user()->hasRole("buyers-manager")) {
             $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
-        } else {
+        } else if(auth()->user()->hasRole("seller"))
+            $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
+        else {
             $quotes = auth()->user()->quotes()->orderBy('created_at', 'desc')->simplePaginate(10);
         }
 
