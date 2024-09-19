@@ -159,16 +159,14 @@
 
                         @if($quoteInformation && $quoteInformation->information == 'Info')
                         <!-- Modal toggle -->
+                        
                         <button data-modal-target="oc-modal-{{ $quote->id }}" data-modal-toggle="oc-modal-{{ $quote->id }}" class="w-full bg-black hover:bg-primary text-white hover:text-black font-bold p-2 rounded text-xs" type="button">
                             Confirmar compra
                         </button>
 
                         <div class="mt-2"></div>
 
-                        <button data-modal-target="oc-edit-{{ $quote->id }}" data-modal-toggle="oc-edit-{{ $quote->id }}" class="w-full bg-black hover:bg-primary text-white hover:text-black font-bold p-2 rounded text-xs" type="button">
-                            Editar cotización
-                        </button>
-
+                      
                         <!-- Main modal -->
                         <div id="oc-modal-{{ $quote->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -250,6 +248,15 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        @endif
+                        @if(Auth::user()->hasRole('seller'))
+
+                            <button data-modal-target="oc-edit-{{ $quote->id }}" data-modal-toggle="oc-edit-{{ $quote->id }}" class="w-full bg-black hover:bg-primary text-white hover:text-black font-bold p-2 rounded text-xs" type="button">
+                                Editar cotización
+                            </button>
+
                         @endif
 
                         @endif
