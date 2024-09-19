@@ -18,6 +18,8 @@ use App\Models\TemporalImageUrl;
 use App\Models\UserLogs;
 use Livewire\Component;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\WithFileUploads;
 
 class EditarCotizacionComponent extends Component
@@ -51,7 +53,7 @@ class EditarCotizacionComponent extends Component
         $this->quoteInformation = QuoteInformation::find($quoteId);
         $productDecode = json_decode($productData->product, true);
         $this->productID = $productDecode['id'];
-       
+        $this->quoteId = $quoteId;
         $this->utilidad = config('settings.utility');
         // $this->priceScales = false;
         if ($this->quote) {
@@ -241,13 +243,9 @@ class EditarCotizacionComponent extends Component
 
     public function actualizarCarrito()
     {
-        
-        dd($this->cantidad);
-
         $user = Auth::user();
 
         $this->validate([
-            'projecName' => 'required|string|max:255',
             'priceTechnique' => 'required',
             'cantidad' => 'required|numeric|min:1',
             'colores' => 'required|numeric|min:0',
@@ -257,76 +255,27 @@ class EditarCotizacionComponent extends Component
         $technique = Technique::findOrFail($this->tecnicaSeleccionada);
         $size = Size::find($this->sizeSeleccionado);       
 
-        $temporalImage = TemporalImageUrl::where('product_id', $this->product->id)->where('type', 'no used')->where('user_id', $user->id)->get()->last();
 
-        $currentQuote = auth()->user()->currentQuote;
-
-        $more_detail = [];
-
-        array_push( $more_detail, (object)[
-            'embalaje' => isset($this->embalaje)? 1:0,
-            'armado'  => isset($this->armado)? 1:0,
-            'destino' => isset($this->destino)? 1:0,
-            'detalles' => $this->detalles != ""? $this->detalles : "",
-            'proyecto'=> $this->projecName,
+        DB::table('quote_techniques')->where('quotes_id', $this->quoteId)->update([
+            'material' => $material->nombre,
+            'technique' => $technique->nombre,
+            'size' => $size->nombre,
         ]);
-
-        if ($currentQuote === null) {
-
-            $currentQuote = auth()->user()->currentQuote()->create([
-                'discount' => false
-            ]);
-        } else {
-            if (auth()->user()->currentQuote) {
-                auth()->user()->currentQuote->discount = false;
-                auth()->user()->currentQuote->type =  null;
-                auth()->user()->currentQuote->value = null;
-                auth()->user()->currentQuote->save();
-            }
-        }
-        $imageName = "";
-        if (isset($temporalImage->src_image)) {
-            $imageName = $temporalImage->src_image;
-            $temporalImage->delete();
-        }
-        // Renombrar la imagen
-        // Subir la imagen
-        /* $this->photo->storeAs('public/logos', $imageName); */
-
-        $creteUserlog = new UserLogs();
-        $creteUserlog->user_id = $user->id;
-        $creteUserlog->type = 'producto';
-        $creteUserlog->value = 'agregar al carrito';
-        $creteUserlog->save();
-
-        $dataQuote = [
-            'product_id' => $this->product->id,
-            'color_logos' => $this->colores,
-            'dias_entrega' => $this->entrega,
-            'product_id' => $this->product->id,
-            'price_technique' => $this->precioDeTecnica *  $this->colores,
-            'color_logos' => $this->colores,
-            'dias_entrega' => $this->entrega,
+      
+        
+        DB::table('quote_products')->where('id', $this->quoteId)->update([
+            'prices_techniques' => $this->precioDeTecnica,
             'cantidad' => $this->cantidad,
             'precio_unitario' => $this->costoCalculado,
             'precio_total' => $this->costoTotal,
-            'logo' => $imageName,
-            'more_details' => json_encode($more_detail)
-        ];
-
-        $createCurrentQuote =  $currentQuote->currentQuoteDetails()->create($dataQuote);
-
-        $createCurrentQuotesTechniques = new CurrentQuotesTechniques();
-        $createCurrentQuotesTechniques->current_quotes_details_id = $createCurrentQuote->id;
-        $createCurrentQuotesTechniques->material = $material->nombre;
-        $createCurrentQuotesTechniques->technique = $technique->nombre; 
-        $createCurrentQuotesTechniques->size = $size->nombre; 
-        $createCurrentQuotesTechniques->save();
-
-        session()->flash('message', 'Se ha agregado este producto al carrito.');
-        $this->emit('currentQuoteAdded');
-        $this->dispatchBrowserEvent('addProducto');
-        $this->resetData();
+        ]);
+    
+        $creteUserlog = new UserLogs();
+        $creteUserlog->user_id = $user->id;
+        $creteUserlog->type = 'update';
+        $creteUserlog->value = 'editar cotización';
+        $creteUserlog->save();
+   
     }
 
     public function editarCurrentCotizacion()

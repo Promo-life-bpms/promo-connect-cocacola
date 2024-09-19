@@ -278,7 +278,7 @@
                 </div>
                 
                 <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="actualizarCarrito()"> 
-                    Actualizar
+                    Actualizar cotización
                 </button>
                 
                 @if ($errors)
