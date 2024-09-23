@@ -352,6 +352,10 @@
                                 class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Compradores</a>
                             </li>
                             <li>
+                                <a href="{{ route('misCotizaciones') }}"
+                                class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Cotizaciones</a>
+                            </li>
+                            <li>
                                 <a href="{{ route('compras') }}"
                                 class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Compras</a>
                             </li>

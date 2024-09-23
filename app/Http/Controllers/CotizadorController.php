@@ -475,7 +475,9 @@ class CotizadorController extends Controller
 
         if (auth()->user()->hasRole("buyers-manager")) {
             $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
-        } else {
+        } else if(auth()->user()->hasRole("seller"))
+            $quotes = Quote::orderBy('created_at', 'desc')->simplePaginate(10);
+        else {
             $quotes = auth()->user()->quotes()->orderBy('created_at', 'desc')->simplePaginate(10);
         }
 
@@ -556,7 +558,6 @@ class CotizadorController extends Controller
 
     public function comprasRealizarCompra(Request $request)
     {
-        //dd($request);
 
         $quote = Quote::where('id', $request->id)->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id)->get()->first();
