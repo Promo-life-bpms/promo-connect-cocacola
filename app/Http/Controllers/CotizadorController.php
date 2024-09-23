@@ -558,7 +558,6 @@ class CotizadorController extends Controller
 
     public function comprasRealizarCompra(Request $request)
     {
-        //dd($request);
 
         $quote = Quote::where('id', $request->id)->get()->first();
         $quote_products = QuoteProducts::where('id', $request->id)->get()->first();
