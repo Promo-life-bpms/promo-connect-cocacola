@@ -48,7 +48,7 @@
         <div class="search-overlay"></div>
 
         @include('components.top')
-
+        @yield('scripts')
         <!--  BEGIN CONTENT PART  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
