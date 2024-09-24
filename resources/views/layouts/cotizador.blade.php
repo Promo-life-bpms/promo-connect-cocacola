@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <title>
         HH GLOBAL - 
@@ -39,7 +40,7 @@
         <div class="flex-grow w-full" >
             @yield('content')
         </div>
-     
+        @yield('scripts')
         <footer class="py-5 w-full bg-stone-900 text-white bottom-0 left-0 z-30 footer">
             <div class="w-full flex flex-col sm:flex-row justify-between items-center text-primary mt-4">
     

@@ -310,11 +310,20 @@
                     <div id="dropdown"
                         class="z-40 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44  hover:">
                         <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+
+                            <a href="{{ route('user.account') }}" class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Mi cuenta</a>
+
                             @role('buyers-manager')
                                 <!-- <li>
                                     <a href="{{ route('administrador') }}"
                                         class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Administrador</a>
                                 </li> -->
+
+                                <li>
+                                    <a href="{{ route('view.stadistics') }}"
+                                        class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">
+                                        Estadísticas</a>
+                                </li>
                             @endrole 
                             @role('seller')
                                 {{-- <li>
@@ -339,6 +348,10 @@
                                         class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">
                                         Muestras</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('misCotizaciones') }}"
+                                    class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Mis cotizaciones</a>
+                                </li>
                             @endrole
 
                             @role('seller')
@@ -350,10 +363,6 @@
                             <li>
                                 <a href="{{ route('seller.compradores') }}"
                                 class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Compradores</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('misCotizaciones') }}"
-                                class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Cotizaciones</a>
                             </li>
                             <li>
                                 <a href="{{ route('compras') }}"

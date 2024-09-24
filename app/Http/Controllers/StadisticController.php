@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Muestra;
+use App\Models\Quote;
+use App\Models\Shopping;
+use App\Models\User;
 use App\Models\UserLogs;
 use Illuminate\Http\Request;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -85,7 +89,10 @@ class StadisticController extends Controller
         $sheet->setCellValue('E2', 'Descripción');
         $sheet->setCellValue('F2', 'Fecha y hora');
 
-        $user_logs = UserLogs::all();
+        $excludedUserIds = [1, 2, 3, 4,179, 180,181];
+        $user_logs = UserLogs::whereNotIn('user_id', $excludedUserIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         foreach($user_logs as $user){
             $start = $start +1;
@@ -109,4 +116,75 @@ class StadisticController extends Controller
         $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
         $writer->save('php://output');
     }
+
+
+    public function  viewStadistics() {
+    
+        $excludedUserIds = [1, 2, 3, 4,179, 180,181];
+        $stadistics = UserLogs::whereNotIn('user_id', $excludedUserIds)
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+
+        $activeUsers =  User::whereNotIn('id', $excludedUserIds)->get();
+        
+        $activeUsersData = [
+            'active' => 0,
+            'inactive' => 0,
+        ];
+
+        $totalCotizations = [];
+        $totalShoppings = [];
+        $totalMuestras = [];
+        
+        $totalCompras = 0;
+        $totalMuestas = 0;
+        $totalCotizaciones = 0;
+
+        foreach($activeUsers as $user){
+
+            $existUser = UserLogs::where('user_id',$user->id)->first();
+
+            if($existUser){
+                $activeUsersData['active'] += 1;
+            }else{
+                $activeUsersData['inactive'] += 1;
+            }
+
+
+            $allCotization  = Quote::where('user_id', $user->id)->count();
+            $allShoppings  = Shopping::where('user_id', $user->id)->count();
+            $allMuestras  = Muestra::where('user_id', $user->id)->count();
+
+
+            if($allCotization > 0){
+
+                array_push($totalCotizations, (object)[
+                    'user' => $user->name,
+                    'total' => $allCotization,
+                ]);
+
+
+                array_push($totalShoppings, (object)[
+                    'user' => $user->name,
+                    'total' => $allShoppings,
+                ]);
+
+
+                array_push($totalMuestras, (object)[
+                    'user' => $user->name,
+                    'total' => $allMuestras,
+                ]);
+                
+            }
+    
+        }
+
+
+        return view('pages.buyer.statistics', compact('stadistics','activeUsersData', 'totalCotizations','totalShoppings', 'totalMuestras'));
+
+
+    }
+
+   
 }
