@@ -139,5 +139,6 @@ Route::middleware(['auth'])->group(function () {
     //////////ESTADISTICAS////////////
     Route::post('/statistics', [StadisticController::class, 'stadistics'])->name('download.stadistics');
     Route::get('/statistics/view', [StadisticController::class, 'viewStadistics'])->name('view.stadistics');
+    Route::post('/statistics/filter', [StadisticController::class, 'stadisticsFilter'])->name('view.stadisticsFilter');
 
 });

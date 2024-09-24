@@ -186,5 +186,74 @@ class StadisticController extends Controller
 
     }
 
+    public function stadisticsFilter(Request $request)  {
+
+        $start = $request->start_date;
+        $end = $request->end_date;
+        
+        $excludedUserIds = [1, 2, 3, 4,179, 180,181];
+        $stadistics = UserLogs::whereNotIn('user_id', $excludedUserIds)
+            ->orderBy('created_at', 'desc')
+            ->paginate(30);
+
+
+        $activeUsers =  User::whereNotIn('id', $excludedUserIds)->get();
+        
+        $activeUsersData = [
+            'active' => 0,
+            'inactive' => 0,
+        ];
+
+        $totalCotizations = [];
+        $totalShoppings = [];
+        $totalMuestras = [];
+        
+        $totalCompras = 0;
+        $totalMuestas = 0;
+        $totalCotizaciones = 0;
+
+        foreach($activeUsers as $user){
+
+            $existUser = UserLogs::where('user_id', $user->id)->whereBetween('created_at', [$start, $end])->first();
+
+            if($existUser){
+                $activeUsersData['active'] += 1;
+            }else{
+                $activeUsersData['inactive'] += 1;
+            }
+
+            $allCotization = Quote::where('user_id', $user->id)->whereBetween('created_at', [$start, $end])->count();
+
+            $allShoppings = Shopping::where('user_id', $user->id)->whereBetween('created_at', [$start, $end])->count();
+
+            $allMuestras = Muestra::where('user_id', $user->id)->whereBetween('created_at', [$start, $end])->count();
+
+
+            if($allCotization > 0){
+
+                array_push($totalCotizations, (object)[
+                    'user' => $user->name,
+                    'total' => $allCotization,
+                ]);
+
+
+                array_push($totalShoppings, (object)[
+                    'user' => $user->name,
+                    'total' => $allShoppings,
+                ]);
+
+
+                array_push($totalMuestras, (object)[
+                    'user' => $user->name,
+                    'total' => $allMuestras,
+                ]);
+                
+            }
+    
+        }
+
+        return view('pages.buyer.statistics', compact('stadistics','activeUsersData', 'totalCotizations','totalShoppings', 'totalMuestras'));
+
+    }
    
 }
