@@ -64,7 +64,7 @@
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
                         <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('importation') }}">Importación</a></p>
                     </div>
-
+                    @if(!Auth::user()->hasRole('invited'))
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
                         <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('compras') }}">Mis compras</a></p>
                     </div>
@@ -72,6 +72,7 @@
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
                         <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
                     </div>
+                    @endif
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
                         <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('special') }}">Especiales</a></p>
                     </div>
@@ -120,10 +121,13 @@
                                     </svg>
                                 </div>
                             </a>
-                            <div class="md:mt-3 md:ml-2 mt-2 pb-4" style="width: 2rem">
-                                @livewire('count-cart-quote')
-                            </div>
-                        
+
+                            @if(!Auth::user()->hasRole('invited'))
+                                <div class="md:mt-3 md:ml-2 mt-2 pb-4" style="width: 2rem">
+                                    @livewire('count-cart-quote')
+                                </div>
+                            @endif
+                          
 
                         {{-- @role('seller')
                             <div class="md:mt-8 md:ml-2" style="width: 2rem">
