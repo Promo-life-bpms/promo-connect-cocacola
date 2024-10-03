@@ -76,7 +76,7 @@
                             @php
                                 $precioTotal = $quote->precio_total;
                             @endphp
-                            @if(!Auth::user()->hasRole('invited'))
+                            @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                                 <p class="font-bold text-lg">$ {{ number_format($precioTotal, 2, '.', ',') }} + IVA</p>
                             @endif
                             
@@ -204,7 +204,7 @@
                     <hr class="border-black"> --}}
                     <div class="flex justify-between">
                         <p>Total:</p>
-                        @if(!Auth::user()->hasRole('invited'))
+                        @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                             <p class="font-bold">$ {{ number_format(round($totalQuote, 2), 2, '.', ',') }} </p>
                         @else
                         No disponible

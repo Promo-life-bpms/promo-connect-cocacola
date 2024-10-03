@@ -24,7 +24,7 @@
         </div>
 
 
-        @if(!Auth::user()->hasRole('invited'))
+        @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
           <div class="w-1/2">
             <div class="bg-white p-4 rounded shadow">
                 <h2 class="text-xl font-bold mb-2">Total: </h2>
@@ -61,7 +61,7 @@
                 <th style="width: 20%;">Descripción</th>
                 <th style="width: 10%;">Cantidad</th>
 
-                @if(!Auth::user()->hasRole('invited'))
+                @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                   <th style="width: 10%;">Total</th>
                 @endif
 
@@ -105,7 +105,7 @@
                       {{ $shopping->products[0]->cantidad }}
                     </td>
 
-                    @if(!Auth::user()->hasRole('invited'))
+                    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                       <td class="text-center">
                         <b>$ {{ number_format($shopping->products[0]->precio_total, 2, '.', ',') }}</b> 
                       </td>              

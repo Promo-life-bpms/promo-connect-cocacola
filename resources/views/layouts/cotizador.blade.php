@@ -48,7 +48,7 @@
                     <img src="{{asset('img/hh-logo.png')}}" alt="logo" style="width: 180px;" class="mb-10 mt-6">
 
                     <div class="flex">
-                    @if(!Auth::user()->hasRole('invited'))
+                    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                         <a href="#" class="mr-6">
                             <svg fill="#FFFFFF" width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"/>
@@ -109,7 +109,7 @@
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
     
-    @if(!Auth::user()->hasRole('invited'))
+    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
         <div class="max-w-7xl" style="z-index:50">
             <a id="whatsapp-link" href="https://api.whatsapp.com/send?phone=5568096555" class="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-full shadow-lg"  style=" z-index:30; @media (max-width: 768px) { margin: 0 120px 0px 0; z-index:30; }">
                 <svg width="40px" height="40px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">

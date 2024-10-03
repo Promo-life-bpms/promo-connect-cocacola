@@ -157,7 +157,7 @@
                 </div>
                 <span class="">Total :</span>
                 
-                @if(!Auth::user()->hasRole('invited'))
+                @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                     <strong class="text-right">$
                         {{ number_format($quote->latestQuotesUpdate->quoteProducts->sum('precio_total'), 2, '.', ',') }}
                     </strong>           

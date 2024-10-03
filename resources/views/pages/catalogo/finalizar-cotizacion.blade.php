@@ -323,7 +323,7 @@
                         <div class="flex justify-between">
                             <p>Total:</p>
 
-                            @if(!Auth::user()->hasRole('invited'))
+                            @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                                 <p class="font-bold">$ {{ number_format($totalQuote, 2, '.', ',') }}</p>
                             @endif
 

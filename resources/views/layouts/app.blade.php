@@ -99,7 +99,7 @@
     @livewireScripts
     @yield('scripts')
     
-    @if(!Auth::user()->hasRole('invited'))
+    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
         <div class="max-w-7xl" style="z-index:50">
             <a id="whatsapp-link" href="https://api.whatsapp.com/send?phone=5568096555" class="fixed bottom-4 right-4 p-4"  style=" z-index:30; @media (max-width: 768px) { margin: 0 120px 0px 0; z-index:30; }">
                 <svg width="40px" height="40px" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
