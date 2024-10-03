@@ -192,14 +192,14 @@
                         @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> 
-                            @if(!Auth::user()->hasRole('invited'))
+                            @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                                 $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn  
                             @else
                                 no disponible                    
                             @endif
                         </td>
                         <td colspan="1"> 
-                            @if(!Auth::user()->hasRole('invited'))
+                            @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                                 $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn
                             @else
                                 no disponible                                                         
@@ -207,7 +207,7 @@
 
                         </td>
                         <td colspan="1"> 
-                            @if(!Auth::user()->hasRole('invited'))
+                            @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                                 $ {{ number_format($totalIVA , 2, '.', ',') }} mxn  
                             @else
                                 no disponible        

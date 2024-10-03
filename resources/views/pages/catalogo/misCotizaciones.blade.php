@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        @if(!Auth::user()->hasRole('invited'))
+        @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
             <div class="w-1/2">
                 <div class="bg-white p-4 rounded shadow">
                     <h2 class="text-xl font-bold mb-2">Total: </h2>
@@ -83,7 +83,7 @@
                     <th style="width:20%;">Detalles</th>
                     <th style="width:10%;">Tiempo de entrega</th>
                     <th style="width:10%;">Cantidad</th>
-                    @if(!Auth::user()->hasRole('invited'))
+                    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                         <th style="width:10%;">Precio unitario</th>
                         <th style="width:10%;">Total</th>
                     @endif
@@ -146,7 +146,7 @@
                     <td class="text-center">{{ $product->dias_entrega}} dias</td>
                     <td class="text-center"> {{ $product->cantidad}} piezas</td>
 
-                    @if(!Auth::user()->hasRole('invited'))
+                    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                         <td class="text-center"> <b>$ {{ $product->precio_unitario}} </b> </td>
                         <td class="text-center"> <b>$ {{ number_format($product->precio_total, 2, '.', ',') }} </b> </td>
                     @endif

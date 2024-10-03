@@ -281,7 +281,7 @@
                 <img src="{{asset('img/hh-logo.png')}}" alt="logo" style="width: 180px;" class="mb-10 mt-6">
                 <div class="flex">
 
-                    @if(!Auth::user()->hasRole('invited'))
+                    @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
 
                         <a href="#" class="mr-6">
                             <svg fill="#FFFFFF" width="30px" height="30px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
