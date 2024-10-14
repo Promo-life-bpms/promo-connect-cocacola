@@ -13,10 +13,10 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
 
     <title>
-        HH GLOBAL - 
+        HH GLOBAL -
         @hasSection('title')
             @yield('title') |
-        @endif 
+        @endif
     </title>
 
     <!-- Fonts -->
@@ -33,7 +33,7 @@
 </head>
 
 <body class="h-screen" style="margin-top:70px;">
-    <div class="h-full flex flex-col justify-between">  
+    <div class="h-full flex flex-col justify-between">
         <div class="w-full bg-white">
             @include('layouts.components.navbar')
         </div>
@@ -43,7 +43,7 @@
         @yield('scripts')
         <footer class="py-5 w-full bg-stone-900 text-white bottom-0 left-0 z-30 footer">
             <div class="w-full flex flex-col sm:flex-row justify-between items-center text-primary mt-4">
-          
+
                 <div class="mb-4 sm:mb-0 pl-20">
                     <img src="{{asset('img/hh-logo.png')}}" alt="logo" style="width: 180px;" class="mb-10 mt-6">
 
@@ -54,12 +54,12 @@
                                 <path d="M12 2.03998C6.5 2.03998 2 6.52998 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.84998C10.44 7.33998 11.93 5.95998 14.22 5.95998C15.31 5.95998 16.45 6.14998 16.45 6.14998V8.61998H15.19C13.95 8.61998 13.56 9.38998 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9164 21.5878 18.0622 20.3855 19.6099 18.57C21.1576 16.7546 22.0054 14.4456 22 12.06C22 6.52998 17.5 2.03998 12 2.03998Z"/>
                             </svg>
                         </a>
-                        
+
                         <a href="#" class="mr-6">
                             <svg width="30px" height="30px" viewBox="0 0 41 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M31.5933 0.411377H37.7347L24.3176 15.2754L40.1018 35.5019H27.7429L18.0629 23.2346L6.98689 35.5019H0.841784L15.1927 19.6032L0.0509033 0.411377H12.7236L21.4734 11.6242L31.5933 0.411377ZM29.4379 31.9389H32.8409L10.8745 3.78727H7.22267L29.4379 31.9389Z" fill="white"/>
                             </svg>
-                                
+
                         </a>
 
                         <a href="#" class="mr-6">
@@ -73,21 +73,21 @@
                         <a href="#" class="mr-6">
                             <svg width="30px" height="30px" viewBox="0 0 41 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M39.8047 6.48532C39.8047 6.48532 39.4135 3.56547 38.2089 2.28339C36.6835 0.595998 34.9782 0.587726 34.196 0.488468C28.5951 0.0583494 20.186 0.0583496 20.186 0.0583496H20.1703C20.1703 0.0583496 11.7612 0.0583494 6.16034 0.488468C5.3781 0.587726 3.67281 0.595998 2.14743 2.28339C0.942776 3.56547 0.559477 6.48532 0.559477 6.48532C0.559477 6.48532 0.15271 9.91799 0.15271 13.3424V16.5517C0.15271 19.9762 0.551654 23.4088 0.551654 23.4088C0.551654 23.4088 0.942776 26.3287 2.13961 27.6108C3.66498 29.2982 5.66753 29.2403 6.55929 29.4222C9.76649 29.7448 20.1782 29.8441 20.1782 29.8441C20.1782 29.8441 28.5951 29.8275 34.196 29.4057C34.9782 29.3064 36.6835 29.2982 38.2089 27.6108C39.4135 26.3287 39.8047 23.4088 39.8047 23.4088C39.8047 23.4088 40.2036 19.9844 40.2036 16.5517V13.3424C40.2036 9.91799 39.8047 6.48532 39.8047 6.48532ZM16.0401 20.4476V8.54492L26.8585 14.517L16.0401 20.4476Z" fill="white"/>
-                            </svg>    
+                            </svg>
                         </a>
                     @endif
-                        
+
 
                     </div>
                     <p class="ml-4 mr-4 text-base text-white mt-10 mb-10 pl-2">Copyright © 2024</p>
                 </div>
-    
+
                 <div class="flex flex-col text-center items-center -mt-7">
                     <img src="{{asset('img/servicio1.png')}}" alt="servicio" style="width: 60px;" class="mb-6">
                     <p class="ml-4 mr-4 text-sm text-white">SERVICIO AL CLIENTE 24/7</p>
                     <p class="ml-4 mr-4 text-xs text-gray-300 mt-2">Atención al cliente amigable 24 horas al día, 7 días a la semana</p>
                 </div>
-    
+
                 <div class="flex flex-col text-center items-center -mt-7">
                     <img src="{{asset('img/servicio2.png')}}" alt="garantia" style="width: 60px;" class="mb-6">
                     <p class="ml-4 mr-4 text-sm text-white">GARANTÍA DE CALIDAD </p>
@@ -108,7 +108,7 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
 
-    
+
     @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
         <div class="max-w-7xl" style="z-index:50">
             <a id="whatsapp-link" href="https://api.whatsapp.com/send?phone=5568096555" class="fixed bottom-4 right-4 p-4 bg-green-500 text-white rounded-full shadow-lg"  style=" z-index:30; @media (max-width: 768px) { margin: 0 120px 0px 0; z-index:30; }">
@@ -127,7 +127,7 @@
             </a>
         </div>
     @endif
-    
+
 </body>
 
 </html>
