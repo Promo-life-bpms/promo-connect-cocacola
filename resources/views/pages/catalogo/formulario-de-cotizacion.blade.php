@@ -1,8 +1,8 @@
 <div>
-  
 
-    <ol class="relative text-gray-500 border-s border-stone-50 ">                  
-        <li class="mb-10 ms-6">            
+
+    <ol class="relative text-gray-500 border-s border-stone-50 ">
+        <li class="mb-10 ms-6">
             <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white">
                 1
             </span>
@@ -14,7 +14,7 @@
                 <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
            </div>
         </li>
-     
+
 
         <li class="mb-10 ms-6 {{ !empty($projecName) ? '' : 'hidden' }}">
             <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
@@ -121,7 +121,7 @@
                 <img  wire:ignore.self id="previewImage" src="#" alt="Vista previa de la imagen generada" style="display: none; width:140px; height:140px;">
                 <br>
 
-                
+
                     <div wire:ignore id="modalPersonalize" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
                         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div class="relative w-full max-w-2xl max-h-full">
@@ -147,13 +147,13 @@
                                 <!-- Modal body -->
                                 <div class="p-6 space-y-6">
                                     <div class="flex">
-                                        
+
                                         <div class="flex-initial">
-                                            <canvas  wire:ignore id="canvas" width="400" height="400" crossorigin="anonymous" ></canvas> 
+                                            <canvas  wire:ignore id="canvas" width="400" height="400" crossorigin="anonymous" ></canvas>
                                             <p class="mt-2 text-sm text-semibold text-red-800"><b>Nota: </b>Imagen solo de referencia *</p>
                                         </div>
                                         <div class="flex-initial pl-4">
-                                    
+
                                             <p class="text-base font-bold">Selecciona tu logo </p>
 
                                             <div class="grid grid-cols-3 gap-4">
@@ -168,18 +168,18 @@
 
                                             <br>
 
-                                            
-                                            
+
+
 g                                          <input type="file"
                                                 class="block w-full text-sm text-slate-500
                                                     file:rounded-full
                                                     file:mr-4 file:py-2 file:px-4
                                                     file:text-sm file:font-semibold mt-2"
-                                                wire:model="photo" accept="image/*" id="imageInput" > 
-                                                
+                                                wire:model="photo" accept="image/*" id="imageInput" >
+
                                                 <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-stone-700 " id="clearImage" style="display:none;">Limpiar imagen</p>
                                                 <br>
-                                            
+
                                                 <p class="text-base font-bold">Texto  (opcional) </p>
                                                 <!-- <p class="text-sm mb-2">Coloca tu logo en la posicion deseada y descarga el producto personalizado</p>
                                                 <button id="showGeneratedImage" class="favorite styled flex items-center gap-2 bg-green-600 hover:bg-lime-600 text-white py-2 px-4 rounded-md">
@@ -249,12 +249,12 @@ g                                          <input type="file"
                     </label> --}}
                 </div>
             </div>
-          
+
             <div class="justify-content-between  grid grid-cols-1">
                 {{--  @if (!$priceScales) --}}
 
                 @if(Auth::user()->hasRole('invited'))
-                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
+                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $
                             No disponible
                             <b class="text-xs text-red-500 font-bold">Incluye TF</b>
                         </h6>
@@ -262,7 +262,7 @@ g                                          <input type="file"
                     <h6 class="text-success"><strong>Precio Total:</strong>No disponible</h6>
                 @else
                     <div>
-                        <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $ 
+                        <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $
                             @if($this->cantidad == null || $this->cantidad == 0)
                                 0.00
                             @else
@@ -274,8 +274,8 @@ g                                          <input type="file"
                         <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
                     </div>
                 @endif
-                
-        
+
+
                 {{--  @endif --}}
                 <div class="form-group m-0 mb-1 text-center">
                     @if ($currentQuote)
@@ -291,8 +291,8 @@ g                                          <input type="file"
                     @else
                     @endif
                 </div>
-                
-                <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()"> 
+
+                <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()">
                     Agregar al carrito
                 </button>
                 @if ($errors)
@@ -317,8 +317,8 @@ g                                          <input type="file"
                         $errors = null;
                     @endphp
                 @endif
-             
-              
+
+
                 @if (session()->has('message'))
                     <div wire:poll.4s class="btn btn-sm btn-success w-100" style="margin-top:0px; margin-bottom:0px;">
                         {{ session('message') }} </div>
@@ -367,71 +367,71 @@ g                                          <input type="file"
                timer: 3000
            })
        })
-   
+
        /* Generador de logos  */
-   
+
       /*  Obtener de path de imagenes */
        var imageURL = "{{ $product->images != '[]'?  $product->images[0]->image_url : '' }}";
        var productID = "{{ $product->id }}";
-   
+
        /* Logos */
-                                           
+
        var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
        var logo2 = "{{asset('img/HHGLOBALBLANCO.png')}}";
        var logo3 = "{{asset('img/LOGOADARENEGRO.png')}}";
        var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}";
-   
+
        if(imageURL.startsWith("https://catalogodeproductos.promolife.lat/")){
            imageURL = imageURL.slice(41);
        }
        /* Identificadores */
        var selectedLogo1 = document.getElementById("logo1");
        var selectedLogo2 = document.getElementById("logo2");
-   
+
        var logoSelect = document.getElementById("logos");
-       
+
        var logoURL = document.getElementById("imageInput");
-   
+
        var selectedImageLogo = null;
-   
+
        /* Canvas en DOOM*/
        document.addEventListener("DOMContentLoaded", function () {
            var canvas = new fabric.Canvas('canvas', {
                backgroundColor: 'white'
            });
-   
+
            var selectedImage = null; // Definir selectedImage aquí
-   
+
            logoSelect.addEventListener("change", function () {
 
                 document.getElementById('clearLogo').style.display = 'block';
 
                var selectedLogo = logoSelect.value;
-             
+
                canvas.remove(selectedImageLogo);
-   
+
                // Construir la URL de la imagen dinámicamente
                var logo = `{{asset('img/${selectedLogo}')}}`;
                if (selectedImageLogo) {
                    canvas.remove(selectedImageLogo);
                }
-               
-                  
+
+
                fabric.Image.fromURL(logo, function (image) {
                    image.scaleToWidth(50);
                    image.scaleToHeight(50);
                    image.set({ left: 100, top: 100, selectable: true, crossOrigin: 'anonymous' });
                    canvas.add(image);
                    selectedImageLogo = image;
-                   
+
                    canvas.renderAll();
                });
-   
+
                canvas.remove(image);
-       
+
                console.log("Logo seleccionado: " + selectedImage);
            });
-   
+
            /* Verifica la url de la imagen de proveedores de APIS */
            if (imageURL.startsWith('/storage/')) {
                /* Imagenes con CORS y locales */
@@ -453,7 +453,7 @@ g                                          <input type="file"
                    });
                });
            }
-   
+
            /* Evento para agregar imagenes desde input */
            imageInput.addEventListener("change", function (event) {
                var file = event.target.files[0];
@@ -477,7 +477,7 @@ g                                          <input type="file"
                    reader.readAsDataURL(file);
                }
            });
-   
+
            /* Evento para agregar texto */
            var textObject = null;
            document.getElementById('addTextButton').addEventListener('click', function() {
@@ -504,7 +504,7 @@ g                                          <input type="file"
                    canvas.renderAll();
                }
            });
-   
+
            /* Borrado manual de imagenes y texto */
            var resultLogo = document.getElementById("resultLogo");
            var resultImage = document.getElementById("resultImage");
@@ -518,7 +518,7 @@ g                                          <input type="file"
            document.getElementById('clearText').addEventListener('click', function() {
                canvas.remove(textObject);
            });
-   
+
            /* Envio de image generada a backend */
            var sendImageToBackend = document.getElementById("sendImageToBackend");
            sendImageToBackend.addEventListener('click', saveImage, false);
@@ -552,7 +552,7 @@ g                                          <input type="file"
                xhr.send(formData);
                previewImage();
            }
-   
+
            /* Evento para cambiar el color del texto */
            const colorPicker = document.getElementById('colorPicker');
            colorPicker.addEventListener('input', function() {
@@ -561,7 +561,7 @@ g                                          <input type="file"
                    canvas.renderAll();
                }
            });
-   
+
            // Función para convertir Data URL a Blob
            function dataURLToBlob(dataURL) {
                var arr = dataURL.split(',');
@@ -575,7 +575,7 @@ g                                          <input type="file"
                return new Blob([arrayBuffer], { type: mime });
            }
        });
-   
+
        /* Envia imagen generada a componente principal para preview */
        function previewImage() {
            var generatedDataURL = canvas.toDataURL({
@@ -588,5 +588,5 @@ g                                          <input type="file"
        }
    </script>
 
-  
+
 </div>

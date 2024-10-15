@@ -1,277 +1,129 @@
 @extends('layouts.cotizador')
 @section('title', $product->name)
 @section('content')
-    <div class="container mx-auto max-w-7xl">
-        <div class="font-semibold text-slate-700 py-8 flex items-center space-x-2">
-            <a class="text-secondary" href="/">Inicio</a>
-            <p class="text-secondary"> / </p>
-            <a class="text-secondary" href="#">Catálogo de productos</a>
-        </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="p-4 rounded-lg">
-                <div class="grid grid-cols-10 gap-4">
-                    <div class="col-span-7 p-4">
-                        <img id="imgBox" class="py-4 rounded" src="{{ $product->firstImage ? $product->firstImage->image_url : asset('img/default.jpg') }}"style="border: 1px solid #d1d5db;">
-                    </div>
-                    <div class="col-span-3  p-4 flex flex-col space-y-4">
-                        @foreach ($product->images as $image)
-                        <div>
-                            <img class="object-scale-down rounded" src="{{ $image->image_url }}" alt="{{ $image->image_url }}" onclick="cambiarImagen(this)" style="border: 1px solid #d1d5db;">
-                        </div>
+    <!-- Detalle del producto -->
+    <div class="container mx-auto py-6 px-6 w-[1000px] font-TCCCUnityHeadline">
+        <!-- Contenedor principal del producto -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Sección izquierda: Imagen y thumbnails -->
+            <div>
+                <!-- Imagen principal del producto -->
+                <div class="mb-4 mt-16">
+                    <img id="imgBox" class="py-4 rounded" src="{{ $product->firstImage ? $product->firstImage->image_url : asset('img/default.jpg') }}" alt="Producto" class="w-full h-auto rounded-lg shadow-md object-cover">
+                </div>
+
+                <!-- Thumbnails -->
+                <div class="flex space-x-3 mt-auto">
+                    @foreach ($product->images as $image)
+                        <img src="{{ $image->image_url }}" alt="{{ $image->image_url }}" onclick="cambiarImagen(this)" alt="Thumb 1" class="w-20 h-20 rounded-lg shadow-md object-cover cursor-pointer">
                     @endforeach
-
-                    </div>
-
                 </div>
-
-
             </div>
-            <div class="p-4 rounded-lg">
+            <!-- Sección derecha: Información del producto -->
+            <div>
+                <!-- Nombre del producto -->
+                <h2 class="text-2xl mb-2 capitalize font-light">{{ $product->name }}</h2>
 
-                <div
-                    class=" product mt-2 px-5 py-7 max-w-full h-fit w-screen">
+                <!-- Precio unitario -->
+                <p class="text-xl text-primary font-semibold mb-3">$ {{ $product->price }} MXN</p>
 
-                    <p class="text-4xl font-semibold mb-4 w-full" style="margin-left: 24px;">{{ $product->name }}</p>
-
-                    <div class="col-start-1 col-span-5 px-6">
-                        {{-- <p class="font-normal"> <strong>Precio Unitario: </strong>$
-
-                            @php
-                                $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
-
-
-                                $priceProduct = $product->price;
-
-                                if ($product_type && $product_type->value == 'Normal') {
-                                    $precioTotal = round($priceProduct - $priceProduct * (30 / 100), 2);
-                                    $priceProduct = $precioTotal / config('settings.utility');
-
-                                } elseif (
-                                    $product_type &&
-                                    ($product_type->value == 'Outlet' || $product_type->value == 'Unico')
-                                ) {
-                                    $precioTotal = round($priceProduct - $priceProduct * (0 / 100), 2);
-                                    $priceProduct = $precioTotal / config('settings.utility');
-                                } else {
-                                    if ($product->producto_promocion) {
-                                        $precioTotal = round($priceProduct - $priceProduct * ($product->descuento / 100),2,);
-                                        $priceProduct = $precioTotal / config('settings.utility');
-                                    } else {
-                                        $priceProduct = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
-
-                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
-                                        $priceProduct = $precioTotal / config('settings.utility');
-                                    }
-                                    if ($product->provider->company == 'EuroCotton') {
-                                        $precioTotal = round($priceProduct - $priceProduct * ($product->provider->discount / 100),2,);
-                                        $iva = $precioTotal * 0.16;
-                                        $precioTotal = round($priceProduct - $iva, 2);
-
-                                        $priceProduct = $precioTotal / config('settings.utility');
-                                    }
-
-                                    if ($product->provider->company == 'For Promotional') {
-                                        if ($product->descuento >= $product->provider->discount) {
-                                            $precioTotal = round($product->price - $product->price * ($product->descuento / 100),2,);
-                                            $priceProduct = $precioTotal / config('settings.utility');
-                                        } else {
-                                            $precioTotal = round($product->price - $product->price * (25 / 100), 2);
-                                            $priceProduct = $precioTotal / config('settings.utility');
-                                        }
-                                    }
-                                }
-
-                                $initialPrice =$precioTotal;
-                            @endphp
-
-                            {{
-                                number_format($initialPrice,2);
-                            }}</p> --}}
-
-                            <p class="font-normal">Stock: <b>{{ $product->stock }}</b> </p>
-
-                            <div class="w-full mx-auto mt-2">
-                                <div class="flex border-b border-gray-300">
-                                    <button
-                                        class="w-1/2 py-2 text-center font-medium text-gray-700 rounded-tl-lg focus:outline-none"
-                                        onclick="openTab(event, 'tab1')">Atributos </button>
-                                    <button
-                                        class="w-1/2 py-2 text-center font-medium text-gray-700 rounded-tr-lg focus:outline-none"
-                                        onclick="openTab(event, 'tab2')">Descripcion</button>
-                                </div>
-                                <div id="tab1" class="tabcontent p-4">
-                                <div style="margin-left:-20px;">
-
-                                    <p class="font-normal"><strong>Descripcion:</strong>  {{ $product->description }}</p>
-
-                                    @if (count($product->productCategories) > 0)
-                                        <strong>Categorias</strong>
-                                        {{ $product->productCategories[0]->category->family }}
-                                    @endif
-
-                                    @foreach ($product->productAttributes as $attr)
-                                        @if($attr->attribute == 'Impresion')
-                                            <strong >{{ $attr->attribute }}:</strong > <strong class="text-orange-500"> {{  $attr->value }}</strong>
-                                        @endif
-                                    @endforeach
-
-                                    @if (!$product->precio_unico)
-                                        <h5><strong>Precios</strong></h5>
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Escala</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                            </tbody>
-                                        </table>
-                                    @endif
-                                    <div class="col-start-1 col-end-2">
-                                        @foreach ($product->productAttributes as $attr)
-                                            <p class="my-1">
-                                                <strong>{{ $attr->attribute }}:</strong> {{ $attr->value }}
-                                            </p>
-                                        @endforeach
-                                    </div>
-                                    <p><strong>Ultima Actualizacion: </strong>
-                                        {{ $product->updated_at->diffForHumans() }}
-                                    </p>
-                                    </div>
-
-                                </div>
-                                <div id="tab2" class="tabcontent p-4 hidden">
-                                    <p>{{$product->description}}</p>
-                                </div>
-                            </div>
-
-                            <script>
-                                function openTab(evt, tabName) {
-                                    var i, tabcontent, tablinks;
-
-                                    // Ocultar todas las pestañas
-                                    tabcontent = document.getElementsByClassName("tabcontent");
-                                    for (i = 0; i < tabcontent.length; i++) {
-                                        tabcontent[i].classList.add("hidden");
-                                    }
-
-                                    // Remover las clases de todos los botones
-                                    tablinks = document.querySelectorAll(".flex button");
-                                    for (i = 0; i < tablinks.length; i++) {
-                                        tablinks[i].classList.remove("border-b-2", "border-blue-500", "text-blue-500");
-                                    }
-
-                                    // Mostrar la pestaña seleccionada
-                                    document.getElementById(tabName).classList.remove("hidden");
-                                    evt.currentTarget.classList.add("border-b-2", "border-blue-500", "text-blue-500");
-                                }
-
-                                // Por defecto, mostrar la primera pestaña
-                                document.addEventListener('DOMContentLoaded', (event) => {
-                                    document.querySelector('.flex button').click();
-                                });
-                            </script>
-
-                        <div class="w-full bg-stone-400" style="height: 1px;"></div>
-                        <br>
-
-                            @livewire('formulario-de-cotizacion', ['product' => $product])
-
+                <!-- Colores seleccionables -->
+                <div class="mb-4">
+                    <h4 class="text-lg mb-1 font-light">Colores</h4>
+                    <div class="flex space-x-3">
+                        <!-- Switch de color con borde al seleccionar -->
+                        <button class="w-9 h-9 rounded-full bg-red-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
+                        <button class="w-9 h-9 rounded-full bg-blue-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
+                        <button class="w-9 h-9 rounded-full bg-green-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
                     </div>
                 </div>
 
+                <!-- Cantidad y stock -->
+                <div class="flex items-center">
+                    <div class="mr-4">
+                        <label for="quantity" class="block text-md font-semibold mb-1">Cantidad</label>
+                        <input type="number" id="quantity" class="w-16 p-2 border border-gray-300 rounded-lg" value="1" min="1">
+                    </div>
+                    <div class="self-center">
+                        <p class="text-gray-500 text-sm">Stock disponible: <span class="font-semibold">{{ $product->stock }}</span></p>
+                    </div>
+                </div>
+
+                <!-- Atributos del producto -->
+                <div class="mb-1">
+                    <h4 class="text-lg font-semibold mb-1">Atributos</h4>
+                    <ul class="space-y-1 text-sm font-light">
+                        @foreach ($product->productAttributes as $attr)
+                            <li>{{ $attr->attribute }}:<span class="font-semibold">{{ $attr->value }}</span></li>
+                        @endforeach
+                    </ul>
+                </div>
+
+                <!-- Precios -->
+                <div class="mb-1">
+                    <h4 class="text-lg font-semibold mb-1">Precios</h4>
+                    <p class="text-sm font-light">Precio actual de la técnica por artículo: <span class="font-semibold">$50.00 MXN</span></p>
+                    <p class="text-sm font-light">Precio final por artículo: <span class="font-semibold">$100.00 MXN</span></p>
+                    <p class="text-sm font-light">Total: <span class="font-semibold">$100.00 MXN</span></p>
+                </div>
+
+                <!-- Botones -->
+                <div class="flex flex-col space-y-3">
+
+                    <!-- Botón de personalización -->
+                    <button class="w-1/2 flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
+                        Personalizar producto
+                    </button>
+
+                    <!-- Botón de agregar al carrito con ícono -->
+                    <button class="w-1/2 flex items-center justify-center px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-light transition duration-300">
+                        <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.3267 12.2869C5.56689 14.4488 5.68699 15.5296 6.41443 16.1808C7.14186 16.8318 8.22942 16.8318 10.4045 16.8318H10.5651H15.3737H17.1062C18.6047 16.8318 19.3538 16.8318 19.9618 16.4658C20.5698 16.0997 20.9204 15.4376 21.6215 14.1133L24.774 8.15846C25.4519 6.87803 24.5237 5.33636 23.0749 5.33636H10.5651H10.2626C7.59861 5.33636 6.26661 5.33636 5.50505 6.18723C4.74349 7.03809 4.89059 8.36194 5.18478 11.0096L5.3267 12.2869Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.66385 22.5795C9.66385 23.6376 8.80607 24.4955 7.74794 24.4955C6.68981 24.4955 5.83203 23.6376 5.83203 22.5795C5.83203 21.5215 6.68981 20.6636 7.74794 20.6636C8.80607 20.6636 9.66385 21.5215 9.66385 22.5795Z" stroke="white" stroke-width="2.5"/>
+                            <path d="M21.159 22.5795C21.159 23.6376 20.3012 24.4955 19.2431 24.4955C18.185 24.4955 17.3271 23.6376 17.3271 22.5795C17.3271 21.5215 18.185 20.6636 19.2431 20.6636C20.3012 20.6636 21.159 21.5215 21.159 22.5795Z" stroke="white" stroke-width="2.5"/>
+                        </svg>
+                        Agregar al carrito
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div class="w-full">
-
-        <div class="container mx-auto py-8">
-            <h1 class="text-2xl font-bold mb-6 mt-10">Productos relacionados</h1>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-                @foreach ($recommendedProducts as $product)
-
-                        <div class="flex-1 p-4 text-center items-center">
-
-                            <div class="max-w-sm bg-white rounded-lg shadow hover-grow"style="width:240px; height:320px">
-                                @if ($product->firstImage)
-                                <div style="height: 168px;">
-                                    <img class="rounded-t-lg" src="{{ $product->firstImage->image_url }}" alt="" style="width: 70%; margin-left:15%; object-fit: contain;" />
-
-                                </div>
-                                @else
-                                <div class="bg-black flex justify-center items-center" style="height: 168px;">
-                                    <img src="{{asset('img/hh-logo.png')}}" style="width: 70%; object-fit:contain;">
-
-                                </div>
-                                @endif
-                                <div class="p-5">
-                                    <p class="mb-2 text-base font-bold truncate-text truncate-text" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $product->name}}</p>
-                                   {{--  <p class="text-base text-stone-600 mb-2"> ${{ $product->price}}</p> --}}
-                                    <br>
-                                    <a href="#" class="bg-black text-white font-semibold py-2 px-10 rounded mt-5">
-                                        Ver más
-                                    </a>
-
-                                </div>
-                            </div>
-                        </div>
-
-
-                @endforeach
-            </div>
-        </div>
-
-        </div>
-        <style>
-            .product-small-img img {
-                width: 4%;
-                border: 1px solid rgba(0, 0, 0, .2);
-                /* padding: 8px; */
-                /* margin: 10px 10px 15px; */
-                cursor: pointer;
-            }
-
-            .product-small-img {
-                display: flex;
-                /* justify-content: center; */
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .img-container {
-                border: 1px solid rgba(0, 0, 0, .2);
-            }
-
-            .img-container img {
-                height: 20rem;
-            }
-
-            .img-container {
-                padding: 10px;
-                max-height: 400px;
-            }
-        </style>
-        <script>
-            function cambiarImagen(smallImg) {
-                let fullImg = document.querySelector('#imgBox')
-                console.log(fullImg);
-                fullImg.src = smallImg.src
-            }
-        </script>
-
-
-
     </div>
 
+    <!-- Productos relacionados -->
+    <div class="container mx-auto py-8 font-TCCCUnityHeadline">
+        <h1 class="text-2xl font-bold mb-6 mt-10">Productos relacionados</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            @foreach ($recommendedProducts as $product)
+
+                <div class="border border-gray-300 rounded-2xl shadow-lg p-4">
+                        @if ($product->firstImage)
+                            <img src="{{ $product->firstImage->image_url }}" alt="Producto 1" class="w-full h-52 object-cover rounded-lg mb-4">
+                        @else
+                            <img src="{{asset('img/default.jpg')}}" class="w-full h-52 object-cover rounded-lg mb-4">
+                        @endif
+                    <h3 class="text-lg font-bold text-primary mb-2 line-clamp-1">{{ $product->name}}</h3>
+                    <p class="text-md text-primary mb-4">$ {{ $product->price}}</p>
+                    <button class="w-full flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
+                        <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5.32664 12.2868C5.56683 14.4488 5.68693 15.5296 6.41437 16.1807C7.1418 16.8318 8.22936 16.8318 10.4045 16.8318H10.565H15.3736H17.1061C18.6046 16.8318 19.3537 16.8318 19.9617 16.4657C20.5697 16.0996 20.9203 15.4375 21.6214 14.1132L24.774 8.1584C25.4518 6.87797 24.5236 5.3363 23.0748 5.3363H10.565H10.2626C7.59855 5.3363 6.26655 5.3363 5.50499 6.18717C4.74342 7.03803 4.89053 8.36188 5.18472 11.0096L5.32664 12.2868Z" fill="#171616" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" fill="white"/>
+                            <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.66367 22.5795C9.66367 23.6376 8.80589 24.4954 7.74776 24.4954C6.68963 24.4954 5.83185 23.6376 5.83185 22.5795C5.83185 21.5214 6.68963 20.6636 7.74776 20.6636C8.80589 20.6636 9.66367 21.5214 9.66367 22.5795Z" fill="white" stroke="white" stroke-width="2.5"/>
+                            <path d="M21.1591 22.5795C21.1591 23.6376 20.3013 24.4954 19.2432 24.4954C18.1851 24.4954 17.3273 23.6376 17.3273 22.5795C17.3273 21.5214 18.1851 20.6636 19.2432 20.6636C20.3013 20.6636 21.1591 21.5214 21.1591 22.5795Z" fill="white" stroke="white" stroke-width="2.5"/>
+                        </svg>
+                        Agregar
+                    </button>
+                </div>
+            @endforeach
+        </div>
+    </div>
     <style>
         #footerPrincipal{
             display: none;
         }
     </style>
-
     <!-- Footer -->
     <footer id="footerCatalogoByProduct" class="bg-primary text-white py-10 px-8">
         <!-- Logo en la esquina superior izquierda -->
@@ -333,4 +185,11 @@
             </div>
         </div>
     </footer>
+    <script>
+        function cambiarImagen(smallImg) {
+            let fullImg = document.querySelector('#imgBox')
+            console.log(fullImg);
+            fullImg.src = smallImg.src
+        }
+    </script>
 @endsection
