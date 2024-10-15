@@ -1,17 +1,16 @@
-<div  class="fixed top-0 left-0 right-0 z-50"> 
-    <nav class="w-full flex justify-between py-2 px-4 md:px-12 items-center flex-wrap bg-black shadow-md mb-4">
+<div  class="fixed top-0 left-0 right-0 z-50">
+    <nav class="w-full flex justify-between py-2 px-4 md:px-12 items-center flex-wrap bg-white shadow-md mb-4">
 
-    
+
         <div class="w-full md:w-3/12 mb-2 md:mb-0">
             <a href="{{ route('index') }}" class="flex">
-                <img src="{{asset('img/hh-logo.png')}}"
+                <img src="{{asset('img/navBar/cocaLogo.png')}}"
                     style="object-fit: cover; width:100px;"
                     alt="logo" class="p-2 ">
-                    <div class="text-black text-sm bg-stone-200 " style="margin: 0 0 0 4px; padding:0 4px 0 4px; height:20px; margin-top:8px;">México</div>
             </a>
-          
+
         </div>
-       
+
         <div id="popup-modal" tabindex="-1"
             class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full">
@@ -58,31 +57,31 @@
                 @role(['buyers-manager', 'buyer'])
 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
-                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('catalogo') }}">Catálogo</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('catalogo') }}">Catálogo</a></p>
                     </div>
 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('importation') }}">Importación</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('importation') }}">Importación</a></p>
                     </div>
                     @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
-                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('compras') }}">Mis compras</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('compras') }}">Mis compras</a></p>
                     </div>
-                
+
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
                     </div>
                     @endif
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-white hover:text-hh-green text-sm mx-2"><a href="{{ route('special') }}">Especiales</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('special') }}">Especiales</a></p>
                     </div>
                 @endrole
             </div>
         </div>
 
-       
 
-        <div class="w-full md:w-3/12 -mt-2 text-white">
+
+        <div class="w-full md:w-3/12 -mt-2 text-primary">
             <div class="flex flex-col md:flex-row justify-around">
 
                 <div class="mb-6 md:mb-0 md:mr-4 -mt-1">
@@ -90,7 +89,7 @@
                         <div class=" mt-5">
                             <div class="flex items-center">
                                 <button id="dropdownHoverButton" data-dropdown-toggle="dropdown"
-                                    class="text-white hover:text-hh-green  p-1 font-medium focus:rounded text-sm text-center inline-flex items-center"
+                                    class="text-primary hover:text-primary-light  p-1 font-medium focus:rounded text-sm text-center inline-flex items-center"
                                     type="button">
                                     <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M5 21C5 17.134 8.13401 14 12 14C15.866 14 19 17.134 19 21M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -103,8 +102,8 @@
                         </div>
                     @endif
                 </div>
-                
-            
+
+
                 @role(['buyers-manager', 'buyer'])
 
                     <div class="flex -mt-2">
@@ -127,7 +126,7 @@
                                     @livewire('count-cart-quote')
                                 </div>
                             @endif
-                          
+
 
                         {{-- @role('seller')
                             <div class="md:mt-8 md:ml-2" style="width: 2rem">
@@ -137,8 +136,8 @@
                     </div>
                 @endrole
             </div>
-            
-            
+
+
             <div class="flex items-start justify-end">
 
                 <div class="flex justify-between sm:justify-end gap-5 font-semibold text-md items-center mt-3 sm:mt-0">
@@ -161,7 +160,7 @@
                                 <a href="{{ route('seller.muestras') }}"
                                     class="block px-4 py-2  hover:text-primary-superlight text-base">Muestras</a>
                             </li>
-                        
+
 
                         </ul>
                     @endrole --}}
@@ -183,7 +182,7 @@
                                 @if (auth()->user()->unreadNotifications->count() > 0)
                                     <div
                                         class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold  bg-red-500 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
-                                        {{ auth()->user()->unreadNotifications->count() }} 
+                                        {{ auth()->user()->unreadNotifications->count() }}
                                     </div>
                                 @endif -->
 
@@ -328,7 +327,7 @@
                                         class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">
                                         Estadísticas</a>
                                 </li>
-                            @endrole 
+                            @endrole
                             @role('seller')
                                 {{-- <li>
                                     <a href="{{ route('seller.content') }}"
@@ -359,7 +358,7 @@
                             @endrole
 
                             @role('seller')
-                            
+
                             <li>
                                 <a href="{{ route('seller.content') }}"
                                 class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Banners</a>
@@ -380,7 +379,7 @@
                                 <a href="{{ route('seller.muestras') }}"
                                 class="w-full text-left text-xs block px-4 py-2 hover:text-black hover:bg-stone-50">Muestras</a>
                             </li>
-                            
+
                             @endrole
 
                             <li>

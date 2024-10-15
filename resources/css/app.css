@@ -21,18 +21,13 @@
 @font-face {
     font-family: 'TCCC-UnityHeadline';
     font-weight: 400;
-    src: url('/public/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineMedium.ttf') format('truetype');
+    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineMedium.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'TCCC-UnityHeadline';
     font-weight: 700;
-    src: url('/public/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineBold.ttf') format('truetype');
-}
-
-
-*{
-    font-family: 'Open Sans',sans-serif;
+    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineBold.ttf') format('truetype');
 }
 
 .hh-text-shadow{
