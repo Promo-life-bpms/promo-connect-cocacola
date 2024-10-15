@@ -17,7 +17,7 @@ class ProductosImportacionMinComponent extends Component
 
     use WithPagination;
     public $category;
-    
+
     protected $paginationTheme = 'bootstrap';
 
     public $producto = '';
@@ -30,8 +30,8 @@ class ProductosImportacionMinComponent extends Component
     {
         $this->nombre = Session::get('busqueda', '');
         $this->color = '';
-    
-        
+
+
         // Setear a los valores de porveedores en settings
         $utilidad = (float) config('settings.utility');
         $price = DB::connection('mysql_catalogo')->table('products')->max('price');
@@ -66,7 +66,7 @@ class ProductosImportacionMinComponent extends Component
         if ($stockMax == null) {
             $stockMax = $stock;
         }
-    
+
         if ($stockMin == null) {
             $stockMin = 0;
         }
@@ -80,7 +80,7 @@ class ProductosImportacionMinComponent extends Component
                 $newColor  = '%' . $color . '%';
                 $query->where('colors.color', 'LIKE', $newColor);
             })
-            ->paginate(9);
+            ->paginate(15);
 
         return view('livewire.productos-importacion-min-component', [
             'products' => $products,
