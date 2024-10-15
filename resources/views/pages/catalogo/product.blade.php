@@ -14,9 +14,11 @@
                 </div>
 
                 <!-- Thumbnails -->
-                <div class="flex space-x-3 mt-auto">
+                <div class="grid grid-cols-3 gap-3 mt-auto"> <!-- Grid con 3 columnas -->
                     @foreach ($product->images as $image)
-                        <img src="{{ $image->image_url }}" alt="{{ $image->image_url }}" onclick="cambiarImagen(this)" alt="Thumb 1" class="w-20 h-20 rounded-lg shadow-md object-cover cursor-pointer">
+                        <img src="{{ $image->image_url }}" alt="{{ $image->image_url }}"
+                             onclick="cambiarImagen(this)"
+                             class="w-20 h-20 rounded-lg shadow-md object-cover cursor-pointer">
                     @endforeach
                 </div>
             </div>
@@ -90,7 +92,7 @@
             </div>
         </div>
     </div>
-
+    {{-- TODO: Agregar compatiblidad con formulario livewire --}}
     <!-- Productos relacionados -->
     <div class="container mx-auto py-8 font-TCCCUnityHeadline">
         <h1 class="text-2xl font-bold mb-6 mt-10">Productos relacionados</h1>

@@ -1595,6 +1595,9 @@ input:checked + .toggle-bg {
 .max-w-sm {
   max-width: 24rem;
 }
+.max-w-\[calc\(3\*5rem\)\] {
+  max-width: calc(3 * 5rem);
+}
 .flex-1 {
   flex: 1 1 0%;
 }
