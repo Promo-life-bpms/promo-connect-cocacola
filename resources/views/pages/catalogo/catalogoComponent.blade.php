@@ -139,7 +139,7 @@
                             <div>
 
                                 <a  wire:click.prevent="limpiar"
-                                    class="block w-full bg-primary hover:bg-black  text-black  hover:text-white  text-center  font-semibold py-2">
+                                    class="w-full flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300 cursor-pointer">
                                     Limpiar filtro
                                 </a>
                             </div>

@@ -42,7 +42,7 @@
         </div>
         @yield('scripts')
         <!-- Footer -->
-        <footer class="bg-primary text-white py-10 px-8">
+        <footer id="footerPrincipal" class="bg-primary text-white py-10 px-8">
             <!-- Logo en la esquina superior izquierda -->
             <div class="flex justify-start md:justify-between items-start mb-8">
                 <div>
