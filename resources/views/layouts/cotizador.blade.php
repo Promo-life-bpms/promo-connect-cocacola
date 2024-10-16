@@ -84,16 +84,16 @@
                     <!-- Logos de redes sociales -->
                     <div class="flex space-x-4">
                         <a href="#" class="hover:text-primary">
-                            <img src="/public/img/home/fb.svg" alt="Facebook" class="h-6 w-6">
+                            <img src="{{asset('img/home/fb.svg')}}" alt="Facebook" class="h-6 w-6">
                         </a>
                         <a href="#" class="hover:text-primary">
-                            <img src="/public/img/home/twitter.svg" alt="Instagram" class="h-6 w-6">
+                            <img src="{{asset('img/home/insta.svg')}}" alt="Instagram" class="h-6 w-6">
                         </a>
                         <a href="#" class="hover:text-primary">
-                            <img src="/public/img/home/insta.svg" alt="Twitter" class="h-6 w-6">
+                            <img src="{{asset('img/home/twitter.svg')}}" alt="Twitter" class="h-6 w-6">
                         </a>
                         <a href="#" class="hover:text-primary">
-                            <img src="/public/img/home/youtube.svg" alt="Twitter" class="h-6 w-6">
+                            <img src="{{asset('img/home/youtube.svg')}}" alt="Twitter" class="h-6 w-6">
                         </a>
                     </div>
 

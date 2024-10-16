@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class=" mx-auto w-full px-20">
+<div class=" mx-auto w-full px-20 font-TCCCUnityHeadline">
     <style>
         tr:nth-child(even) {
             background-color: #fafafa;
@@ -74,7 +74,7 @@
     <div class="w-full">
         <table class="table-auto">
             <thead>
-                <tr class="bg-black text-white text-sm ">
+                <tr class="bg-gray-800 text-white text-sm ">
                     <th class="p-4" style="width:5%;">Cotizacion</th>
                     <th style="width:5%;">Proyecto</th>
                     <th style="width:5%;">Logo</th>
@@ -87,7 +87,7 @@
                         <th style="width:10%;">Precio unitario</th>
                         <th style="width:10%;">Total</th>
                     @endif
-                    <th style="width:10%;"></th>
+                    <th class="w-40 text-center">Confirmar</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,7 +150,7 @@
                         <td class="text-center"> <b>$ {{ $product->precio_unitario}} </b> </td>
                         <td class="text-center"> <b>$ {{ number_format($product->precio_total, 2, '.', ',') }} </b> </td>
                     @endif
-                   
+
                     <td class="text-center">
 
                         @if( intval($product->cantidad) > intval($productDB->stock) )
@@ -159,8 +159,11 @@
 
                         @if($quoteInformation && $quoteInformation->information == 'Info')
                             <!-- Modal toggle -->
-                        
-                            <button data-modal-target="oc-modal-{{ $quote->id }}" data-modal-toggle="oc-modal-{{ $quote->id }}" class="w-full bg-black hover:bg-primary text-white hover:text-black font-bold p-2 rounded text-xs" type="button">
+
+                            <button data-modal-target="oc-modal-{{ $quote->id }}"
+                                data-modal-toggle="oc-modal-{{ $quote->id }}"
+                                class="w-full bg-transparent border border-secondary hover:bg-secondary-light text-secondary hover:text-black font-bold p-3 md:p-4 rounded text-xs transition-colors duration-300"
+                                type="button">
                                 Confirmar compra
                             </button>
 
@@ -213,7 +216,7 @@
                         @endif
                         <div class="mt-2"></div>
 
-                      
+
                         @if(Auth::user()->hasRole('seller'))
 
                             <button data-modal-target="oc-edit-{{ $quote->id }}" data-modal-toggle="oc-edit-{{ $quote->id }}" class="w-full bg-black hover:bg-primary text-white hover:text-black font-bold p-2 rounded text-xs" type="button">
@@ -221,8 +224,8 @@
                             </button>
 
                         @endif
-                        
-                       
+
+
                         <!-- Main modal -->
                         <div id="oc-edit-{{ $quote->id }}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                             <div class="relative p-4 w-full max-w-2xl max-h-full">
@@ -248,18 +251,18 @@
                                             @livewire('editar-cotizacion-component', ['quoteId' => $quote->id])
                                         </div>
 
-                                        
+
                                     </div>
                                     <!-- Modal footer -->
-                                    
+
 
                                 </div>
                             </div>
                         </div>
 
 
-                       
-                       
+
+
 
                         @endif
 
