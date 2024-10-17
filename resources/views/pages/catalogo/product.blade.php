@@ -65,9 +65,22 @@
                 <!-- Precios -->
                 <div class="mb-1">
                     <h4 class="text-lg font-semibold mb-1">Precios</h4>
-                    <p class="text-sm font-light">Precio actual de la técnica por artículo: <span class="font-semibold">$50.00 MXN</span></p>
-                    <p class="text-sm font-light">Precio final por artículo: <span class="font-semibold">$100.00 MXN</span></p>
-                    <p class="text-sm font-light">Total: <span class="font-semibold">$100.00 MXN</span></p>
+                    <table class="w-full text-left text-sm">
+                        <tbody>
+                            <tr>
+                                <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
+                                <td class="py-2 font-semibold text-right">$50.00 MXN</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-light">Precio final por artículo:</td>
+                                <td class="py-2 font-semibold text-right">$100.00 MXN</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 font-light">Total:</td>
+                                <td class="py-2 font-semibold text-right">$100.00 MXN</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <!-- Botones -->
