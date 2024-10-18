@@ -9,18 +9,18 @@
             <a class="text-secondary" href="#">Importación</a>
         </div>
 
-        
+
         <div class="flex w-full flex-col md:flex-row">
             <style>
                 .container1 {
                     width:400px;
-                    margin: 0; 
+                    margin: 0;
                 }
 
                 @media (max-width: 767px) {
                     .container1 {
                         width:100%;
-                        margin: 0; 
+                        margin: 0;
                         padding: 0 0 10% 5%;
                     }
                 }
@@ -48,12 +48,12 @@
                         </div>
                     @endif
                     <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-3 gap-8 pb-8 -mt-8">
-                        @foreach ($products as $row)
+                        @foreach ($products as $product)
 
-                            @if(isset($row->firstImage) && $row->firstImage->image_url != null)
+                            @if(isset($product->firstImage) && $product->firstImage->image_url != null)
                                 @php
                                     $haspvc = false;
-                                    foreach ($row->productAttributes as $attribute) {
+                                    foreach ($product->productAttributes as $attribute) {
                                         if ($attribute->value === 'pvc') {
                                             $haspvc = true;
                                         }
@@ -61,8 +61,7 @@
                                 @endphp
 
                                 @if($haspvc == false)
-                                    <div class="w-full h-auto bg-white rounded-xl shadow-lg overflow-hidden p-4 sm:ml-0 md:ml-0" style="border: 1px solid #d1d1d1;">
-                                        
+                                    <div class="border border-gray-300 rounded-2xl shadow-lg p-4 bg-white">
                                         @php
                                             /* $priceProduct = $row->price;
                                             if ($row->producto_promocion) {
@@ -71,51 +70,41 @@
                                                 $priceProduct = round($priceProduct - $priceProduct * ($row->provider->discount / 100), 2);
                                             }
                                             $priceProduct = round($priceProduct / ((100 - $utilidad) / 100), 2); */
-            
-                                            if($row->provider_id == 1){
+
+                                            if($product->provider_id == 1){
                                                 /* FOR PROMOTIONAL */
-                                                $priceProduct = ($row->price) * 0.93751;
-                                            }else if($row->provider_id == 2){
+                                                $priceProduct = ($product->price) * 0.93751;
+                                            }else if($product->provider_id == 2){
                                                 /* PROMO OPCION */
-            
-                                                $priceProduct = ($row->price) * 0.87502;
-                                            }else if($row->provider_id == 3){
+
+                                                $priceProduct = ($product->price) * 0.87502;
+                                            }else if($product->provider_id == 3){
                                                 /* INNOVATION */
-                                                $priceProduct = ($row->price) * 1.2329;
+                                                $priceProduct = ($product->price) * 1.2329;
                                             }else{
                                                 /* OTRO */
-                                                $priceProduct = ($row->price);
+                                                $priceProduct = ($product->price);
                                             }
                                             /* $priceProduct = round($row->price * 0.9375, 2); */
-                                
-                                        
                                         @endphp
-                                        <div class="w-full flex justify-center  sm:p-5 sm:bg-white  text-center">
-                                            <div class="">
-                                                <img src="{{ $row->firstImage ? $row->firstImage->image_url : '' }}"
-                                                    class="w-auto h-52" alt="{{ $row->name }}">
-                                            </div>
-                                        </div>
-                                        <div class="text-center flex-grow gap-2 flex flex-col justify-between sm:block">
-                                            {{-- <div class="py-2 text-lg text-slate-700">
-                                                <h5 class="capitalize m-0">
-                                                    {{ Str::limit($row->name, 22, '...') }}</h5>
-                                                <p class="m-0">$
-                                                    {{number_format($priceProduct,2)}}</p>
-                                            </div> --}}
-                                            <p class="mb-4 text-2lx">{{ $row->name }}</p>
-                                            <a href="https://api.whatsapp.com/send?phone=5568096555&text=Hola%20me%20gustaría%20solicitar%20una%20cotización%20para%20el%20producto%20{{ $row->name }}%20con%20SKU%20:%20({{ $row->internal_sku }})"
-                                                class="block w-full bg-primary text-black hover:bg-black hover:text-white text-center rounded-sm font-semibold py-2 rounded-xl">
-                                                Solicitar cotización
-                                            </a>
-                                        </div>
-                                    
+                                        <img src="{{ $product->firstImage ? $product->firstImage->image_url : '' }}" alt="Producto 1" class="w-full h-auto object-cover rounded-lg mb-4 max-h-64">
+                                        <h3 class="text-lg font-bold text-primary mb-2 text-center font-TCCCUnityHeadline">{{ strtolower($product->name) }}</h3>
+                                        <p class="text-lg font-bold text-primary mb-2 capitalize truncate whitespace-nowrap overflow-hidden">${{ $product->price}}</p>
+                                        <a href="{{ route('show.product', ['product' => $product->id]) }}">
+                                            <button class="w-full flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
+                                                <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M5.32664 12.2868C5.56683 14.4488 5.68693 15.5296 6.41437 16.1807C7.1418 16.8318 8.22936 16.8318 10.4045 16.8318H10.565H15.3736H17.1061C18.6046 16.8318 19.3537 16.8318 19.9617 16.4657C20.5697 16.0996 20.9203 15.4375 21.6214 14.1132L24.774 8.1584C25.4518 6.87797 24.5236 5.3363 23.0748 5.3363H10.565H10.2626C7.59855 5.3363 6.26655 5.3363 5.50499 6.18717C4.74342 7.03803 4.89053 8.36188 5.18472 11.0096L5.32664 12.2868Z" fill="#171616" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                                                    <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" fill="white"/>
+                                                    <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                                    <path d="M9.66367 22.5795C9.66367 23.6376 8.80589 24.4954 7.74776 24.4954C6.68963 24.4954 5.83185 23.6376 5.83185 22.5795C5.83185 21.5214 6.68963 20.6636 7.74776 20.6636C8.80589 20.6636 9.66367 21.5214 9.66367 22.5795Z" fill="white" stroke="white" stroke-width="2.5"/>
+                                                    <path d="M21.1591 22.5795C21.1591 23.6376 20.3013 24.4954 19.2432 24.4954C18.1851 24.4954 17.3273 23.6376 17.3273 22.5795C17.3273 21.5214 18.1851 20.6636 19.2432 20.6636C20.3013 20.6636 21.1591 21.5214 21.1591 22.5795Z" fill="white" stroke="white" stroke-width="2.5"/>
+                                                </svg>
+                                                Agregar
+                                            </button>
+                                        </a>
                                     </div>
-                                
                                 @endif
-
                             @endif
- 
                         @endforeach
                     </div>
                 </div>
@@ -123,6 +112,6 @@
         </div>
         <br>
     </div>
-    
+
 </div>
 @endsection

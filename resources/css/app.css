@@ -12,8 +12,22 @@
     src: url('/fonts/ZillaSlab-Bold.ttf') format('truetype');
 }
 
-*{
-    font-family: 'Open Sans',sans-serif;
+@font-face {
+    font-family: 'TCCC-UnityHeadline';
+    font-weight: 300;
+    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineLight.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TCCC-UnityHeadline';
+    font-weight: 400;
+    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineMedium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TCCC-UnityHeadline';
+    font-weight: 700;
+    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineBold.ttf') format('truetype');
 }
 
 .hh-text-shadow{
