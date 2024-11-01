@@ -233,12 +233,11 @@ class FormularioDeCotizacion extends Component
         
         $user = Auth::user();
 
-        $this->validate([
+      /*   $this->validate([
             'priceTechnique' => 'required',
             'cantidad' => 'required|numeric|min:1',
             'colores' => 'required|numeric|min:0',
-            
-        ]);
+        ]); */
  
         $material = Material::findOrFail($this->materialSeleccionado);
         $technique = Technique::findOrFail($this->tecnicaSeleccionada);
@@ -255,7 +254,7 @@ class FormularioDeCotizacion extends Component
             'armado'  => isset($this->armado)? 1:0,
             'destino' => isset($this->destino)? 1:0,
             'detalles' => $this->detalles != ""? $this->detalles : "",
-            'proyecto'=> $this->tipoEnvio,
+            'envio'=> $this->tipoEnvio,
         ]);
 
         if ($currentQuote === null) {

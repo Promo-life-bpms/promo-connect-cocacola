@@ -43,10 +43,10 @@
 
                 <!-- Cantidad y stock -->
                 <div class="flex items-center">
-                    <div class="mr-4">
+                    {{-- <div class="mr-4">
                         <label for="quantity" class="block text-md font-semibold mb-1">Cantidad</label>
                         <input type="number" id="quantity" class="w-16 p-2 border border-gray-300 rounded-lg" value="1" min="1">
-                    </div>
+                    </div> --}}
                     <div class="self-center">
                         <p class="text-gray-500 text-sm">Stock disponible: <span class="font-semibold">{{ $product->stock }}</span></p>
                     </div>
@@ -60,27 +60,6 @@
                             <li>{{ $attr->attribute }}:<span class="font-semibold">{{ $attr->value }}</span></li>
                         @endforeach
                     </ul>
-                </div>
-
-                <!-- Precios -->
-                <div class="mb-1">
-                    <h4 class="text-lg font-semibold mb-1">Precios</h4>
-                    <table class="w-full text-left text-sm">
-                        <tbody>
-                            <tr>
-                                <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
-                                <td class="py-2 font-semibold text-right">$50.00 MXN</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 font-light">Precio final por artículo:</td>
-                                <td class="py-2 font-semibold text-right">$100.00 MXN</td>
-                            </tr>
-                            <tr>
-                                <td class="py-2 font-light">Total:</td>
-                                <td class="py-2 font-semibold text-right">$100.00 MXN</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
 
                 <!-- Personalizador y tecnicas -->
