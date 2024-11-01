@@ -83,30 +83,20 @@
                     </table>
                 </div>
 
-                <!-- Botones -->
+                <!-- Personalizador y tecnicas -->
                 <div class="flex flex-col space-y-3">
 
-                    <!-- Botón de personalización -->
-                    <button class="w-1/2 flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
-                        Personalizar producto
-                    </button>
-
-                    <!-- Botón de agregar al carrito con ícono -->
-                    <button class="w-1/2 flex items-center justify-center px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-light transition duration-300">
-                        <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5.3267 12.2869C5.56689 14.4488 5.68699 15.5296 6.41443 16.1808C7.14186 16.8318 8.22942 16.8318 10.4045 16.8318H10.5651H15.3737H17.1062C18.6047 16.8318 19.3538 16.8318 19.9618 16.4658C20.5698 16.0997 20.9204 15.4376 21.6215 14.1133L24.774 8.15846C25.4519 6.87803 24.5237 5.33636 23.0749 5.33636H10.5651H10.2626C7.59861 5.33636 6.26661 5.33636 5.50505 6.18723C4.74349 7.03809 4.89059 8.36194 5.18478 11.0096L5.3267 12.2869Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-                            <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M9.66385 22.5795C9.66385 23.6376 8.80607 24.4955 7.74794 24.4955C6.68981 24.4955 5.83203 23.6376 5.83203 22.5795C5.83203 21.5215 6.68981 20.6636 7.74794 20.6636C8.80607 20.6636 9.66385 21.5215 9.66385 22.5795Z" stroke="white" stroke-width="2.5"/>
-                            <path d="M21.159 22.5795C21.159 23.6376 20.3012 24.4955 19.2431 24.4955C18.185 24.4955 17.3271 23.6376 17.3271 22.5795C17.3271 21.5215 18.185 20.6636 19.2431 20.6636C20.3012 20.6636 21.159 21.5215 21.159 22.5795Z" stroke="white" stroke-width="2.5"/>
-                        </svg>
-                        Agregar al carrito
-                    </button>
+                    @livewire('formulario-de-cotizacion', ['product' => $product])
                 </div>
             </div>
         </div>
     </div>
     {{-- TODO: Agregar compatiblidad con formulario livewire --}}
     <!-- Productos relacionados -->
+
+
+
+
     <div class="container mx-auto py-8 font-TCCCUnityHeadline">
         <h1 class="text-2xl font-bold mb-6 mt-10">Productos relacionados</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
