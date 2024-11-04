@@ -56,6 +56,7 @@
                 <div class="mb-1">
                     <h4 class="text-lg font-semibold mb-1">Atributos</h4>
                     <ul class="space-y-1 text-sm font-light">
+
                         @foreach ($product->productAttributes as $attr)
                             <li>{{ $attr->attribute }}:<span class="font-semibold">{{ $attr->value }}</span></li>
                         @endforeach

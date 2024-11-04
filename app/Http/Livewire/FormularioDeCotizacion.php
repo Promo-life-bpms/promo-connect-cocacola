@@ -230,19 +230,19 @@ class FormularioDeCotizacion extends Component
 
     public function agregarCarrito()
     {
-        
-        $user = Auth::user();
-
-      /*   $this->validate([
+      
+        $this->validate([
             'priceTechnique' => 'required',
             'cantidad' => 'required|numeric|min:1',
             'colores' => 'required|numeric|min:0',
-        ]); */
- 
+        ]); 
+
+        $user = Auth::user();
+        $piezas = $this->product->productAttributes->firstWhere('slug', 'piezas_caja');
         $material = Material::findOrFail($this->materialSeleccionado);
         $technique = Technique::findOrFail($this->tecnicaSeleccionada);
         $size = Size::find($this->sizeSeleccionado);       
-
+      
         $temporalImage = TemporalImageUrl::where('product_id', $this->product->id)->where('type', 'no used')->where('user_id', $user->id)->get()->last();
 
         $currentQuote = auth()->user()->currentQuote;
@@ -255,6 +255,7 @@ class FormularioDeCotizacion extends Component
             'destino' => isset($this->destino)? 1:0,
             'detalles' => $this->detalles != ""? $this->detalles : "",
             'envio'=> $this->tipoEnvio,
+            'piezasCaja'=>  isset($piezas->value)? $piezas->value : 00
         ]);
 
         if ($currentQuote === null) {
