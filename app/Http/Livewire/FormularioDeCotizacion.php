@@ -254,7 +254,7 @@ class FormularioDeCotizacion extends Component
             'armado'  => isset($this->armado)? 1:0,
             'destino' => isset($this->destino)? 1:0,
             'detalles' => $this->detalles != ""? $this->detalles : "",
-            'envio'=> $this->tipoEnvio,
+            'envio'=> $this->tipoEnvio == null? 'foraneo': $this->tipoEnvio,
             'piezasCaja'=>  isset($piezas->value)? $piezas->value : 00
         ]);
 

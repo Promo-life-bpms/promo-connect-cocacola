@@ -100,6 +100,12 @@
                     $image64 = base64_encode($imageData);
                 }
 
+                $envio = isset($product->piezasCaja)? $product->piezasCaja: 0;
+                
+                $piezasCaja = isset($product->piezasCaja)? $product->piezasCaja: 0;
+
+
+                
             @endphp
             
                 <br>

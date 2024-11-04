@@ -266,7 +266,8 @@ class CurrentQuoteComponent extends Component
                 $product->armado = $current_quote_more_details[0]->armado;    
                 $product->destino = $current_quote_more_details[0]->destino;    
                 $product->detalles = $current_quote_more_details[0]->detalles;   
-                $product->proyecto = $current_quote_more_details[0]->proyecto;
+                $product->envio = isset($current_quote_more_details[0]->envio)? $current_quote_more_details[0]->envio:'';
+                $product->piezasCaja = isset($current_quote_more_details[0]->piezasCaja)? $current_quote_more_details[0]->piezasCaja :'';
             }
 
             if($product){
