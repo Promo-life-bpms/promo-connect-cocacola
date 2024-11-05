@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>HH GLOBAL</title>
+    <title>Coca-Cola</title>
 
     <!-- Scripts -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
