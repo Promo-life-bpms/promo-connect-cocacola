@@ -100,6 +100,25 @@
                     $image64 = base64_encode($imageData);
                 }
 
+                $envio = isset($productData->piezasCaja)? $productData->piezasCaja: 0;
+                
+                $piezasCaja = isset($productData->piezasCaja)? $productData->piezasCaja: 0;
+
+                $costoEnvio = 0;
+                $totalCajas = 0;
+                $utilidad = 0;
+                if($envio = 'foraneo'){
+                    $totalCajas = ceil(floatval($productData->cantidad) / floatval($product->cantidad));
+                    $utilidad = floatval($totalCajas * 400) * 0.20;
+                    $costoEnvio =   floatval($totalCajas * 400) * 1.20;
+                }else if($envio = 'foraneo'){
+                    $costoEnvio = floatval(floatval($productData->cantidad) * 0.60) * 1.20;
+                    $utilidad = floatval(floatval($productData->cantidad) * 0.60) * 0.20;
+                }else{
+                    $costoEnvio = floatval( $product->precio_total * 1.16) * 1.20;
+                    $utilidad = floatval( $product->precio_total * 1.16) * 0.20;
+                }
+
             @endphp
             
                 <br>
@@ -107,7 +126,7 @@
                 <table border="1" >
                     <tr>
                         <th style="width:30%" >Imagen de Referencia</th>
-                        <th style="width:70%" colspan="3">Descripción 
+                        <th style="width:70%" colspan="4">Descripción 
                     </th>
                     </tr>
                     <tr>
@@ -119,7 +138,7 @@
                             <center><img style="width:200px; height:240px; object-fit:contain;" src="data:image/png;base64,{{$image64}}" alt=""></center>
                         @endif
                         </td>
-                        <td colspan="3" style="width:70%; padding:2px;">
+                        <td colspan="4" style="width:70%; padding:2px;">
                             {{ $productName }}
 
                             @switch($category)
@@ -167,11 +186,11 @@
                         
                     </tr>
                     <tr>
-                        <th colspan="1" style="width:35%; padding:2px;">Tecnica de Personalizacion </th>
+                        <th colspan="2" style="width:35%; padding:2px;">Tecnica de Personalizacion </th>
                         <th colspan="2" style="width:35%; padding:2px;" >Detalle de la Personalizacion </th>
                     </tr>
                     <tr>
-                        <td colspan="1" style="width:35%">{{ isset($quoteTechnique->technique)? $quoteTechnique->technique :  '' }} </td>
+                        <td colspan="2" style="width:35%">{{ isset($quoteTechnique->technique)? $quoteTechnique->technique :  '' }} </td>
                         <td colspan="2" style="width:35%">
                             <p> <b>Material: </b>  {{ isset($quoteTechnique->material)? $quoteTechnique->material : ''  }} </p>
                             <p> <b>Tamaño: </b>  {{ isset($quoteTechnique->size)? $quoteTechnique->size : '' }} </p>
@@ -182,25 +201,26 @@
                     </tr>
                     <tr>
                         <th colspan="1">Cantidad</th>
-                        <th colspan="1">Precio Unitario</th>
-                        <th colspan="1">Precio total</th>
-                        <th colspan="1">Total con IVA </th>
+                        <th colspan="1">Subtotal</th>
+                        <th colspan="1">Utilidad</th>
+                        <th colspan="1">Total </th>
                     </tr>
                     <tr>
                         @php
-                            $totalIVA=$product->precio_total * 1.16;
+                            $totalIVA=$costoEnvio * 1.16;
                         @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn   
+                                $ {{ number_format($costoEnvio , 2, '.', ',') }} mxn   
                             @else
-                                no disponible            
+                                no disponible 
                             @endif
                         </td>
+
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn 
+                                $ {{ number_format($utilidad , 2, '.', ',') }} mxn 
                             @else
                                 no disponible                                                 
                             @endif

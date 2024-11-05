@@ -241,14 +241,12 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="inline-flex p-1 px-2  text-black border-b-2 border-black rounded-t-lg active dark:text-black dark:border-black group
-                              "
+                                            <a class="inline-flex p-1 px-2  text-black border-b-2 border-black rounded-t-lg active dark:text-black dark:border-black group"
                                                 id="contacts-tab" data-tabs-target="#contacts" type="button"
                                                 role="tab" aria-controls="contacts" aria-selected="false">
 
                                                 <div
-                                                    class="  rounded-full bg-black text-[#F2F2F2] h-6 w-6 mr-2 flex justify-center pt-[0.5px]
-                                    ">
+                                                    class="  rounded-full bg-black text-[#F2F2F2] h-6 w-6 mr-2 flex justify-center pt-[0.5px]">
                                                     3
                                                 </div>
                                                 Confirmacion

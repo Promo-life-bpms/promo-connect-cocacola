@@ -9,7 +9,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="https://hhglobal.com/wp-content/uploads/2023/12/cropped-HH-Global-favicon-3-32x32.png" sizes="32x32">
-    <title>HH GLOBAL</title>
+    <title>Coca-Cola</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>

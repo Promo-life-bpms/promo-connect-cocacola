@@ -44,9 +44,7 @@
                             <div class="flex items-center space-x-3">
                                 <p>Cantidad: <strong>{{ $quote->cantidad }}</strong> <span>PZ</span></p>
                             </div>
-                            <div class="flex items-center space-x-3">
-                                <p>Proyecto N°: <strong>{{ $moreDetails[0]['proyecto']  }}</strong></p>
-                            </div>
+                          
                             
                         </div>
                         <div class="h-full text-center pr-20">

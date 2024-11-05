@@ -1,33 +1,15 @@
 <div>
 
 
-    <ol class="relative text-gray-500 border-s border-stone-50 ">
-        <li class="mb-10 ms-6">
-            <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white">
-                1
-            </span>
-           <div>
-                <p class="text-lg font-bold mb-2">Número de proyecto</p>
-                @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                <p class="text-sm text-red-500 font-semibold my-2"> HH Global (CE Team) deberá de crear el proyecto en los sistemas de HH Global y compartir el número a BH Trade, para que BH Trade suba el costo final a nuestro sistema. Posteriormente BH Trade colocará el # de proyecto en su sistema, para tener un match.</p>
-                @endif
-                <input type="text" name="projecName" id="add-to-car" placeholder="Ingresa el número de proyecto" wire:model="projecName" required class="w-full">
-           </div>
-        </li>
-
-
-        <li class="mb-10 ms-6 {{ !empty($projecName) ? '' : 'hidden' }}">
-            <span class="absolute flex items-center justify-center w-8 h-8 bg-white rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                2
-            </span>
-
-            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Personalizacion de la tecnica</strong></p>
-
+    <ol class="relative border-s border-stone-50 ">
+       
+            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong> Personaliza la técnica</strong></p>
+        
             <div class="">
                 <div class="rounded">
                     <div class="grid grid-cols-2">
                         <div class="m-0 mb-1 col-span-1">
-                            <label for="tecnica" class="m-0"><strong>Material</strong> </label>
+                            <label for="tecnica" class="m-0 font-light">Material <span class="text-red-500">*</span></label>
                             <select name="" id=""
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                                 wire:model="materialSeleccionado" wire:change="resetTecnique">
@@ -39,7 +21,7 @@
                         </div>
                         @if ($techniquesAvailables)
                             <div class="form-group m-0 mb-1 col-md-6">
-                                <label for="tecnica" class="m-0"><strong>Tecnica</strong> </label>
+                                <label for="tecnica" class="m-0 font-light">Técnica <span class="text-red-500">*</span></label>
                                 <select name="" id=""
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                                     wire:model="tecnicaSeleccionada" wire:change="resetSizes">
@@ -53,7 +35,7 @@
                         @endif
                         @if ($sizesAvailables)
                             <div class="form-group m-0 mb-1 col-md-6">
-                                <label for="tecnica" class="m-0"><strong>Tamaño</strong> </label>
+                                <label for="tecnica" class="m-0 font-light">Tamaño  <span class="text-red-500">*</span></label>
                                 <select name="" id=""
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
                                     wire:model="sizeSeleccionado">
@@ -96,7 +78,7 @@
                 </div>
                 <div class="row">
                     <div class="grid grid-cols-1 md:grid-cols-3 mt-5">
-                        <label><strong>Piezas</strong> </label>
+                        <label><strong> Total de Piezas</strong> </label>
                         <br>
                         <input
                             class="grid grid-cols-3  w-full py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"
@@ -111,10 +93,18 @@
                             name="colores" wire:model="colores" placeholder="Colores" min="0">
                     </div>
                     <br>
+        
+                <div>
+                    <label for="tipoEnvio" class="font-bold">Tipo de envío </label>
+                    <select id="tipoEnvio" wire:model="tipoEnvio" class="border rounded p-2">
+                        <option value="foraneo" selected>Foráneo</option>
+                        <option value="local">Local</option>
+                    </select>
 
+                </div>
 
-                    <button class="w-full col-span-5 px-10 py-3 bg-gray-900 hover:bg-primary hover:text-black text-stone-50"
-                    data-modal-target="modalPersonalize" data-modal-toggle="modalPersonalize" type="button">
+                <button class="mt-10 w-1/2 flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300"
+                    dal-target="modalPersonalize" data-modal-toggle="modalPersonalize" type="button">
                     Personaliza tu producto
                 </button>
                 <br>
@@ -156,7 +146,7 @@
 
                                             <p class="text-base font-bold">Selecciona tu logo </p>
 
-                                            <div class="grid grid-cols-3 gap-4">
+                                           {{--  <div class="grid grid-cols-3 gap-4">
                                                 <select id="logos" name="logos" class=" mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" style="width: 210px;">
                                                     <option value="HHGLOBALNEGRO.png">HH Global negro</option>
                                                     <option value="HHGLOBALBLANCO.png">HH Global blanco</option>
@@ -166,11 +156,11 @@
                                             </div>
                                             <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-stone-700 " id="clearLogo" style="display:none;">Limpiar logo</p>
 
-                                            <br>
+                                            <br> --}}
 
 
 
-g                                          <input type="file"
+                                            <input type="file"
                                                 class="block w-full text-sm text-slate-500
                                                     file:rounded-full
                                                     file:mr-4 file:py-2 file:px-4
@@ -225,76 +215,47 @@ g                                          <input type="file"
                     </div>
                 </div>
             </div>
-        </li>
-        <li class="ms-6 {{ !empty($projecName) ? 'min-h-full' : 'hidden' }}">
-            <span class="absolute flex items-center justify-center w-8 h-8 bg-gray-100 rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-700">
-                3
-            </span>
+
 
             <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Total</strong></p>
 
-            <div class="rounded">
-                <div class="form-group m-0 mb-1 ">
-                    <label for="newTechnique" class=" m-0">
-                        <strong>Dias de entrega:</strong>
-                        10
-                    </label>
-                </div>
-                <div class="form-group m-0 mb-1 ">
-                   {{--  <label for="newTechnique" class=" m-0">
-                        <strong>
-                            Precio actual de la tecnica por articulo:
-                        </strong>
-                        $ {{ $precioDeTecnica * $colores }}
-                    </label> --}}
-                </div>
-            </div>
+            <table class="w-full text-left text-sm">
+                <tbody>
+                    <tr>
+                        <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
+                        <td class="py-2 font-semibold text-right"> {{ $precioDeTecnica }}</td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-light">Precio final por artículo:</td>
+                        <td class="py-2 font-semibold text-right">
 
-            <div class="justify-content-between  grid grid-cols-1">
-                {{--  @if (!$priceScales) --}}
-
-                @if(Auth::user()->hasRole('invited'))
-                    <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $
-                            No disponible
-                            <b class="text-xs text-red-500 font-bold">Incluye TF</b>
-                        </h6>
-
-                    <h6 class="text-success"><strong>Precio Total:</strong>No disponible</h6>
-                @else
-                    <div>
-                        <h6 class="text-success"><strong>Precio Final por Articulo:</strong> $
                             @if($this->cantidad == null || $this->cantidad == 0)
                                 0.00
                             @else
                                 {{ number_format($costoCalculado,2)}}
                             @endif
-                            <b class="text-xs text-red-500 font-bold">Incluye TF</b>
-                        </h6>
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="py-2 font-light">Total:</td>
+                        <td class="py-2 font-semibold text-right"> {{ number_format($costoTotal,2)}} </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="justify-content-between  grid grid-cols-1">
 
-                        <h6 class="text-success"><strong>Precio Total:</strong> $ {{ number_format($costoTotal,2)}}</h6>
-                    </div>
-                @endif
-
-
-                {{--  @endif --}}
-                <div class="form-group m-0 mb-1 text-center">
-                    @if ($currentQuote)
-                        <button type="button" class="btn btn-warning py-2 px-4" wire:click='editarCurrentCotizacion'>Editar
-                            cotizacion</button>
-                    @elseif ($productEdit)
-                        <button type="button" class="btn btn-info py-2 px-4" wire:click='editarCotizacion'>Actualizar
-                            cotizacion</button>
-                    @elseif ($productNewAdd)
-                        <button type="button" class="btn btn-secondary py-2 px-4" wire:click='addNewProductToQuote'>Agregar
-                            a
-                            la cotizacion</button>
-                    @else
-                    @endif
-                </div>
-
-                <button data-modal-hide="add-to-car" type="submit" class="bg-primary hover:bg-black hover:text-white text-black py-3 col-span-4 px-10" wire:click="agregarCarrito()">
+                <button data-modal-hide="add-to-car" wire:click="agregarCarrito()"type="submit"  class="w-1/2 flex items-center justify-center px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-light transition duration-300 mt-4">
+                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5.3267 12.2869C5.56689 14.4488 5.68699 15.5296 6.41443 16.1808C7.14186 16.8318 8.22942 16.8318 10.4045 16.8318H10.5651H15.3737H17.1062C18.6047 16.8318 19.3538 16.8318 19.9618 16.4658C20.5698 16.0997 20.9204 15.4376 21.6215 14.1133L24.774 8.15846C25.4519 6.87803 24.5237 5.33636 23.0749 5.33636H10.5651H10.2626C7.59861 5.33636 6.26661 5.33636 5.50505 6.18723C4.74349 7.03809 4.89059 8.36194 5.18478 11.0096L5.3267 12.2869Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                        <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9.66385 22.5795C9.66385 23.6376 8.80607 24.4955 7.74794 24.4955C6.68981 24.4955 5.83203 23.6376 5.83203 22.5795C5.83203 21.5215 6.68981 20.6636 7.74794 20.6636C8.80607 20.6636 9.66385 21.5215 9.66385 22.5795Z" stroke="white" stroke-width="2.5"/>
+                        <path d="M21.159 22.5795C21.159 23.6376 20.3012 24.4955 19.2431 24.4955C18.185 24.4955 17.3271 23.6376 17.3271 22.5795C17.3271 21.5215 18.185 20.6636 19.2431 20.6636C20.3012 20.6636 21.159 21.5215 21.159 22.5795Z" stroke="white" stroke-width="2.5"/>
+                    </svg>
                     Agregar al carrito
                 </button>
+
                 @if ($errors)
                     <div wire:poll.12s>
                         @if ($errors->has('cantidad'))
@@ -323,8 +284,8 @@ g                                          <input type="file"
                     <div wire:poll.4s class="btn btn-sm btn-success w-100" style="margin-top:0px; margin-bottom:0px;">
                         {{ session('message') }} </div>
                 @endif
-
-        </li>
+            </div>
+    
     </ol>
 
 
