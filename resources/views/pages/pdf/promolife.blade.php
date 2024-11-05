@@ -16,7 +16,7 @@
 
         <p style="margin-left:672px; margin-top:2px; z-index:2; color:#FFFFFF; font-size:12px;"><b>{{$date}}</b></p>
             <div style="z-index:4; margin-top:20px;">
-            <img src="img/hhglobal_negro.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
+            <img src="img/navBar/cocaLogo.png" alt="cocacola" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
             <center>
                
                 <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Daniel Levy Hano </b> </span>
@@ -98,6 +98,26 @@
                     curl_close($ch);
 
                     $image64 = base64_encode($imageData);
+                }
+
+                $envio = isset($productData->piezasCaja)? $productData->piezasCaja: 0;
+                
+                $piezasCaja = isset($productData->piezasCaja)? $productData->piezasCaja: 0;
+
+                $costoEnvio = 0;
+                $totalCajas = 0;
+                $utilidad = 0;
+         
+                if($envio = 'foraneo'){
+                    $totalCajas = ceil(floatval($product->cantidad) ) / floatval($productData->piezasCaja);
+                    $utilidad = floatval($totalCajas * 400) * 0.20;
+                    $costoEnvio =   floatval($totalCajas * 400) * 1.20;
+                }else if($envio = 'foraneo'){
+                    $costoEnvio = floatval(floatval($productData->cantidad) * 0.60) * 1.20;
+                    $utilidad = floatval(floatval($productData->cantidad) * 0.60) * 0.20;
+                }else{
+                    $costoEnvio = floatval( $product->precio_total * 1.16) * 1.20;
+                    $utilidad = floatval( $product->precio_total * 1.16) * 0.20;
                 }
 
             @endphp
@@ -182,35 +202,36 @@
                     </tr>
                     <tr>
                         <th colspan="1">Cantidad</th>
-                        <th colspan="1">Precio Unitario</th>
-                        <th colspan="1">Precio total</th>
-                        <th colspan="1">Total con IVA </th>
+                        <th colspan="1">Subtotal</th>
+                        <th colspan="1">Utilidad</th>
+                        <th colspan="1">Total </th>
                     </tr>
                     <tr>
                         @php
-                            $totalIVA=$product->precio_total * 1.16;
+                            $totalIVA=$costoEnvio * 1.16;
                         @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($product->precio_unitario , 2, '.', ',') }} mxn  
+                                $ {{ number_format($costoEnvio , 2, '.', ',') }} mxn   
                             @else
-                                no disponible                    
+                                no disponible 
                             @endif
                         </td>
+
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn
+                                $ {{ number_format($utilidad , 2, '.', ',') }} mxn 
                             @else
-                                no disponible                                                         
+                                no disponible                                                 
                             @endif
 
                         </td>
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($totalIVA , 2, '.', ',') }} mxn  
+                                $ {{ number_format($totalIVA , 2, '.', ',') }} mxn
                             @else
-                                no disponible        
+                                no disponible           
                             @endif                        
                         </td>
                     </tr>
@@ -224,7 +245,6 @@
         <p> Condiciones:</p>
         <ul>
             <li>Condiciones de pago acordadas en el contrato</li>
-            <li>Precios unitarios mostrados antes de IVA</li>
             <li>Precios mostrados en pesos mexicanos (MXN)</li>
             <li>Una vez entregada la orden de compra y/o muestra física aprobada, la entrega de los productos se realizará en un plazo estimado de 10 días hábiles.</li>
             <li>Antes de generar la orden de compra, le invitamos a verificar la disponibilidad actual de stock para garantizar la prontitud en el cumplimiento de su pedido.</li>
