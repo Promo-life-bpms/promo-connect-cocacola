@@ -79,7 +79,7 @@
                             @endif
                             
                                 <!-- Modal toggle -->
-                                <button data-modal-target="edit-modal-{{$quote->id}}" data-modal-toggle="edit-modal-{{$quote->id}}" class=" bg-primary text-black block w-full text-center text-sm underline rounded-sm font-semibold py-2 px-4" type="button">
+                                <button data-modal-target="edit-modal-{{$quote->id}}" data-modal-toggle="edit-modal-{{$quote->id}}" class=" bg-primary text-white block w-full text-center text-sm underline rounded-sm font-semibold py-2 px-4" type="button">
                                     Editar cotización
                                 </button>
 

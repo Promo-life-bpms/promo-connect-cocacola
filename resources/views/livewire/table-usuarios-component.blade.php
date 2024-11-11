@@ -15,7 +15,7 @@
             <div class="flex">
                 <form action="{{ route('download.stadistics')}}" method="POST">
                     @csrf 
-                    <button type="submit" class="text-black bg-primary text-black hover:bg-black hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none flex">
+                    <button type="submit" class="bg-primary text-white hover:bg-black hover:text-white focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none flex">
                         <svg width="20px" height="20px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-2">
                             <path d="M3 15C3 17.8284 3 19.2426 3.87868 20.1213C4.75736 21 6.17157 21 9 21H15C17.8284 21 19.2426 21 20.1213 20.1213C21 19.2426 21 17.8284 21 15" stroke="#a8a8a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M12 3V16M12 16L16 11.625M12 16L8 11.625" stroke="#a8a8a8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />

@@ -65,11 +65,11 @@
                     </div>
                     @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
                     <div class="mb-7 md:mt-7 md:mb-0 mx-1">
-                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('compras') }}">Mis compras</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('compras') }}">Compras</a></p>
                     </div>
 
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
-                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('misCotizaciones') }}">Mis cotizaciones</a></p>
+                        <p class="text-primary hover:text-primary-light text-sm mx-2 font-TCCCUnityHeadline"><a href="{{ route('misCotizaciones') }}">Cotizaciones</a></p>
                     </div>
                     @endif
                     <div class="mb-7 md:mt-7 md:mb-0 mx-2">
