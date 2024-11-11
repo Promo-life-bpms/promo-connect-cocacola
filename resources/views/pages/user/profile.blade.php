@@ -16,7 +16,7 @@
     
     <section class="px-10" style="margin-top: 160px;">
         @if(session('locate'))
-            <div class="bg-primary border border-black text-black px-4 py-3 rounded relative mb-4" role="alert">
+            <div class="bg-primary border border-black text-white px-4 py-3 rounded relative mb-4" role="alert">
                 <span class="block sm:inline">{{ session('message') }}</span>
             </div>
         @endif

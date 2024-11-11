@@ -193,7 +193,7 @@
                                                 <p class="mt-4"></p>
                                                
 
-                                                <button class="w-full bg-primary hover:bg-primary hover:bg-text text-black py-2 px-4 rounded" id="sendImageToBackend">GUARDAR</button>
+                                                <button class="w-full bg-primary hover:bg-primary hover:bg-text text-white py-2 px-4 rounded" id="sendImageToBackend">GUARDAR</button>
                                                 <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-green-600 text-sm" id="savedText" style="display:none;">Imagen guardada, ya puedes cerrar esta ventana</p>
                                                 <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-red-600 text-sm" id="errorText" style="display:none;">Ocurrio un error al guardar la imagen, intenta nuevamente</p>
 
