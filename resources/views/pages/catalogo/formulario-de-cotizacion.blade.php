@@ -191,17 +191,7 @@
                                                 <p class="text-base font-bold">Color de texto (opcional) </p>
                                                 <input type="color" id="colorPicker" name="colorPicker" value="#ff0000">
                                                 <p class="mt-4"></p>
-                                                <!-- <div x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true"
-                                                    x-on:livewire-upload-finish="isUploading = false"
-                                                    x-on:livewire-upload-error="isUploading = false"
-                                                    x-on:livewire-upload-progress="progress = $event.detail.progress">
-                                                    <input type="file"
-                                                        class="block w-full text-sm text-slate-500 bg-violet-50
-                                                        file:rounded-full
-                                                        file:mr-4 file:py-2 file:px-4
-                                                        file:text-sm file:font-semibold"
-                                                        wire:model="photo" accept="image/*" onchange="fileUploaded()" id="fileInput">
-                                                        <div class="text-xs m-1" id="statusIcon"></div> -->
+                                               
 
                                                 <button class="w-full bg-primary hover:bg-primary hover:bg-text text-black py-2 px-4 rounded" id="sendImageToBackend">GUARDAR</button>
                                                 <p class="inline-block cursor-pointer transition duration-300 ease-in-out text-green-600 text-sm" id="savedText" style="display:none;">Imagen guardada, ya puedes cerrar esta ventana</p>
@@ -337,20 +327,20 @@
 
        /* Logos */
 
-       var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
+      /*  var logo1 = "{{asset('img/HHGLOBALNEGRO.png')}}";
        var logo2 = "{{asset('img/HHGLOBALBLANCO.png')}}";
        var logo3 = "{{asset('img/LOGOADARENEGRO.png')}}";
-       var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}";
+       var logo4 = "{{asset('img/LOGOADAREBLANCO.png')}}"; */
 
        if(imageURL.startsWith("https://catalogodeproductos.promolife.lat/")){
            imageURL = imageURL.slice(41);
        }
        /* Identificadores */
-       var selectedLogo1 = document.getElementById("logo1");
-       var selectedLogo2 = document.getElementById("logo2");
+       /* var selectedLogo1 = document.getElementById("logo1");
+       var selectedLogo2 = document.getElementById("logo2"); */
 
-       var logoSelect = document.getElementById("logos");
-
+/*        var logoSelect = document.getElementById("logos");
+ */
        var logoURL = document.getElementById("imageInput");
 
        var selectedImageLogo = null;
@@ -363,7 +353,7 @@
 
            var selectedImage = null; // Definir selectedImage aquí
 
-           logoSelect.addEventListener("change", function () {
+            /* logoSelect.addEventListener("change", function () {
 
                 document.getElementById('clearLogo').style.display = 'block';
 
@@ -391,7 +381,7 @@
                canvas.remove(image);
 
                console.log("Logo seleccionado: " + selectedImage);
-           });
+            }); */
 
            /* Verifica la url de la imagen de proveedores de APIS */
            if (imageURL.startsWith('/storage/')) {
@@ -467,12 +457,12 @@
            });
 
            /* Borrado manual de imagenes y texto */
-           var resultLogo = document.getElementById("resultLogo");
+           /* var resultLogo = document.getElementById("resultLogo"); */
            var resultImage = document.getElementById("resultImage");
            var showGeneratedImage = document.getElementById("showGeneratedImage");
-           document.getElementById('clearLogo').addEventListener('click', function() {
+           /* document.getElementById('clearLogo').addEventListener('click', function() {
                canvas.remove(selectedImageLogo);
-           });
+           }); */
            document.getElementById('clearImage').addEventListener('click', function() {
                canvas.remove(selectedImage);
            });
