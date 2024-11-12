@@ -3,103 +3,133 @@
 @section('content')
 
     <style>
-        .swiper {
+        .carousel-container {
+            overflow: hidden;
             width: 100%;
-            height: 100%;
+            position: relative;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 20px; /* Ajusta el espacio entre los slides */
+            padding: 0 20px; /* Espacio en los extremos para ver el "gap" */
         }
 
-        [aria-current="true"] {
-            background-color: black;
+        .carousel-slide {
+            min-width: calc(70% - 20px); /* Reduce el ancho para considerar el gap */
+            flex-shrink: 0;
         }
 
-        .swiper-slide {
-            text-align: center;
-            font-size: 18px;
-            background: #fff;
+        .carousel-pagination {
             display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 10px;
+            margin-top: 1rem;
         }
 
-        .swiper-slide img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .carousel-pagination-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.3);
+            cursor: pointer;
         }
 
-        .img1, .img2, .img3, .img4, .img4, .img5, .img6, .img7, .img8, .img9, .img10, .img11{
-            width: 350px;
-            height: 250px;
-        }
-        .img1:hover,
-        .img2:hover,
-        .img3:hover,
-        .img4:hover,
-        .img5:hover,
-        .img6:hover,
-        .img7:hover,
-        .img8:hover,
-        .img9:hover,
-        .img10:hover,
-        .img11:hover {
-            background-size: cover;
-            background-position: center;
-            color: white;
-        }
-
-        .swiper-pagination-bullet-active{
-            background: rgb(166 105 51);
+        .carousel-pagination-dot.active {
+            background-color: rgb(166, 105, 51);
         }
     </style>
-    <div id="default-carousel" class="container mx-auto mt-8 flex justify-center" data-carousel="slide">
-        <!-- Carousel wrapper -->
-        <div class="relative overflow-hidden  md:h-[32rem] mx-auto w-full">
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <a href="{{route('presentation')}}">
-                    <img class="w-full h-full object-fill" src="{{ asset('img/home/carouselImage.png') }}"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="banner">
-                </a>
 
-            </div>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <a href="{{route('presentation')}}">
-                    <img class="w-full h-full object-fill" src="{{ asset('img/home/carouselImage.png') }}"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+    <div class="carousel-container">
+        <div id="carousel-track" class="carousel-track">
+            <!-- Duplicamos los banners al inicio para un efecto de bucle infinito -->
+            <div class="carousel-slide">
+                <a href="{{ route('presentation') }}">
+                    <img src="{{ asset('storage/banners/' . $banners->last()->url_banner) }}" class="w-full h-full object-fill" alt="banner">
                 </a>
+            </div>
 
-            </div>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <a href="{{route('presentation')}}">
-                    <img class="w-full h-full object-fill" src="{{ asset('img/home/carouselImage.png') }}"
-                    class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." >
-                </a>
-            </div>
+            <!-- Banners reales -->
             @foreach ($banners as $item)
-                <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <a href="{{route('presentation')}}">
-                        <img class="w-full h-full object-fill" src="{{ asset('img/home/carouselImage.png') }}"
-                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="..." >
+                <div class="carousel-slide">
+                    <a href="{{ route('presentation') }}">
+                        <img src="{{ asset('storage/banners/' . $item->url_banner) }}" class="w-full h-full object-fill" alt="banner">
                     </a>
                 </div>
             @endforeach
-            <div class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 4" data-carousel-slide-to="3"></button>
+
+            <!-- Duplicamos el primer banner al final para un efecto de bucle infinito -->
+            <div class="carousel-slide">
+                <a href="{{ route('presentation') }}">
+                    <img src="{{ asset('storage/banners/' . $banners->first()->url_banner) }}" class="w-full h-full object-fill" alt="banner">
+                </a>
             </div>
         </div>
 
-        <!-- Slider indicators -->
-        {{-- <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-            @for ($i = 0; $i < count($banners); $i++)
-                <button type="button" class="w-3 h-3 rounded-full" aria-current="{{ $i == 0 ? 'true' : 'false' }}"
-                    aria-label="Slide {{ $i + 1 }}" data-carousel-slide-to="{{ $i }}"></button>
-            @endfor
-        </div> --}}
-
+        <!-- Paginación -->
+        <div class="carousel-pagination">
+            @foreach ($banners as $index => $item)
+                <div class="carousel-pagination-dot" onclick="goToSlide({{ $index }})"></div>
+            @endforeach
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const track = document.getElementById('carousel-track');
+            const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+            const paginationDots = Array.from(document.querySelectorAll('.carousel-pagination-dot'));
+            const slideWidth = slides[0].clientWidth + 20; // Ancho de slide con el gap incluido
+            let currentIndex = 1;
+            let interval;
+
+            // Mover el carrusel a una posición específica
+            function moveToSlide(index, smooth = true) {
+                track.style.transition = smooth ? 'transform 0.5s ease' : 'none';
+                track.style.transform = `translateX(-${index * slideWidth}px)`;
+                updatePagination(index);
+            }
+
+            // Actualizar los dots de paginación
+            function updatePagination(index) {
+                paginationDots.forEach(dot => dot.classList.remove('active'));
+                const paginationIndex = (index - 1 + slides.length - 2) % (slides.length - 2);
+                paginationDots[paginationIndex].classList.add('active');
+            }
+
+            // Función para avanzar al siguiente slide
+            function nextSlide() {
+                currentIndex++;
+                moveToSlide(currentIndex);
+                
+                // Si estamos en el último slide duplicado, reiniciar sin transición
+                if (currentIndex >= slides.length - 1) {
+                    setTimeout(() => {
+                        currentIndex = 1;
+                        moveToSlide(currentIndex, false);
+                    }, 500); // Después de la transición de 0.5s, reiniciar
+                }
+            }
+
+            // Función para ir a un slide específico desde la paginación
+            window.goToSlide = function (index) {
+                clearInterval(interval); // Detener el ciclo automático
+                currentIndex = index + 1;
+                moveToSlide(currentIndex);
+                startCarousel(); // Reiniciar el ciclo automático
+            }
+
+            // Función para iniciar el carrusel automático
+            function startCarousel() {
+                interval = setInterval(nextSlide, 3000); // Cambiar cada 3 segundos
+            }
+
+            // Inicialización
+            moveToSlide(currentIndex, false); // Posicionar en el primer slide real sin animación
+            startCarousel();
+        });
+    </script>
 
     <!-- Los Favoritos -->
     <div class="w-full mt-10 p-6 sm:p-10 md:p-24 bg-cover bg-center relative" style="background-image:  url('{{ asset('img/home/favoritosBackground.png') }}');">
@@ -276,23 +306,59 @@
     </div>
 
     <!-- Card centrado con dimensiones exactas y contenido centrado -->
-    <div class="flex justify-center items-center w-full mt-10">
-        <div class="bg-white p-8 rounded-2xl shadow-lg" style="width: 1329px; height: 586px;">
+    <div class="flex justify-center items-center w-full md:my-[150px] relative">
+    <!-- Imagen izquierda en primer plano -->
+        <div id="imagenIzquierda" class="absolute left-0 z-10 invisible">
+            <img src="{{ asset('storage/img/izquierda.png')}}" alt="Imagen izquierda" class="md:w-[480px] h-auto object-cover rounded-lg">
+        </div>
+
+        <!-- Contenedor principal en segundo plano -->
+        <div class="bg-white p-8 rounded-2xl shadow-lg md:w-[1329px] md:h-[586px] relative z-0">
             <!-- Contenido centrado -->
             <div class="flex flex-col justify-center items-center h-full">
                 <!-- Título centrado -->
-                <h2 class="md:text-3xl text-6xl font-bold text-primary mb-4 font-TCCCUnityHeadline">TERMOS</h2>
+                <h2 class="sm:text-3xl md:text-6xl font-bold text-primary mb-4 font-TCCCUnityHeadline">TERMOS</h2>
 
                 <!-- Texto descriptivo centrado -->
-                <p class="text-md md:text-lg text-primary-dark mb-6 font-TCCCUnityHeadline" >Coleccionables de calidad que perduran con el tiempo</p>
+                <p class="sm:text-lg md:text-2xl text-primary-dark mb-6 font-TCCCUnityHeadline">Coleccionables de calidad que perduran con el tiempo</p>
 
                 <!-- Botón rojo centrado -->
-                <button class="bg-secondary text-white py-2 px-6 rounded-lg hover:bg-secondary-light transition duration-300 font-TCCCUnityHeadline">
+                <button class="bg-[#E61D2B] w-[250px] text-white py-4 px-6 rounded-lg hover:bg-secondary-light transition duration-300 font-TCCCUnityHeadline">
                     VER MÁS
                 </button>
             </div>
         </div>
+
+        <!-- Imagen derecha en primer plano -->
+        <div id="imagenDerecha" class="absolute right-0 z-10 invisible">
+            <img src="{{ asset('storage/img/derecha.png')}}" alt="Imagen derecha" class="md:w-[480px] h-auto object-cover rounded-lg">
+        </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const imagenIzquierda = document.getElementById("imagenIzquierda");
+            const imagenDerecha = document.getElementById("imagenDerecha");
+
+            function checkScrollPosition() {
+                const triggerPoint = window.innerHeight / 2; // Punto de activación en la mitad de la página
+                const sectionPosition = imagenIzquierda.getBoundingClientRect().top;
+
+                if (sectionPosition < triggerPoint) {
+                    imagenIzquierda.classList.add("animate-slide-left");
+                    imagenDerecha.classList.add("animate-slide-right");
+
+                    imagenIzquierda.classList.remove("invisible");
+                    imagenDerecha.classList.remove("invisible");
+
+                    // Remover el event listener para que la animación ocurra solo una vez
+                    window.removeEventListener("scroll", checkScrollPosition);
+                }
+            }
+
+            // Escuchar el evento de scroll
+            window.addEventListener("scroll", checkScrollPosition);
+        });
+    </script>
 
     <!-- Premium brands -->
     <div class="w-full mt-10">

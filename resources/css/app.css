@@ -3,33 +3,68 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'sharpslab-bold';
-    src: url('/fonts/SharpSlab-Bold.ttf') format('truetype');
+    font-family: "sharpslab-bold";
+    src: url("/fonts/SharpSlab-Bold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'zillaslap-bold';
-    src: url('/fonts/ZillaSlab-Bold.ttf') format('truetype');
+    font-family: "zillaslap-bold";
+    src: url("/fonts/ZillaSlab-Bold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'TCCC-UnityHeadline';
+    font-family: "TCCC-UnityHeadline";
     font-weight: 300;
-    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineLight.ttf') format('truetype');
+    src: url("/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineLight.ttf")
+        format("truetype");
 }
 
 @font-face {
-    font-family: 'TCCC-UnityHeadline';
+    font-family: "TCCC-UnityHeadline";
     font-weight: 400;
-    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineMedium.ttf') format('truetype');
+    src: url("/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineMedium.ttf")
+        format("truetype");
 }
 
 @font-face {
-    font-family: 'TCCC-UnityHeadline';
+    font-family: "TCCC-UnityHeadline";
     font-weight: 700;
-    src: url('/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineBold.ttf') format('truetype');
+    src: url("/fonts/TCC-UnityHeadLine/TCCC-UnityHeadlineBold.ttf")
+        format("truetype");
 }
 
-.hh-text-shadow{
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+.hh-text-shadow {
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Definición de animaciones */
+@keyframes slideInFromLeft {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Clases de animación */
+.animate-slide-left {
+    animation: slideInFromLeft 1s ease-out forwards;
+}
+
+.animate-slide-right {
+    animation: slideInFromRight 1s ease-out forwards;
 }
