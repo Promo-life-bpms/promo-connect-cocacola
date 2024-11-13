@@ -175,7 +175,7 @@
                         @foreach ($products as $product)
 
                             @if(isset($product->firstImage) && $product->firstImage->image_url != null)
-                                    <div class="border border-gray-300 rounded-2xl shadow-lg p-4">
+                                    <div class="border border-gray-300 rounded-2xl p-8 bg-white h-[460px] flex flex-col items-center justify-end shadow-xl">
                                         @php
                                             $product_type = $product->productAttributes->where('attribute', 'Tipo Descuento')->first();
 
@@ -221,12 +221,12 @@
 
                                             }
                                         @endphp
-                                        <img src="{{ $product->firstImage ? $product->firstImage->image_url : '' }}" alt="{{ $product->name }}" class="w-full h-auto object-cover rounded-lg mb-4">
-                                        <h3 class="text-lg font-bold text-primary mb-2 text-center font-TCCCUnityHeadline">{{ Str::limit($product->name, 22, '...') }}</h3>
-                                        <p class="text-md text-primary mb-4 font-TCCCUnityHeadline font-bold">${{ $product->price}}</p>
-                                        <a href="{{ route('show.product', ['product' => $product->id]) }}">
+                                        <img src="{{ $product->firstImage ? $product->firstImage->image_url : '' }}" alt="{{ $product->name }}" class="w-auto h-[240px] object-cover rounded-lg mb-4">
+                                        <h3 class="text-lg font-light text-primary text-center font-TCCCUnityHeadline mb-6">{{ Str::limit($product->name, 22, '...') }}</h3>
+                                        <p class="w-full text-left text-md text-primary mb-4 font-TCCCUnityHeadline font-bold">${{ $product->price}}</p>
+                                        <a href="{{ route('show.product', ['product' => $product->id]) }}" class="w-full">
                                             <button class="w-full flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
-                                                <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <svg width="23" height="23" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-4">
                                                     <path d="M5.32664 12.2868C5.56683 14.4488 5.68693 15.5296 6.41437 16.1807C7.1418 16.8318 8.22936 16.8318 10.4045 16.8318H10.565H15.3736H17.1061C18.6046 16.8318 19.3537 16.8318 19.9617 16.4657C20.5697 16.0996 20.9203 15.4375 21.6214 14.1132L24.774 8.1584C25.4518 6.87797 24.5236 5.3363 23.0748 5.3363H10.565H10.2626C7.59855 5.3363 6.26655 5.3363 5.50499 6.18717C4.74342 7.03803 4.89053 8.36188 5.18472 11.0096L5.32664 12.2868Z" fill="#171616" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
                                                     <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" fill="white"/>
                                                     <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -242,12 +242,17 @@
                         @endforeach
                     </div>
                 </div>
-                <div class=" flex sm:hidden justify-center">
-                    {{ $products->onEachSide(0)->links() }}
-                </div>
-                <div class="hidden sm:flex justify-center">
-                    {{ $products->onEachSide(3)->links() }}
-                </div>
+                <section class="w-full flex justify-between items-center p-10">
+                    <!-- Información de resultados -->
+                    <div class="text-gray-600 text-sm">
+                        <p>Mostrando <span class="font-semibold">{{ $products->firstItem() }}</span> - <span class="font-semibold">{{ $products->lastItem() }}</span> de <span class="font-semibold">{{ $products->total() }}</span> resultados</p>
+                    </div>
+                    
+                    <!-- Paginación -->
+                    <div class="flex items-center space-x-2">
+                        {{ $products->onEachSide(1)->links('vendor.pagination.tailwind') }}
+                    </div>
+                </section>
             </div>
         </div>
 
