@@ -24,7 +24,7 @@ class FormularioDeCotizacion extends Component
 
     public $product, $currentQuote, $productEdit, $currentQuote_id, $productNewAdd;
     public $tipoEnvio;
-    public $precio, $precioCalculado, $precioTotal = 0;
+    public $precio=0, $precioCalculado, $precioTotal = 0;
     public $costoTotal, $costoCalculado = 0;
 
     public $tecnica = null, $colores = null, $operacion = null, $utilidad = 0, $entrega = null, $cantidad = null, $priceTechnique, $newPriceTechnique = null, $newDescription = null, $imageSelected;
@@ -39,6 +39,9 @@ class FormularioDeCotizacion extends Component
     public $precioDeTecnica;
 
     public $photo;
+
+    protected $listeners = ['cantidadActualizada']; // Listeners para actualizar la cantidad de productos
+    public $inputInvalid = false;
 
     public function mount()
     {
@@ -123,6 +126,19 @@ class FormularioDeCotizacion extends Component
         $this->precio = $priceProduct;
 
         $this->precioCalculado = $this->precio;
+    }
+
+    // 
+    public function cantidadActualizada($nuevaCantidad)
+    {
+        
+        $this->cantidad = $nuevaCantidad;
+        // Verificar si la cantidad es mayor al stock
+        if ($this->cantidad > $this->product->stock) {
+            $this->inputInvalid = true;
+        } else {
+            $this->inputInvalid = false;
+        }
     }
 
     public function render()
@@ -211,7 +227,7 @@ class FormularioDeCotizacion extends Component
             $precioDeTecnicaUsado = $precioDeTecnica;
             if ($this->newPriceTechnique != null && $this->newPriceTechnique >= 0)
                 $precioDeTecnicaUsado = $this->newPriceTechnique;
-           
+
             $this->costoCalculado = (($this->precio + ($precioDeTecnicaUsado * $this->colores) + $this->operacion) / 0.8) * 1.12;
             $this->costoTotal = $this->costoCalculado * $this->cantidad;
             

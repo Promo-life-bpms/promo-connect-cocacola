@@ -1,17 +1,81 @@
-<div>
-
-
+<div class="mt-2">
+    <!-- Input sobre la cantidad -->
+    <div class="flex flex-col items-start justify-center">
+        <label 
+            class="uppercase font-light mb-2"
+            for="cantidad"
+        >
+            Cantidad
+        </label>
+        <div class="flex items-center justify-center">
+            <input
+                class="grid grid-cols-3 w-[100px] py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300 mr-2"
+                type="number" 
+                name="cantidad" 
+                placeholder="Piezas" 
+                min="0"
+                max="{{ $product->stock }}"
+                wire:model.debounce.500ms="cantidad"
+                wire:input="$emit('cantidadActualizada', $event.target.value)"
+                :class="{'ring-red-500 focus:ring-red-500': @entangle('inputInvalid')}"
+            >
+            <p class="text-black font-light text-sm">
+                Piezas disponibles: <span class="">{{ $product->stock }}</span>
+            </p>
+        </div>
+    </div> 
+    <!-- Mensaje de error -->
+    @if ($inputInvalid)
+        <p class="text-red-500 text-sm font-light mt-2">
+            La cantidad de productos no puede ser mayor a las piezas disponibles
+        </p>
+    @endif
+    <!-- Atributos del producto -->
+    <div class="my-6">
+        <h4 class="text-lg font-semibold mb-1 text-[#939393] underline uppercase">Atributos</h4>
+        <ul class="space-y-1 text-sm text-[#939393] font-light list-disc list-inside">
+            @foreach ($product->productAttributes as $attr)
+                <li>{{ $attr->attribute }}:<span class="ml-2 font-semibold text-black">{{ $attr->value }}</span></li>
+            @endforeach
+        </ul>
+    </div>
+    <!-- Totales -->
+    <div class="my-10">
+        <table class="w-full text-left text-lg">
+            <tbody>
+                <tr>
+                    <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
+                    <td class="py-2 font-semibold text-right">$ {{ $precioDeTecnica }}</td>
+                </tr>
+                <tr>
+                    <td class="py-2 font-light">Precio final por artículo:</td>
+                    <td class="py-2 font-semibold text-right">
+                        $
+                        @if($this->cantidad == null || $this->cantidad == 0)
+                            0.00
+                        @else
+                            {{ number_format($costoCalculado,2)}}
+                        @endif
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td class="py-2 font-light">Precio total:</td>
+                    <td class="py-2 font-semibold text-right">$ {{ number_format($costoTotal,2)}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Tecnicas -->
     <ol class="relative border-s border-stone-50 ">
-       
-            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong> Personaliza la técnica</strong></p>
-        
+            <p class="mt-5 mb-2 font-semibold text-xl">Personalización de la técnica</p>
             <div class="">
                 <div class="rounded">
                     <div class="grid grid-cols-2">
                         <div class="m-0 mb-1 col-span-1">
-                            <label for="tecnica" class="m-0 font-light">Material <span class="text-red-500">*</span></label>
+                            <label for="tecnica" class="font-light mb-2">Material <span class="text-red-500">*</span></label>
                             <select name="" id=""
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full font-light p-2.5"
                                 wire:model="materialSeleccionado" wire:change="resetTecnique">
                                 <option value="">Seleccione el material</option>
                                 @foreach ($materiales as $material)
@@ -20,10 +84,10 @@
                             </select>
                         </div>
                         @if ($techniquesAvailables)
-                            <div class="form-group m-0 mb-1 col-md-6">
+                            <div class="ml-4 form-group m-0 mb-1 col-md-6">
                                 <label for="tecnica" class="m-0 font-light">Técnica <span class="text-red-500">*</span></label>
                                 <select name="" id=""
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full font-light p-2.5"
                                     wire:model="tecnicaSeleccionada" wire:change="resetSizes">
                                     <option value="">Seleccione la tecnica</option>
                                     @foreach ($techniquesAvailables as $technique)
@@ -34,10 +98,10 @@
                             </div>
                         @endif
                         @if ($sizesAvailables)
-                            <div class="form-group m-0 mb-1 col-md-6">
+                            <div class="form-group m-0 mb-5 col-md-6">
                                 <label for="tecnica" class="m-0 font-light">Tamaño  <span class="text-red-500">*</span></label>
                                 <select name="" id=""
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full p-2.5"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block w-full font-light p-2.5"
                                     wire:model="sizeSeleccionado">
                                     <option value="">Seleccione el tamaño</option>
                                     @foreach ($sizesAvailables as $size)
@@ -77,39 +141,30 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="grid grid-cols-1 md:grid-cols-3 mt-5">
-                        <label><strong> Total de Piezas</strong> </label>
-                        <br>
+
+                    <div class="flex flex-col items-start justify-center my-5">
+                        <label class="col-span-2 font-light mb-2">Cantidad de Colores y / o Logos</label>
                         <input
-                            class="grid grid-cols-3  w-full py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"
-                            type="number" name="cantidad" wire:model="cantidad" placeholder="Piezas" min="0"
-                            max="{{ $product->stock }}">
-                    </div>
-                    <br>
-                    <div class="grid grid-cols-1 md:grid-cols-3">
-                        <label class="col-span-2"><strong>Cantidad de Colores y / o Logos</strong> </label>
-                        <input
-                            class="flex flex-wrap w-full py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"type="number"
+                            class="flex flex-wrap py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"type="number"
                             name="colores" wire:model="colores" placeholder="Colores" min="0">
                     </div>
-                    <br>
         
-                <div>
-                    <label for="tipoEnvio" class="font-bold">Tipo de envío </label>
-                    <select id="tipoEnvio" wire:model="tipoEnvio" class="border rounded p-2">
-                        <option value="foraneo" selected>Foráneo</option>
-                        <option value="local">Local</option>
-                    </select>
+                    <div>
+                        <label for="tipoEnvio" class="font-bold">Selecciona el tipo de envio</label>
+                        <select id="tipoEnvio" wire:model="tipoEnvio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block font-light p-2.5">
+                            <option value="foraneo" selected>Foráneo</option>
+                            <option value="local">Local</option>
+                        </select>
+                    </div>
 
-                </div>
-
-                <button class="mt-10 w-1/2 flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300"
-                    dal-target="modalPersonalize" data-modal-toggle="modalPersonalize" type="button">
-                    Personaliza tu producto
-                </button>
-                <br>
-                <img  wire:ignore.self id="previewImage" src="#" alt="Vista previa de la imagen generada" style="display: none; width:140px; height:140px;">
-                <br>
+                    <!-- Personalizador de productos -->
+                    @if (!$inputInvalid)
+                        <button class="mt-10 w-[300px] h-[80px] flex items-center justify-center bg-primary text-white rounded-[20px] hover:bg-primary-light transition duration-300 font-light"
+                            dal-target="modalPersonalize" data-modal-toggle="modalPersonalize" type="button">
+                            Personaliza tu producto
+                        </button>
+                    @endif
+                    <img  wire:ignore.self id="previewImage" src="#" alt="Vista previa de la imagen generada" style="display: none; width:140px; height:140px;">
 
 
                     <div wire:ignore id="modalPersonalize" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
@@ -206,45 +261,19 @@
                 </div>
             </div>
 
-
-            <p class="flex flex-grow text-lg grid-cols-1 mt-2"><strong>Total</strong></p>
-
-            <table class="w-full text-left text-sm">
-                <tbody>
-                    <tr>
-                        <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
-                        <td class="py-2 font-semibold text-right"> {{ $precioDeTecnica }}</td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 font-light">Precio final por artículo:</td>
-                        <td class="py-2 font-semibold text-right">
-
-                            @if($this->cantidad == null || $this->cantidad == 0)
-                                0.00
-                            @else
-                                {{ number_format($costoCalculado,2)}}
-                            @endif
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="py-2 font-light">Total:</td>
-                        <td class="py-2 font-semibold text-right"> {{ number_format($costoTotal,2)}} </td>
-                    </tr>
-                </tbody>
-            </table>
-            
             <div class="justify-content-between  grid grid-cols-1">
 
-                <button data-modal-hide="add-to-car" wire:click="agregarCarrito()"type="submit"  class="w-1/2 flex items-center justify-center px-4 py-2 bg-secondary text-white rounded-lg hover:bg-secondary-light transition duration-300 mt-4">
-                    <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5.3267 12.2869C5.56689 14.4488 5.68699 15.5296 6.41443 16.1808C7.14186 16.8318 8.22942 16.8318 10.4045 16.8318H10.5651H15.3737H17.1062C18.6047 16.8318 19.3538 16.8318 19.9618 16.4658C20.5698 16.0997 20.9204 15.4376 21.6215 14.1133L24.774 8.15846C25.4519 6.87803 24.5237 5.33636 23.0749 5.33636H10.5651H10.2626C7.59861 5.33636 6.26661 5.33636 5.50505 6.18723C4.74349 7.03809 4.89059 8.36194 5.18478 11.0096L5.3267 12.2869Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-                        <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9.66385 22.5795C9.66385 23.6376 8.80607 24.4955 7.74794 24.4955C6.68981 24.4955 5.83203 23.6376 5.83203 22.5795C5.83203 21.5215 6.68981 20.6636 7.74794 20.6636C8.80607 20.6636 9.66385 21.5215 9.66385 22.5795Z" stroke="white" stroke-width="2.5"/>
-                        <path d="M21.159 22.5795C21.159 23.6376 20.3012 24.4955 19.2431 24.4955C18.185 24.4955 17.3271 23.6376 17.3271 22.5795C17.3271 21.5215 18.185 20.6636 19.2431 20.6636C20.3012 20.6636 21.159 21.5215 21.159 22.5795Z" stroke="white" stroke-width="2.5"/>
-                    </svg>
-                    Agregar al carrito
-                </button>
+                @if (!$inputInvalid)
+                    <button data-modal-hide="add-to-car" wire:click="agregarCarrito()" type="submit" class="w-[300px] h-[80px] flex items-center justify-center px-4 py-2 bg-secondary text-white rounded-[20px] hover:bg-secondary-light transition duration-300 font-semibold mt-4">
+                        <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg" class="mr-4">
+                            <path d="M5.3267 12.2869C5.56689 14.4488 5.68699 15.5296 6.41443 16.1808C7.14186 16.8318 8.22942 16.8318 10.4045 16.8318H10.5651H15.3737H17.1062C18.6047 16.8318 19.3538 16.8318 19.9618 16.4658C20.5698 16.0997 20.9204 15.4376 21.6215 14.1133L24.774 8.15846C25.4519 6.87803 24.5237 5.33636 23.0749 5.33636H10.5651H10.2626C7.59861 5.33636 6.26661 5.33636 5.50505 6.18723C4.74349 7.03809 4.89059 8.36194 5.18478 11.0096L5.3267 12.2869Z" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M2 1.50452H2.63864C3.487 1.50452 4.19969 2.14241 4.29338 2.98558L5.26417 11.7227" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.66385 22.5795C9.66385 23.6376 8.80607 24.4955 7.74794 24.4955C6.68981 24.4955 5.83203 23.6376 5.83203 22.5795C5.83203 21.5215 6.68981 20.6636 7.74794 20.6636C8.80607 20.6636 9.66385 21.5215 9.66385 22.5795Z" stroke="white" stroke-width="2.5"/>
+                            <path d="M21.159 22.5795C21.159 23.6376 20.3012 24.4955 19.2431 24.4955C18.185 24.4955 17.3271 23.6376 17.3271 22.5795C17.3271 21.5215 18.185 20.6636 19.2431 20.6636C20.3012 20.6636 21.159 21.5215 21.159 22.5795Z" stroke="white" stroke-width="2.5"/>
+                        </svg>
+                        Agregar al carrito
+                    </button>
+                @endif
 
                 @if ($errors)
                     <div wire:poll.12s>

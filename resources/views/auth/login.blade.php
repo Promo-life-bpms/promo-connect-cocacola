@@ -4,10 +4,10 @@
 
 <div class="flex h-screen">
     <div
-        class="flex w-full h-full bg-cover bg-center"
-        style="background-image: url('{{ asset('img/login/bannerLogin.png') }}')">
+        class="flex flex-row-reverse flex-wrap w-full h-full bg-cover md:bg-center sm:bg-left"
+        style="background-image: url('{{ asset('storage/img/bg-coca.png')}}')">
         <!-- Sección izquierda: Formulario de Login (Transparente) -->
-        <div class="w-1/2 flex items-center justify-center">
+        <div class="md:w-1/2 sm:w-full flex items-center justify-center">
             <div
                 class="w-full max-w-md px-8 py-6 bg-white bg-opacity-0">
                 <!-- Sección transparente -->
@@ -67,9 +67,7 @@
         </div>
 
         <!-- Sección derecha: Espacio vacío o imagen continua -->
-        <div class="w-1/2">
-            <!-- Espacio vacío, pero sigue mostrando el fondo -->
-        </div>
+        
     </div>
 </div>
 

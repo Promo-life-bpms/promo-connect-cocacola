@@ -32,7 +32,7 @@
     @livewireStyles
 </head>
 
-<body class="h-screen bg-gray-50" style="margin-top:70px;">
+<body class="h-screen bg-[#f9f9f9]" style="margin-top:70px;">
     <div class="h-full flex flex-col justify-between">
         <div class="w-full bg-white">
             @include('layouts.components.navbar')
