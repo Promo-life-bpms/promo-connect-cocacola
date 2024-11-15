@@ -1,5 +1,5 @@
 @extends('layouts.cotizador')
-@section('title', $product->name)
+@section('title', $product->name ?? 'Producto')
 @section('content')
 
     <!-- Detalle del producto -->
@@ -30,38 +30,24 @@
                 <p class="text-base font-light text-primary capitalize mb-10">{{ $product->description }}</p>
                 <!-- Precio unitario -->
                 <p class="text-base font-light text-primary mb-3">Precio unitario: <span class="font-semibold">$ {{ $product->price }} MXN</span></p>
-
+                <p>Utilidad: <span class="font-semibold">{{ $product->price}}%</span></p>
                 <!-- Colores seleccionables -->
                 <div class="mb-4 flex flex-row w-full items-center justify-start">
                     <h4 class="text-lg mb-1 font-light mr-6">Colores:</h4>
                     <div class="flex space-x-3">
+                        <p class="font-light text-primary">
+                            {{ $product->color->color }}
+                        </p>
+                    </div>
+
+                    <div class="flex space-x-3 hidden">
                         <!-- Switch de color con borde al seleccionar -->
                         <button class="w-6 h-6 rounded-full bg-red-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
                         <button class="w-6 h-6 rounded-full bg-blue-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
                         <button class="w-6 h-6 rounded-full bg-green-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
                     </div>
                 </div>
-
                 <!-- Cantidad y stock -->
-                <div class="flex items-center">
-                    {{-- <div class="mr-4">
-                        <label for="quantity" class="block text-md font-semibold mb-1">Cantidad</label>
-                        <input type="number" id="quantity" class="w-16 p-2 border border-gray-300 rounded-lg" value="1" min="1">
-                    </div> --}}
-                    <div class="self-center">
-                        <p class="text-black font-light text-sm">Piezas disponibles: <span class="">{{ $product->stock }}</span></p>
-                    </div>
-                </div>
-
-                <!-- Atributos del producto -->
-                <div class="my-6">
-                    <h4 class="text-lg font-semibold mb-1 text-[#939393] underline uppercase">Atributos</h4>
-                    <ul class="space-y-1 text-sm text-[#939393] font-light list-disc list-inside">
-                        @foreach ($product->productAttributes as $attr)
-                            <li>{{ $attr->attribute }}:<span class="ml-2 font-semibold text-black">{{ $attr->value }}</span></li>
-                        @endforeach
-                    </ul>
-                </div>
 
                 <!-- Personalizador y tecnicas -->
                 <div class="flex flex-col space-y-3">

@@ -1,7 +1,5 @@
 @extends('layouts.cotizador')
-
 @section('content')
-
     <style>
         .carousel-container {
             overflow: hidden;
@@ -38,7 +36,25 @@
 
         .carousel-pagination-dot.active {
             background-color: rgb(166, 105, 51);
-        }
+        }      
+
+        @media (max-width: 768px) {
+            .carousel-container {
+                margin-top: 250px;
+                max-width: 100%;
+                padding: 0 15px; /* Añade un padding para evitar que el contenido toque los bordes */
+            }
+
+            .carousel-slide {
+                min-width: calc(100% - 20px); /* Reduce el ancho para considerar el gap */
+            }
+
+            .carousel-track {
+                gap: 10px; /* Ajusta el espacio entre los slides */
+                padding: 0 10px; /* Espacio en los extremos para ver el "gap" */
+                height: 200px; /* Altura fija para evitar que el contenido se desborde */
+            }
+        }  
     </style>
 
     <div class="carousel-container">
@@ -131,6 +147,8 @@
         });
     </script>
 
+
+
     <!-- Los Favoritos -->
     <div class="w-full mt-10 p-6 sm:p-10 md:p-24 bg-cover bg-center relative" style="background-image:  url('{{ asset('img/home/favoritosBackground.png') }}');">
         <!-- Título "Los favoritos" en la esquina superior derecha -->
@@ -152,12 +170,16 @@
         </div>
     </div>
 
+
     <!-- Categorías -->
     <div class="w-full mt-10 p-6 sm:p-10 md:p-24 bg-cover bg-center relative">
-        <h2 class="text-xl sm:text-2xl md:text-3xl font-TCCCUnityHeadline font-bold text-primary absolute top-4">CATEGORÍAS</h2>
-
+        <h2 
+            class="text-xl sm:text-2xl md:text-3xl font-TCCCUnityHeadline font-bold text-primary absolute top-4"
+        >
+            CATEGORÍAS
+        </h2>
         <!-- Contenedor de categorías responsivas -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mt-8">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-6 md:gap-4 sm:gap-8 mt-8">
             <!-- Categoría 1 -->
             <div class="flex flex-col items-center transition-transform duration-300 hover:scale-105 cursor-pointer">
                 <a href="{{ route('categoryfilter', ['category' => 9]) }}">
@@ -257,9 +279,8 @@
             <div class="w-full md:w-1/2 flex justify-center items-center">
                 <img src="{{asset('img/home/productsLeft.png')}}" alt="Imagen Izquierda" class="w-full h-auto object-cover rounded-lg">
             </div>
-
             <!-- Parte derecha: Grid de productos -->
-            <div class="w-full md:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="w-full md:w-1/2 grid sm:grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Producto 1 -->
                 @foreach (array_slice($latestProducts, 0, 4) as $product)
                     @if ($product->firstImage)
@@ -309,9 +330,8 @@
     <div class="flex justify-center items-center w-full md:my-[150px] relative">
     <!-- Imagen izquierda en primer plano -->
         <div id="imagenIzquierda" class="absolute left-0 z-10 invisible">
-            <img src="{{ asset('storage/img/izquierda.png')}}" alt="Imagen izquierda" class="md:w-[480px] h-auto object-cover rounded-lg">
+            <img src="{{ asset('storage/img/izquierda.png')}}" alt="Imagen izquierda" class="md:w-[480px] sm:w-[100px] h-auto object-cover rounded-lg">
         </div>
-
         <!-- Contenedor principal en segundo plano -->
         <div class="bg-white p-8 rounded-2xl shadow-lg md:w-[1329px] md:h-[586px] relative z-0">
             <!-- Contenido centrado -->
@@ -320,7 +340,7 @@
                 <h2 class="sm:text-3xl md:text-6xl font-bold text-primary mb-4 font-TCCCUnityHeadline">TERMOS</h2>
 
                 <!-- Texto descriptivo centrado -->
-                <p class="sm:text-lg md:text-2xl text-primary-dark mb-6 font-TCCCUnityHeadline">Coleccionables de calidad que perduran con el tiempo</p>
+                <p class="sm:text-lg md:text-2xl sm:text-xl text-center text-primary-dark mb-6 font-TCCCUnityHeadline">Coleccionables de calidad que perduran con el tiempo</p>
 
                 <!-- Botón rojo centrado -->
                 <button class="bg-[#E61D2B] w-[250px] text-white py-4 px-6 rounded-lg hover:bg-secondary-light transition duration-300 font-TCCCUnityHeadline">
@@ -331,7 +351,7 @@
 
         <!-- Imagen derecha en primer plano -->
         <div id="imagenDerecha" class="absolute right-0 z-10 invisible">
-            <img src="{{ asset('storage/img/derecha.png')}}" alt="Imagen derecha" class="md:w-[480px] h-auto object-cover rounded-lg">
+            <img src="{{ asset('storage/img/derecha.png')}}" alt="Imagen derecha" class="md:w-[480px] sm:w-[100px] h-auto object-cover rounded-lg">
         </div>
     </div>
     <script>
@@ -376,6 +396,4 @@
           },
         });
     </script>
-
-
 @endsection
