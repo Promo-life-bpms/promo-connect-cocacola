@@ -1,6 +1,21 @@
 <div class="mt-2">
     <!-- Input sobre la cantidad -->
     <div class="flex flex-col items-start justify-center">
+        <h2 class="text-2xl capitalize font-light">{{ $product->name }}</h2>
+        <!-- Descripción del producto -->
+        <p class="text-base font-light text-primary capitalize mb-10">{{ $product->description }}</p>
+        <!-- Precio unitario -->
+        <p class="text-base font-light text-primary mb-3">Precio unitario: <span class="font-semibold">$ {{ $this->precio }} MXN</span></p>
+        <!-- Colores seleccionables -->
+        <div class="mb-4 flex flex-row w-full items-center justify-start">
+            <h4 class="text-lg mb-1 font-light mr-6">Colores:</h4>
+            <div class="flex space-x-3">
+                <p class="font-light text-primary">
+                    {{ $product->color->color }}
+                </p>
+            </div>
+        </div>
+        
         <label 
             class="uppercase font-light mb-2"
             for="cantidad"
