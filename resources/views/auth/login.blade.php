@@ -4,8 +4,7 @@
 
 <div class="flex h-screen">
     <div
-        class="flex flex-row-reverse flex-wrap w-full h-full bg-cover md:bg-center sm:bg-left"
-        style="background-image: url('{{ asset('storage/img/bg-coca.png')}}')">
+        class="flex flex-row-reverse flex-wrap w-full h-full bg-[url('/storage/img/bg-coca.png')] bg-cover md:bg-center sm:bg-left">
         <!-- Sección izquierda: Formulario de Login (Transparente) -->
         <div class="md:w-1/2 sm:w-full flex items-center justify-center">
             <div

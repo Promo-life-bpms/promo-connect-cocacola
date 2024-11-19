@@ -30,7 +30,6 @@
                 <p class="text-base font-light text-primary capitalize mb-10">{{ $product->description }}</p>
                 <!-- Precio unitario -->
                 <p class="text-base font-light text-primary mb-3">Precio unitario: <span class="font-semibold">$ {{ $product->price }} MXN</span></p>
-                <p>Utilidad: <span class="font-semibold">{{ $product->price}}%</span></p>
                 <!-- Colores seleccionables -->
                 <div class="mb-4 flex flex-row w-full items-center justify-start">
                     <h4 class="text-lg mb-1 font-light mr-6">Colores:</h4>

@@ -228,7 +228,7 @@ class FormularioDeCotizacion extends Component
             if ($this->newPriceTechnique != null && $this->newPriceTechnique >= 0)
                 $precioDeTecnicaUsado = $this->newPriceTechnique;
 
-            $this->costoCalculado = (($this->precio + ($precioDeTecnicaUsado * $this->colores) + $this->operacion) / 0.8) * 1.12;
+            $this->costoCalculado = (($this->precio + ($precioDeTecnicaUsado * $this->colores) + $this->operacion) / 1) * 1.12;
             $this->costoTotal = $this->costoCalculado * $this->cantidad;
             
         }
