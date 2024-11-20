@@ -37,8 +37,17 @@
             <p class="text-black font-light text-sm">
                 Piezas disponibles: <span class="">{{ $product->stock }}</span>
             </p>
+
         </div>
     </div> 
+
+    <div class="mt-5">
+        <label for="tipoEnvio" class="font-light" >TIPO DE ENVÍO </label>
+        <select id="tipoEnvio" wire:model="tipoEnvio" class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block font-light p-2.5">
+            <option value="foraneo" selected>Foráneo</option>
+            <option value="local">Local</option>
+        </select>
+    </div>
     <!-- Mensaje de error -->
     @if ($inputInvalid)
         <p class="text-red-500 text-sm font-light mt-2">
@@ -59,11 +68,11 @@
         <table class="w-full text-left text-lg">
             <tbody>
                 <tr>
-                    <td class="py-2 font-light">Precio actual de la técnica por artículo:</td>
+                    <td class="py-2 font-light">Precio actual de la técnica:</td>
                     <td class="py-2 font-semibold text-right">$ {{ $precioDeTecnica }}</td>
                 </tr>
                 <tr>
-                    <td class="py-2 font-light">Precio final por artículo:</td>
+                    <td class="py-2 font-light">Precio actual por artículo:</td>
                     <td class="py-2 font-semibold text-right">
                         $
                         @if($this->cantidad == null || $this->cantidad == 0)
@@ -162,14 +171,6 @@
                         <input
                             class="flex flex-wrap py-2 text-center rounded-lg ring-1 ring-inset placeholder:text-gray-300"type="number"
                             name="colores" wire:model="colores" placeholder="Colores" min="0">
-                    </div>
-        
-                    <div>
-                        <label for="tipoEnvio" class="font-bold">Selecciona el tipo de envio</label>
-                        <select id="tipoEnvio" wire:model="tipoEnvio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block font-light p-2.5">
-                            <option value="foraneo" selected>Foráneo</option>
-                            <option value="local">Local</option>
-                        </select>
                     </div>
 
                     <!-- Personalizador de productos -->

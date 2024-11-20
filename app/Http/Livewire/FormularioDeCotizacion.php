@@ -23,7 +23,7 @@ class FormularioDeCotizacion extends Component
     use WithFileUploads;
 
     public $product, $currentQuote, $productEdit, $currentQuote_id, $productNewAdd;
-    public $tipoEnvio;
+    public $tipoEnvio, $precioUnitarioEnvio =0, $totalCajas,$precioProductoCajas;
     public $precio=0, $precioCalculado, $precioTotal = 0;
     public $costoTotal, $costoCalculado = 0;
 
@@ -146,6 +146,8 @@ class FormularioDeCotizacion extends Component
         $this->entrega = 15;
 
         $this->precioTotal = 0;
+
+
         // Obtener precios de las tecnicas
 
         // Obtengo Materiales
@@ -224,11 +226,43 @@ class FormularioDeCotizacion extends Component
                 $this->priceTechnique = null;
             }
 
-            $precioDeTecnicaUsado = $precioDeTecnica;
+            if($this->tipoEnvio == 'foraneo'){
+                $precioDeTecnicaUsado = $precioDeTecnica;
+                $piezasCaja = $this->product->productAttributes->firstWhere('slug', 'piezas_caja');
+
+                $this->totalCajas = ceil(floatval($piezasCaja->value) / floatval($this->product->stock));
+                $this->precioProductoCajas = floatval($this->totalCajas * 400);
+ 
+                $this->precioUnitarioEnvio  = floatval($this->cantidad/ $this->precioProductoCajas);
+
+            }else{
+                $precioDeTecnicaUsado = $precioDeTecnica + 0.6;
+            }
+ 
+
+           /*  if($envio = 'foraneo'){
+                $totalCajas = ceil(floatval($productData->cantidad) / floatval($product->cantidad));
+                $utilidad = floatval($totalCajas * 400) * 0.20;
+                $costoEnvio =   floatval($totalCajas * 400) * 1.20;
+            }else if($envio = 'local'){
+                $costoEnvio = floatval(floatval($productData->cantidad) * 0.60) * 1.20;
+                $utilidad = floatval(floatval($productData->cantidad) * 0.60) * 0.20;
+            }else{
+                $costoEnvio = floatval( $product->precio_total * 1.16) * 1.20;
+                $utilidad = floatval( $product->precio_total * 1.16) * 0.20;
+            } */
+            
             if ($this->newPriceTechnique != null && $this->newPriceTechnique >= 0)
                 $precioDeTecnicaUsado = $this->newPriceTechnique;
 
-            $this->costoCalculado = (($this->precio + ($precioDeTecnicaUsado * $this->colores) + $this->operacion) / 0.8) ;
+
+            if($this->tipoEnvio == 'foraneo'){
+                $this->costoCalculado = (($this->precio + $this->precioUnitarioEnvio + ($precioDeTecnicaUsado * $this->colores) ) / 0.8) ;
+
+            }else{
+                $this->costoCalculado = (($this->precio + ($precioDeTecnicaUsado * $this->colores) + 0.60 ) / 0.8) ;
+            }
+
             $this->costoTotal = $this->costoCalculado * $this->cantidad;
             
         }

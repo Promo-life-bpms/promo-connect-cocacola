@@ -19,9 +19,9 @@
             <img src="img/hhglobal_negro.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
             <center>
                
-                <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Daniel Levy Hano </b> </span>
-                <span style="display: inline; margin-right:30px;"> <img src="img/whatsapp.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>5530395106</b> </span>
-                <span style="display: inline; margin-right:30px;"> <img src="img/email.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>daniel@trademarket.com.mx </b></span>
+                <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Mariana Portillo</b> </span>
+                <span style="display: inline; margin-right:30px;"> <img src="img/whatsapp.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>5530385592</b> </span>
+                <span style="display: inline; margin-right:30px;"> <img src="img/email.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>mariana.portillo@trademarket.com.mx </b></span>
             </center>
         </div> 
        
