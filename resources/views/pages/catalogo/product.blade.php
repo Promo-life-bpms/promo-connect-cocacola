@@ -24,32 +24,6 @@
             </div>
             <!-- Sección derecha: Información del producto -->
             <div>
-                <!-- Nombre del producto -->
-                <h2 class="text-2xl capitalize font-light">{{ $product->name }}</h2>
-                <!-- Descripción del producto -->
-                <p class="text-base font-light text-primary capitalize mb-10">{{ $product->description }}</p>
-                <!-- Precio unitario -->
-                <p class="text-base font-light text-primary mb-3">Precio unitario: <span class="font-semibold">$ {{ $product->price }} MXN</span></p>
-                <p>Utilidad: <span class="font-semibold">{{ $product->price}}%</span></p>
-                <!-- Colores seleccionables -->
-                <div class="mb-4 flex flex-row w-full items-center justify-start">
-                    <h4 class="text-lg mb-1 font-light mr-6">Colores:</h4>
-                    <div class="flex space-x-3">
-                        <p class="font-light text-primary">
-                            {{ $product->color->color }}
-                        </p>
-                    </div>
-
-                    <div class="flex space-x-3 hidden">
-                        <!-- Switch de color con borde al seleccionar -->
-                        <button class="w-6 h-6 rounded-full bg-red-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
-                        <button class="w-6 h-6 rounded-full bg-blue-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
-                        <button class="w-6 h-6 rounded-full bg-green-500 border-2 border-transparent focus:outline-none focus:border-black"></button>
-                    </div>
-                </div>
-                <!-- Cantidad y stock -->
-
-                <!-- Personalizador y tecnicas -->
                 <div class="flex flex-col space-y-3">
                     @livewire('formulario-de-cotizacion', ['product' => $product])
                 </div>

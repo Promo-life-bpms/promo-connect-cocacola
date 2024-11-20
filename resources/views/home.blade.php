@@ -156,7 +156,7 @@
 
         <!-- Contenedor de imágenes horizontales -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 relative top-16 overflow-hidden">
-            <!-- Imagen 1 -->
+            <!-- Imagen 1
             @foreach ( array_slice($latestProducts, 0, 4) as $product )
             <div class="w-full h-52 sm:h-60 md:h-[234px] rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
                 <a href="{{ route('show.product', ['product' => $product->id]) }}">
@@ -167,6 +167,44 @@
                 </a>
             </div>
             @endforeach
+             -->
+            <!-- Temporal -->
+            <div class="w-full h-52 sm:h-60 md:h-[234px] rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                <a href="#">
+                    <img
+                        src="{{asset('storage/placeholders/1.png')}}"
+                        alt="Temporal"
+                        class="w-full h-full object-contain"
+                    >
+                </a>
+            </div>
+            <div class="w-full h-52 sm:h-60 md:h-[234px] rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                <a href="#">
+                    <img
+                        src="{{asset('storage/placeholders/2.png')}}"
+                        alt="Temporal"
+                        class="w-full h-full object-contain"
+                    >
+                </a>
+            </div>
+            <div class="w-full h-52 sm:h-60 md:h-[234px] rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                <a href="#">
+                    <img
+                        src="{{asset('storage/placeholders/3.png')}}"
+                        alt="Temporal"
+                        class="w-full h-full object-contain"
+                    >
+                </a>
+            </div>
+            <div class="w-full h-52 sm:h-60 md:h-[234px] rounded-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                <a href="#">
+                    <img
+                        src="{{asset('storage/placeholders/4.png')}}"
+                        alt="Temporal"
+                        class="w-full h-full object-contain"
+                    >
+                </a>
+            </div>
         </div>
     </div>
 

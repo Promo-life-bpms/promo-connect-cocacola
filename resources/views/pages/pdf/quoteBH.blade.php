@@ -16,12 +16,12 @@
 
         <p style="margin-left:672px; margin-top:2px; z-index:2; color:#FFFFFF; font-size:12px;"><b>{{$date}}</b></p>
             <div style="z-index:4; margin-top:20px;">
-            <img src="img/hhglobal_negro.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
+                <img src="img/navBar/cocaLogo.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
             <center>
                
-                <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Daniel Levy Hano </b> </span>
-                <span style="display: inline; margin-right:30px;"> <img src="img/whatsapp.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>5530395106</b> </span>
-                <span style="display: inline; margin-right:30px;"> <img src="img/email.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>daniel@trademarket.com.mx </b></span>
+                <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Mariana Portillo</b> </span>
+                <span style="display: inline; margin-right:30px;"> <img src="img/whatsapp.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>5530385592</b> </span>
+                <span style="display: inline; margin-right:30px;"> <img src="img/email.png" alt="whatsapp" style="width: 14px; margin-right:10px;"><b>mariana.portillo@trademarket.com.mx </b></span>
             </center>
         </div> 
        
@@ -107,17 +107,17 @@
                 $costoEnvio = 0;
                 $totalCajas = 0;
                 $utilidad = 0;
-                if($envio = 'foraneo'){
+                /* if($envio = 'foraneo'){
                     $totalCajas = ceil(floatval($productData->cantidad) / floatval($product->cantidad));
                     $utilidad = floatval($totalCajas * 400) * 0.20;
                     $costoEnvio =   floatval($totalCajas * 400) * 1.20;
-                }else if($envio = 'foraneo'){
+                }else if($envio = 'local'){
                     $costoEnvio = floatval(floatval($productData->cantidad) * 0.60) * 1.20;
                     $utilidad = floatval(floatval($productData->cantidad) * 0.60) * 0.20;
                 }else{
                     $costoEnvio = floatval( $product->precio_total * 1.16) * 1.20;
                     $utilidad = floatval( $product->precio_total * 1.16) * 0.20;
-                }
+                } */
 
             @endphp
             
@@ -197,22 +197,40 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="4" style="width:10% ;"><center><b>Tiempo de Entrega: 10 días hábiles</b> </center>  </td>
+                        <td colspan="4" style="width:10% ;">
+                            <center>
+                                <b>Tiempo de Entrega: 10 días hábiles</b> 
+                            </center>  
+                            <center>
+                                @switch($productData->envio ?? '')
+                                    @case('local')
+                                        <p><b>Tipo de envío: LOCAL</b> </p>
+                                        @break
+
+                                    @case('foraneo')
+                                        <p> <b>Tipo de envío: FORÁNEO</b> </p>
+                                        @break
+
+                                    @default
+                                        <p></p>
+                                @endswitch
+                            </center>
+                        </td>
                     </tr>
                     <tr>
                         <th colspan="1">Cantidad</th>
                         <th colspan="1">Subtotal</th>
-                        <th colspan="1">Utilidad</th>
+                        <th colspan="1">IVA</th>
                         <th colspan="1">Total </th>
                     </tr>
                     <tr>
                         @php
-                            $totalIVA=$costoEnvio * 1.16;
+                            $totalIVA= $product->precio_total * 0.16;
                         @endphp
                         <td colspan="1"> {{ $product->cantidad}} piezas</td>
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($costoEnvio , 2, '.', ',') }} mxn   
+                                $ {{ number_format($product->precio_total , 2, '.', ',') }} mxn   
                             @else
                                 no disponible 
                             @endif
@@ -220,7 +238,7 @@
 
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($utilidad , 2, '.', ',') }} mxn 
+                                $ {{ number_format($totalIVA , 2, '.', ',') }} mxn 
                             @else
                                 no disponible                                                 
                             @endif
@@ -228,7 +246,11 @@
                         </td>
                         <td colspan="1"> 
                             @if(Auth::user() != null && !Auth::user()->hasRole('invited'))
-                                $ {{ number_format($totalIVA , 2, '.', ',') }} mxn
+                                @php
+                                    $total = $product->precio_total * 1.16 
+                                @endphp
+                            
+                                $ {{ number_format($total , 2, '.', ',') }} mxn
                             @else
                                 no disponible           
                             @endif                        
