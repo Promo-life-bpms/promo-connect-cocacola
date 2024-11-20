@@ -114,7 +114,7 @@
                                         }
                                     </style>
                                     <p class="text-lg font-bold text-primary mb-2 capitalize truncate whitespace-nowrap overflow-hidden">${{ $product->price}}</p>
-                                    <a href="https://api.whatsapp.com/send?phone=5568096555&text=Hola%20me%20gustaría%20solicitar%20una%20cotización%20para%20el%20producto%20{{ $product->name }}%20con%20SKU%20:%20({{ $product->internal_sku }})">
+                                    <a href="https://api.whatsapp.com/send?phone=5530385592&text=Hola%20me%20gustaría%20solicitar%20una%20cotización%20para%20el%20producto%20{{ $product->name }}%20con%20SKU%20:%20({{ $product->internal_sku }})">
                                         <button class="w-full flex items-center justify-center bg-primary text-white py-2 rounded-lg hover:bg-primary-light transition duration-300">
                                             <svg width="27" height="26" viewBox="0 0 27 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M5.32664 12.2868C5.56683 14.4488 5.68693 15.5296 6.41437 16.1807C7.1418 16.8318 8.22936 16.8318 10.4045 16.8318H10.565H15.3736H17.1061C18.6046 16.8318 19.3537 16.8318 19.9617 16.4657C20.5697 16.0996 20.9203 15.4375 21.6214 14.1132L24.774 8.1584C25.4518 6.87797 24.5236 5.3363 23.0748 5.3363H10.565H10.2626C7.59855 5.3363 6.26655 5.3363 5.50499 6.18717C4.74342 7.03803 4.89053 8.36188 5.18472 11.0096L5.32664 12.2868Z" fill="#171616" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
