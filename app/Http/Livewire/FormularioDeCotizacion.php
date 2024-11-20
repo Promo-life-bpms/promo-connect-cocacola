@@ -231,6 +231,7 @@ class FormularioDeCotizacion extends Component
                 $piezasCaja = $this->product->productAttributes->firstWhere('slug', 'piezas_caja');
 
                 $this->totalCajas = ceil(floatval( $this->cantidad == 0? 1 :$this->cantidad ) / floatval($piezasCaja->value));
+                /* $this->totalCajas = ceil(floatval($this->cantidad) / floatval($piezasCaja->value)); */
         
                 $this->precioProductoCajas = floatval($this->totalCajas * 400);
                 
