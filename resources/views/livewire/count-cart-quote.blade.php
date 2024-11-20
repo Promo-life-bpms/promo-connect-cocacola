@@ -3,7 +3,7 @@
         data-placement="bottom" title="Cotizacion Actual" >
         <div class="ml-2 mr-2 mt-4">
             @if ($total > 0)
-                <span class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-black bg-primary  border-1  rounded-full -top-2 -right-2" >{{ $total }}</span>
+                <span class="absolute inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-black bg-primary  border-1  rounded-full -top-2 -right-2 text-white" >{{ $total }}</span>
             @endif
             <svg width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 

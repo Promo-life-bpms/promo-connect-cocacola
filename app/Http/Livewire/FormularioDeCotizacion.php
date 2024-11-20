@@ -241,19 +241,6 @@ class FormularioDeCotizacion extends Component
             }else{
                 $precioDeTecnicaUsado = $precioDeTecnica + 0.6;
             }
- 
-
-           /*  if($envio = 'foraneo'){
-                $totalCajas = ceil(floatval($productData->cantidad) / floatval($product->cantidad));
-                $utilidad = floatval($totalCajas * 400) * 0.20;
-                $costoEnvio =   floatval($totalCajas * 400) * 1.20;
-            }else if($envio = 'local'){
-                $costoEnvio = floatval(floatval($productData->cantidad) * 0.60) * 1.20;
-                $utilidad = floatval(floatval($productData->cantidad) * 0.60) * 0.20;
-            }else{
-                $costoEnvio = floatval( $product->precio_total * 1.16) * 1.20;
-                $utilidad = floatval( $product->precio_total * 1.16) * 0.20;
-            } */
             
             if ($this->newPriceTechnique != null && $this->newPriceTechnique >= 0)
                 $precioDeTecnicaUsado = $this->newPriceTechnique;

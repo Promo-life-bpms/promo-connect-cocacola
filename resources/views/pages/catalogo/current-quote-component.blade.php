@@ -218,7 +218,7 @@
                     <form wire:submit.prevent="generarPDF">
                         @csrf
                         @if(count($cotizacionActual) > 0)
-                            <button type="submit" class="w-full bg-primary p-2 rounded text-center text-black font-semibold" target="_blank" id="pdfButton" style="z-index: 5;">
+                            <button type="submit" class="w-full bg-primary p-2 rounded text-center text-white font-semibold" target="_blank" id="pdfButton" style="z-index: 5;">
                                 <span id="buttonText">COTIZAR</span>
                             </button>
                             @if($pdfDescargado)
