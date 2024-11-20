@@ -16,7 +16,7 @@
 
         <p style="margin-left:672px; margin-top:2px; z-index:2; color:#FFFFFF; font-size:12px;"><b>{{$date}}</b></p>
             <div style="z-index:4; margin-top:20px;">
-            <img src="img/hhglobal_negro.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
+                <img src="img/navBar/cocaLogo.png" alt="loreal" style="width: 70px; z-index:4; margin-top:30px; margin-left:72px; margin-bottom: 2px;">
             <center>
                
                 <span style="display: inline; margin-right:30px; color:#0225F4;"><b>Vendedor: </b> <b style="color:black;">Mariana Portillo</b> </span>
