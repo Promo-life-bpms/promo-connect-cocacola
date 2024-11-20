@@ -76,6 +76,9 @@
                 </tr>
                 <tr>
                     <td class="py-2 font-light">Precio actual por artículo:</td>
+
+
+                    {{$this->precioUnitarioEnvio   }}
                     <td class="py-2 font-semibold text-right">
                         $
                         @if($this->cantidad == null || $this->cantidad == 0)

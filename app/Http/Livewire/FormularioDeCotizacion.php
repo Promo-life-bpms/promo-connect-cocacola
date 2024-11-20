@@ -230,12 +230,12 @@ class FormularioDeCotizacion extends Component
                 $precioDeTecnicaUsado = $precioDeTecnica;
                 $piezasCaja = $this->product->productAttributes->firstWhere('slug', 'piezas_caja');
 
-                $this->totalCajas = ceil(floatval($this->cantidad) / floatval($piezasCaja->value));
+                $this->totalCajas = ceil(floatval( $this->cantidad == 0? 1 :$this->cantidad ) / floatval($piezasCaja->value));
         
                 $this->precioProductoCajas = floatval($this->totalCajas * 400);
-               
-    
-                $this->precioUnitarioEnvio  = floatval($this->cantidad == 0? 1:$this->cantidad/ $this->precioProductoCajas);
+                
+
+                $this->precioUnitarioEnvio = floatval($this->precioProductoCajas / (($this->cantidad == null || $this->cantidad == 0) ? 1 : $this->cantidad));
 
             }else{
                 $precioDeTecnicaUsado = $precioDeTecnica + 0.6;
@@ -256,7 +256,7 @@ class FormularioDeCotizacion extends Component
             
             if ($this->newPriceTechnique != null && $this->newPriceTechnique >= 0)
                 $precioDeTecnicaUsado = $this->newPriceTechnique;
-
+            
 
             if($this->tipoEnvio == 'foraneo'){
                 $this->costoCalculado = (($this->precio + $this->precioUnitarioEnvio + ($precioDeTecnicaUsado * $this->colores) ) / 0.8) ;
