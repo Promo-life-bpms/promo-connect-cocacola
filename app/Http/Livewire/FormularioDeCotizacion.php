@@ -225,15 +225,17 @@ class FormularioDeCotizacion extends Component
                 $precioDeTecnica = 0;
                 $this->priceTechnique = null;
             }
-
+           
             if($this->tipoEnvio == 'foraneo'){
                 $precioDeTecnicaUsado = $precioDeTecnica;
                 $piezasCaja = $this->product->productAttributes->firstWhere('slug', 'piezas_caja');
 
-                $this->totalCajas = ceil(floatval($piezasCaja->value) / floatval($this->product->stock));
+                $this->totalCajas = ceil(floatval($this->cantidad) / floatval($piezasCaja->value));
+        
                 $this->precioProductoCajas = floatval($this->totalCajas * 400);
- 
-                $this->precioUnitarioEnvio  = floatval($this->cantidad/ $this->precioProductoCajas);
+               
+    
+                $this->precioUnitarioEnvio  = floatval($this->cantidad == 0? 1:$this->cantidad/ $this->precioProductoCajas);
 
             }else{
                 $precioDeTecnicaUsado = $precioDeTecnica + 0.6;
@@ -279,8 +281,7 @@ class FormularioDeCotizacion extends Component
 
 
     public function agregarCarrito()
-    {
-      
+    {      
         $this->validate([
             'priceTechnique' => 'required',
             'cantidad' => 'required|numeric|min:1',
@@ -304,8 +305,10 @@ class FormularioDeCotizacion extends Component
             'armado'  => isset($this->armado)? 1:0,
             'destino' => isset($this->destino)? 1:0,
             'detalles' => $this->detalles != ""? $this->detalles : "",
-            'envio'=> $this->tipoEnvio == null? 'foraneo': $this->tipoEnvio,
-            'piezasCaja'=>  isset($piezas->value)? $piezas->value : 00
+            'envio'=> $this->tipoEnvio == null? 'local' : $this->tipoEnvio,
+            'piezasCaja'=>  isset($piezas->value)? $piezas->value : 00,
+            "precioDeTecnica" => $this->precioDeTecnica,
+            "guias" => $this->totalCajas,
         ]);
 
         if ($currentQuote === null) {

@@ -42,11 +42,14 @@
     </div> 
 
     <div class="mt-5">
-        <label for="tipoEnvio" class="font-light" >TIPO DE ENVÍO </label>
+        <label for="tipoEnvio" class="font-light">TIPO DE ENVÍO</label>
         <select id="tipoEnvio" wire:model="tipoEnvio" class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-slate-500 focus:border-slate-500 block font-light p-2.5">
-            <option value="foraneo" selected>Foráneo</option>
             <option value="local">Local</option>
+            <option value="foraneo">Foráneo</option>
         </select>
+        @error('tipoEnvio')
+            <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+        @enderror
     </div>
     <!-- Mensaje de error -->
     @if ($inputInvalid)
@@ -80,7 +83,10 @@
                         @else
                             {{ number_format($costoCalculado,2)}}
                         @endif
-                        
+
+                        @if($this->tipoEnvio == 'foraneo')
+                            <p class="font-light text-xs"> {{$this->totalCajas}} guías</p>
+                        @endif
                     </td>
                 </tr>
                 <tr>
